@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import HighlightMenu from "./HighlightMenu";
+import ThinkingSuggestions from "./ThinkingSuggestions";
 
 export default function ChatPanel() {
   const {
@@ -128,6 +129,19 @@ export default function ChatPanel() {
           {toast}
         </div>
       )}
+
+      {/* Thinking Suggestions */}
+      <ThinkingSuggestions
+        onSelectSuggestion={(text) => setChatPrompt(text)}
+        onSaveAsInsight={(text) => {
+          addInsight({
+            title: text.slice(0, 60),
+            content: text,
+            conversationId: conversation.conversation_id,
+          });
+          showToast("✓ Insight saved");
+        }}
+      />
 
       {/* Input */}
       <ChatInput
