@@ -83,3 +83,49 @@ export interface Conversation {
   created_at: string;
   updated_at: string;
 }
+
+// Knowledge Graph types
+
+export type GraphNodeType = "message" | "insight" | "document_block" | "topic";
+
+export interface GraphNode {
+  node_id: string;
+  node_type: GraphNodeType;
+  entity_id: string;
+  label: string;
+  created_at: string;
+}
+
+export type GraphEdgeRelationship =
+  | "supports"
+  | "contradicts"
+  | "expands"
+  | "references"
+  | "derived_from";
+
+export interface GraphEdge {
+  edge_id: string;
+  source_node_id: string;
+  target_node_id: string;
+  relationship_type: GraphEdgeRelationship;
+  created_at: string;
+}
+
+// AI Thinking Suggestions
+
+export interface ThinkingSuggestion {
+  suggestion_id: string;
+  text: string;
+  source: "unresolved_insight" | "document_gap" | "contradiction" | "context";
+  source_entity_id?: string;
+}
+
+// Contradiction Detection
+
+export interface Contradiction {
+  contradiction_id: string;
+  insight_a_id: string;
+  insight_b_id: string;
+  description: string;
+  detected_at: string;
+}

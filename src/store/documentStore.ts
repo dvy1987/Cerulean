@@ -34,6 +34,7 @@ interface DocumentState {
   getBlocksSorted: () => DocumentBlock[];
   exportMarkdown: () => string;
   exportPlainText: () => string;
+  exportPRD: () => string;
 }
 
 const createDocument = (): Document => ({
@@ -209,5 +210,58 @@ export const useDocumentStore = create<DocumentState>((set, get) => ({
       }
     }
     return text.trim();
+  },
+
+  exportPRD: () => {
+    const doc = get().document;
+    const blocks = get().getBlocksSorted();
+    const sections = [
+      "Problem",
+      "User Pain",
+      "Proposed Solution",
+      "Tradeoffs",
+      "Metrics",
+      "Open Questions",
+    ];
+
+    let prd = `# ${doc.title}\n\n`;
+    prd += `---\n\n`;
+
+    // Map existing blocks into PRD sections
+    const headings = blocks.filter((b) => b.block_type === "heading" || b.block_type === "section");
+    const paragraphs = blocks.filter((b) => b.block_type === "paragraph" || b.block_type === "bullet");
+
+    if (headings.length > 0 || paragraphs.length > 0) {
+      // Include existing content first
+      for (const block of blocks) {
+        switch (block.block_type) {
+          case "heading":
+            prd += `## ${block.content}\n\n`;
+            break;
+          case "section":
+            prd += `### ${block.content}\n\n`;
+            break;
+          case "paragraph":
+            prd += `${block.content}\n\n`;
+            break;
+          case "bullet":
+            prd += `- ${block.content}\n`;
+            break;
+        }
+      }
+      prd += `\n---\n\n`;
+    }
+
+    // Add empty PRD sections that don't already exist
+    for (const section of sections) {
+      const exists = blocks.some(
+        (b) => b.content.toLowerCase().includes(section.toLowerCase())
+      );
+      if (!exists) {
+        prd += `## ${section}\n\n_To be defined._\n\n`;
+      }
+    }
+
+    return prd.trim();
   },
 }));
