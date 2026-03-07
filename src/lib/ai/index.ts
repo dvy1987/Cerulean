@@ -7,4 +7,8 @@ export {
   streamChatResponse,
   generatePromotionPatch,
   insightToPrompt,
+  extractInsightsFromText,
+  detectContradictions,
+  generateThinkingSuggestions,
+  computeRelevanceScores,
 } from "./dev-ai";
