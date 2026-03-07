@@ -1,0 +1,69 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+
+interface ChatInputProps {
+  onSend: (message: string) => void;
+  disabled?: boolean;
+  initialValue?: string;
+}
+
+export default function ChatInput({ onSend, disabled, initialValue }: ChatInputProps) {
+  const [value, setValue] = useState(initialValue ?? "");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (initialValue) {
+      setValue(initialValue);
+    }
+  }, [initialValue]);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height =
+        Math.min(textareaRef.current.scrollHeight, 160) + "px";
+    }
+  }, [value]);
+
+  const handleSubmit = () => {
+    const trimmed = value.trim();
+    if (!trimmed || disabled) return;
+    onSend(trimmed);
+    setValue("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
+
+  return (
+    <div className="border-t border-gray-100 p-3">
+      <div className="flex items-end gap-2">
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Type a message..."
+          disabled={disabled}
+          rows={1}
+          className="flex-1 resize-none rounded-lg border border-gray-200 px-3 py-2 text-sm
+            focus:outline-none focus:border-cerulean-300 focus:ring-1 focus:ring-cerulean-200
+            disabled:opacity-50 bg-white"
+        />
+        <button
+          onClick={handleSubmit}
+          disabled={disabled || !value.trim()}
+          className="rounded-lg bg-cerulean-500 px-4 py-2 text-sm text-white
+            hover:bg-cerulean-600 disabled:opacity-40 transition-colors shrink-0"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  );
+}
