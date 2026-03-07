@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useInsightStore } from "@/store/insightStore";
 import { useDocumentStore } from "@/store/documentStore";
-import { generatePromotionPatch, insightToPrompt } from "@/lib/ai";
+import {
+  generatePromotionPatch,
+  insightToPrompt,
+  detectContradictions,
+  computeRelevanceScores,
+} from "@/lib/ai";
 import { Insight } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import InsightCard from "./InsightCard";
@@ -23,6 +28,41 @@ export default function InsightTray() {
 
   const activeInsights = insights.filter((i) => i.status !== "archived");
   const count = activeInsights.length;
+
+  // Contradiction detection
+  const contradictions = useMemo(() => {
+    return detectContradictions(
+      activeInsights.map((i) => ({
+        insight_id: i.insight_id,
+        content: i.content,
+      }))
+    );
+  }, [activeInsights]);
+
+  const contradictionIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const c of contradictions) {
+      ids.add(c.insight_a_id);
+      ids.add(c.insight_b_id);
+    }
+    return ids;
+  }, [contradictions]);
+
+  // Advanced relevance ranking
+  const rankedInsights = useMemo(() => {
+    const docText = blocks.map((b) => b.content).join(" ");
+    const scores = computeRelevanceScores(
+      activeInsights.map((i) => ({
+        insight_id: i.insight_id,
+        content: i.content,
+        created_at: i.created_at,
+      })),
+      docText
+    );
+    return [...activeInsights].sort(
+      (a, b) => (scores.get(b.insight_id) || 0) - (scores.get(a.insight_id) || 0)
+    );
+  }, [activeInsights, blocks]);
 
   const handleAddInsight = () => {
     const text = newInsightText.trim();
@@ -140,19 +180,34 @@ export default function InsightTray() {
           )}
 
           {/* Insight list */}
-          {activeInsights.length === 0 && (
+          {/* Contradiction warning */}
+          {contradictions.length > 0 && (
+            <div className="mb-3 p-2 bg-red-50 border border-red-200 rounded-md">
+              <p className="text-[11px] font-medium text-red-700">
+                {contradictions.length} potential contradiction{contradictions.length > 1 ? "s" : ""} detected
+              </p>
+              {contradictions.map((c, i) => (
+                <p key={i} className="text-[10px] text-red-600 mt-0.5">
+                  {c.description}
+                </p>
+              ))}
+            </div>
+          )}
+
+          {rankedInsights.length === 0 && (
             <p className="text-xs text-muted text-center py-4">
               No insights yet. Capture ideas from chat or add them manually.
             </p>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-            {activeInsights.map((insight) => (
+            {rankedInsights.map((insight) => (
               <InsightCard
                 key={insight.insight_id}
                 insight={insight}
                 onPromote={handlePromote}
                 onArchive={archiveInsight}
                 onExplore={handleExplore}
+                hasContradiction={contradictionIds.has(insight.insight_id)}
               />
             ))}
           </div>
