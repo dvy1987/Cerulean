@@ -6,6 +6,13 @@ import { BlockType } from "@/types";
 import DocumentBlockView from "./DocumentBlockView";
 import PatchReview from "./PatchReview";
 
+const BLOCK_TYPE_OPTIONS: { value: BlockType; label: string }[] = [
+  { value: "paragraph", label: "Paragraph" },
+  { value: "heading", label: "Heading" },
+  { value: "section", label: "Section" },
+  { value: "bullet", label: "Bullet" },
+];
+
 export default function DocumentPanel() {
   const {
     document: doc,
@@ -17,11 +24,13 @@ export default function DocumentPanel() {
     setDocumentTitle,
     exportMarkdown,
     exportPlainText,
+    exportPRD,
   } = useDocumentStore();
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [titleValue, setTitleValue] = useState(doc.title);
   const [showExport, setShowExport] = useState(false);
+  const [showAddMenu, setShowAddMenu] = useState(false);
 
   const sortedBlocks = useMemo(
     () => [...blocks].sort((a, b) => a.position - b.position),
@@ -39,29 +48,37 @@ export default function DocumentPanel() {
     setIsEditingTitle(false);
   };
 
-  const handleAddBlock = (afterBlockId?: string) => {
+  const handleAddBlock = (afterBlockId?: string, blockType: BlockType = "paragraph") => {
     let position = blocks.length;
     if (afterBlockId) {
       const afterBlock = blocks.find((b) => b.block_id === afterBlockId);
       if (afterBlock) {
         position = afterBlock.position + 0.5;
-        // Reindex positions
       }
     }
     addBlock({
       content: "",
-      block_type: "paragraph" as BlockType,
+      block_type: blockType,
       position,
     });
+    setShowAddMenu(false);
   };
 
-  const handleExport = (format: "markdown" | "text") => {
-    const content = format === "markdown" ? exportMarkdown() : exportPlainText();
+  const handleExport = (format: "markdown" | "text" | "prd") => {
+    let content: string;
+    if (format === "prd") {
+      content = exportPRD();
+    } else if (format === "markdown") {
+      content = exportMarkdown();
+    } else {
+      content = exportPlainText();
+    }
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${doc.title}.${format === "markdown" ? "md" : "txt"}`;
+    const ext = format === "prd" ? "md" : format === "markdown" ? "md" : "txt";
+    a.download = `${doc.title}.${ext}`;
     a.click();
     URL.revokeObjectURL(url);
     setShowExport(false);
@@ -124,6 +141,12 @@ export default function DocumentPanel() {
               >
                 Plain Text (.txt)
               </button>
+              <button
+                onClick={() => handleExport("prd")}
+                className="block w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50"
+              >
+                PRD Format (.md)
+              </button>
             </div>
           )}
         </div>
@@ -161,12 +184,27 @@ export default function DocumentPanel() {
         ))}
 
         {sortedBlocks.length > 0 && (
-          <button
-            onClick={() => handleAddBlock()}
-            className="w-full text-left px-3 py-2 text-xs text-muted hover:text-cerulean-600 transition-colors"
-          >
-            + Add block
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setShowAddMenu(!showAddMenu)}
+              className="w-full text-left px-3 py-2 text-xs text-muted hover:text-cerulean-600 transition-colors"
+            >
+              + Add block
+            </button>
+            {showAddMenu && (
+              <div className="absolute left-3 bottom-full mb-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 py-1">
+                {BLOCK_TYPE_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => handleAddBlock(undefined, opt.value)}
+                    className="block w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50"
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
