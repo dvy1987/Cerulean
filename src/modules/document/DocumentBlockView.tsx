@@ -2,6 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import { DocumentBlock, BlockType } from "@/types";
+import { runAiAction } from "@/lib/ai";
+import { useDocumentStore } from "@/store/documentStore";
+import { DocumentExpandResult } from "@/lib/ai/actions";
+import { v4 as uuidv4 } from "uuid";
 
 interface DocumentBlockViewProps {
   block: DocumentBlock;
@@ -27,7 +31,42 @@ export default function DocumentBlockView({
 }: DocumentBlockViewProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(block.content);
+  const [showAiMenu, setShowAiMenu] = useState(false);
+  const [isAiLoading, setIsAiLoading] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const setPendingPatch = useDocumentStore((s) => s.setPendingPatch);
+  const documentId = useDocumentStore((s) => s.document.document_id);
+
+  const AI_OPERATIONS = [
+    { key: "expand_argument", label: "Expand argument" },
+    { key: "add_example", label: "Add example" },
+    { key: "add_counterpoint", label: "Add counterpoint" },
+    { key: "clarify_language", label: "Clarify language" },
+  ] as const;
+
+  const handleAiExpand = async (operation: "expand_argument" | "add_example" | "add_counterpoint" | "clarify_language") => {
+    setShowAiMenu(false);
+    setIsAiLoading(true);
+    try {
+      const result = await runAiAction<DocumentExpandResult>({
+        type: "document.expand",
+        input: { blockId: block.block_id, operation },
+      });
+      if (result.success && result.data.operations.length > 0) {
+        setPendingPatch({
+          patch_id: uuidv4(),
+          document_id: documentId,
+          operations: result.data.operations,
+          status: "pending",
+          source_insight_id: null,
+          source_text: `AI: ${operation.replace(/_/g, " ")}`,
+          created_at: new Date().toISOString(),
+        });
+      }
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (isEditing && textareaRef.current) {
@@ -107,6 +146,33 @@ export default function DocumentBlockView({
 
       {/* Action buttons */}
       <div className="absolute right-1 top-1 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="relative">
+          <button
+            onClick={() => setShowAiMenu(!showAiMenu)}
+            disabled={isAiLoading || !block.content}
+            className={`p-1 text-xs rounded ${
+              isAiLoading
+                ? "text-cerulean-400 animate-pulse"
+                : "text-muted hover:text-cerulean-600"
+            }`}
+            title="AI expand"
+          >
+            AI
+          </button>
+          {showAiMenu && (
+            <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-20 py-1 w-40">
+              {AI_OPERATIONS.map((op) => (
+                <button
+                  key={op.key}
+                  onClick={() => handleAiExpand(op.key)}
+                  className="block w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50"
+                >
+                  {op.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         <button
           onClick={() => onAddBelow(block.block_id)}
           className="p-1 text-muted hover:text-foreground text-xs"

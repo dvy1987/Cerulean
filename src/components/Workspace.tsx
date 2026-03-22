@@ -6,11 +6,15 @@ import DocumentPanel from "@/modules/document/DocumentPanel";
 import DocumentImport from "@/modules/document/DocumentImport";
 import InsightTray from "@/modules/insights/InsightTray";
 import GraphView from "@/modules/graph/GraphView";
+import SettingsPanel from "@/modules/settings/SettingsPanel";
+import ExemplarUpload from "@/modules/settings/ExemplarUpload";
 
 type RightTab = "document" | "graph";
 
 export default function Workspace() {
   const [rightTab, setRightTab] = useState<RightTab>("document");
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [exemplarsOpen, setExemplarsOpen] = useState(false);
 
   return (
     <div className="h-screen flex flex-col bg-background">
@@ -26,6 +30,19 @@ export default function Workspace() {
         </div>
         <div className="flex items-center gap-1">
           <DocumentImport />
+          <button
+            onClick={() => setExemplarsOpen(true)}
+            className="text-xs text-muted hover:text-foreground px-2 py-1 rounded transition-colors"
+          >
+            Exemplars
+          </button>
+          <button
+            onClick={() => setSettingsOpen(true)}
+            className="text-xs text-muted hover:text-foreground px-2 py-1 rounded transition-colors"
+            title="Settings"
+          >
+            ⚙ Settings
+          </button>
         </div>
       </header>
 
@@ -71,6 +88,12 @@ export default function Workspace() {
 
       {/* Bottom: Insight Tray */}
       <InsightTray />
+
+      {/* Settings panel */}
+      <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+
+      {/* Exemplar upload modal */}
+      <ExemplarUpload open={exemplarsOpen} onClose={() => setExemplarsOpen(false)} />
     </div>
   );
 }

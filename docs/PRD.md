@@ -853,29 +853,51 @@ OpenAI API
 
 ---
 
-# 22. AI Prompt Systems
+# 22. AI Agent Architecture
 
-AI prompts include:
+Cerulean uses a multi-agent architecture (Google ADK) where each AI job is handled by a specialized agent with its own focused system prompt and minimal context window. This enables independent tuning, isolated troubleshooting, and continuous improvement per agent.
 
-### Conversation Prompt
+### 11-Agent Structure (1 orchestrator + 10 specialized)
 
-Encourage deep reasoning.
+1. **Orchestrator Agent** — Routes user actions to the correct agent(s), passes context, collects results. No domain logic itself. Uses an LLM call to decide routing.
+2. **Chat Agent** — Core conversational AI partner. Also converts tray insights into editable chat prompts.
+3. **Document Integration Agent** — Integrates promoted text/insights into the document as a patch. Never rewrites the full document.
+4. **Document Expansion Agent** — Works on existing document blocks: expand argument, add example, add counterpoint, clarify language.
+5. **Tonal Adjustment Agent** — Learns user's voice from examples or guidance. Adjusts tone/style while preserving arguments and substance. Runs in background on promoted content (matches existing document tone) and on-demand when user explicitly requests tone changes with a description or example.
+6. **Insight Extraction Agent** — Ingests uploaded documents (PDF, docx, md, txt). Extracts supporting ideas, contradictions, and new insights for the Insight Tray.
+7. **Suggestion Agent** — Analyzes conversation, unresolved insights, document gaps, and contradictions to suggest both insights and next-topic prompts.
+8. **Knowledge Graph Agent** — Creates and maintains the full knowledge graph (nodes, edges, relationships). Also detects and flags contradictions as part of relationship analysis.
+9. **Insight Relevance Ranking Agent** — Ranks tray insights by relevance to the current document. Re-ranks as the document evolves.
+10. **Exemplar Learning Agent** — Ingests example outputs with user quality notes. Draws generalized insights and distributes relevant learnings to other agents. Dedicated UI for uploading exemplar documents.
+11. **Memory Management Agent** — Manages per-document agent memories and generalized cross-document learnings. Compacts old/irrelevant memories, promotes document-specific learnings to generalized learnings. Memories stored as markdown files.
 
-### Insight Suggestion Prompt
+### Architecture Decisions
 
-Detect high-value insights.
+- **Orchestrator routing:** LLM-based (not hardcoded rules) for flexibility.
+- **Communication model:** Hub-and-spoke — all agents communicate through the orchestrator, never directly. Easier to debug, log, and control.
+- **Background agents:** Some agents (KG, Ranking, Suggestion, Tonal Adjustment on promoted content) run automatically in the background. Users can toggle background agents on/off via Settings.
+- **Agent memory:** Per-document memories + generalized cross-document learnings, managed by the Memory Management Agent, stored as markdown.
 
-### Document Integration Prompt
+### Design Rationale for Merges
 
-Insert promoted insights naturally.
+Three originally-separate jobs were merged after tradeoff analysis:
 
-### Contradiction Detection Prompt
+- **Insight Suggestion + Thinking Suggestions → Suggestion Agent**: Both analyze the same context (conversation, insights, document gaps) to produce suggestions. One agent with two output modes avoids duplicate context loading.
+- **Contradiction Detection → merged into Knowledge Graph Agent**: The KG agent already classifies relationships as supports/contradicts/expands. Contradiction detection is a natural byproduct of that analysis.
+- **Insight-to-Prompt → absorbed into Chat Agent**: Converting an insight into a conversational prompt is a lightweight sub-task the chat agent handles naturally.
 
-Identify conflicting ideas.
+### Settings
 
-### Thinking Suggestion Prompt
+Users can access a Settings panel to:
+- Toggle individual background agents on/off (KG, Ranking, Suggestion, Tonal Adjustment)
 
-Recommend next discussion topics.
+### Exemplar Upload UI
+
+A dedicated interface allows users to upload exemplar documents along with notes on what they liked/disliked about the output. The Exemplar Learning Agent processes these to improve future output quality across all agents.
+
+### Roadmap Ideas (not decided — evaluate later)
+- Allow users to paste exemplar text directly into chat instead of uploading documents
+- Memory Management UI — let users view and edit document-specific memories and generalized cross-document learnings directly
 
 ---
 
