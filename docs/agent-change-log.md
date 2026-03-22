@@ -27,6 +27,17 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-03-22 - AI provider abstraction layer (Gemini, OpenAI, Anthropic)
+- Author: Amp agent
+- Commit: not committed yet
+- Summary: Created a provider abstraction that supports Gemini, OpenAI, and Anthropic APIs. Added a Next.js API route for server-side API calls (keeps keys secret). Updated chat agent to try the real provider first, falling back to dev-ai. Updated `.env.example` with all three provider keys + model overrides. Auto-detects provider based on which key is set (priority: Gemini > OpenAI > Anthropic > dev). Build passes clean.
+- Files:
+  - `src/lib/ai/provider.ts` — provider abstraction (callProvider, detectProviderConfig)
+  - `src/app/api/ai/chat/route.ts` — Next.js API route for server-side AI calls
+  - `src/lib/ai/agents/chat-agent.ts` — updated to try real provider, fallback to dev-ai
+  - `.env.example` — updated with Gemini, OpenAI, Anthropic keys + model overrides
+  - `docs/agent-change-log.md` — this entry
+
 ### 2026-03-21 - Full multi-agent build complete + ESLint fixes + roadmap item
 - Author: Amp agent
 - Commit: not committed yet
