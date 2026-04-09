@@ -10,12 +10,12 @@ interface InsightCardProps {
   hasContradiction?: boolean;
 }
 
-const STATUS_COLORS: Record<string, string> = {
-  captured: "bg-amber-100 text-amber-700",
-  discussing: "bg-cerulean-100 text-cerulean-700",
-  resolved: "bg-green-100 text-green-700",
-  promoted: "bg-purple-100 text-purple-700",
-  archived: "bg-gray-100 text-gray-500",
+const STATUS_STYLES: Record<string, { badge: string; accent: string }> = {
+  captured: { badge: "bg-warning-100 text-warning-700", accent: "border-l-warning-500" },
+  discussing: { badge: "bg-cerulean-100 text-cerulean-700", accent: "border-l-cerulean-500" },
+  resolved: { badge: "bg-success-100 text-success-700", accent: "border-l-success-500" },
+  promoted: { badge: "bg-cerulean-100 text-cerulean-700", accent: "border-l-cerulean-500" },
+  archived: { badge: "bg-gray-100 text-gray-500", accent: "border-l-gray-300" },
 };
 
 export default function InsightCard({
@@ -25,12 +25,14 @@ export default function InsightCard({
   onExplore,
   hasContradiction,
 }: InsightCardProps) {
+  const styles = STATUS_STYLES[insight.status] || STATUS_STYLES.captured;
+
   return (
     <div
-      className={`bg-white border rounded-lg p-3 group transition-colors ${
+      className={`bg-white border rounded-xl p-3.5 group border-l-2 shadow-soft hover:shadow-medium ${
         hasContradiction
-          ? "border-red-200 hover:border-red-300"
-          : "border-gray-100 hover:border-cerulean-200"
+          ? "border-danger-200 border-l-danger-500 hover:border-danger-300"
+          : `border-gray-100 ${styles.accent} hover:border-cerulean-200`
       }`}
     >
       <div className="flex items-start justify-between gap-2">
@@ -38,42 +40,40 @@ export default function InsightCard({
           <p className="text-sm font-medium text-foreground truncate">
             {insight.title}
           </p>
-          <p className="text-xs text-muted mt-0.5 line-clamp-2">
+          <p className="text-xs text-muted mt-1 line-clamp-2 leading-relaxed">
             {insight.content}
           </p>
           {hasContradiction && (
-            <span className="text-[9px] text-red-500 mt-0.5 block">
-              ⚠ Potential contradiction
+            <span className="text-[9px] text-danger-500 font-medium mt-1 block">
+              Potential contradiction
             </span>
           )}
         </div>
         <span
-          className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full shrink-0 ${
-            STATUS_COLORS[insight.status] || STATUS_COLORS.captured
-          }`}
+          className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${styles.badge}`}
         >
           {insight.status}
         </span>
       </div>
-      <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex gap-1.5 mt-2.5 opacity-0 group-hover:opacity-100">
         {insight.status !== "promoted" && (
           <button
             onClick={() => onPromote(insight)}
-            className="text-[10px] px-2 py-1 rounded bg-cerulean-50 text-cerulean-600 hover:bg-cerulean-100 transition-colors"
+            className="text-[10px] font-medium px-2.5 py-1 rounded-md bg-cerulean-50 text-cerulean-600 hover:bg-cerulean-100"
           >
             Promote
           </button>
         )}
         <button
           onClick={() => onExplore(insight)}
-          className="text-[10px] px-2 py-1 rounded bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors"
+          className="text-[10px] font-medium px-2.5 py-1 rounded-md bg-gray-50 text-gray-600 hover:bg-gray-100"
         >
           Explore
         </button>
         {insight.status !== "archived" && (
           <button
             onClick={() => onArchive(insight.insight_id)}
-            className="text-[10px] px-2 py-1 rounded bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"
+            className="text-[10px] font-medium px-2.5 py-1 rounded-md bg-gray-50 text-gray-400 hover:bg-danger-50 hover:text-danger-500"
           >
             Archive
           </button>

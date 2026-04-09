@@ -18,81 +18,86 @@ export default function Workspace() {
 
   return (
     <div className="h-screen flex flex-col bg-background">
-      {/* Top bar */}
-      <header className="h-11 flex items-center justify-between px-4 border-b border-gray-200 bg-white shrink-0">
-        <div className="flex items-center">
-          <h1 className="text-sm font-semibold text-cerulean-700 tracking-tight">
-            Cerulean
-          </h1>
-          <span className="ml-2 text-[10px] text-muted font-medium">
+      <header className="h-12 flex items-center justify-between px-5 bg-white shadow-soft shrink-0 z-10">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-cerulean-400 to-cerulean-600 flex items-center justify-center">
+              <span className="text-white text-xs font-semibold">C</span>
+            </div>
+            <h1 className="text-sm font-semibold text-cerulean-800 tracking-tight">
+              Cerulean
+            </h1>
+          </div>
+          <div className="w-px h-4 bg-gray-200" />
+          <span className="text-[11px] text-muted font-medium">
             Thinking Workspace
           </span>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
           <DocumentImport />
           <button
             onClick={() => setExemplarsOpen(true)}
-            className="text-xs text-muted hover:text-foreground px-2 py-1 rounded transition-colors"
+            className="text-xs text-muted hover:text-foreground hover:bg-gray-50 px-2.5 py-1.5 rounded-md"
           >
             Exemplars
           </button>
+          <div className="w-px h-4 bg-gray-200 mx-1" />
           <button
             onClick={() => setSettingsOpen(true)}
-            className="text-xs text-muted hover:text-foreground px-2 py-1 rounded transition-colors"
+            className="text-xs text-muted hover:text-foreground hover:bg-gray-50 px-2.5 py-1.5 rounded-md"
             title="Settings"
           >
-            ⚙ Settings
+            Settings
           </button>
         </div>
       </header>
 
-      {/* Main panels */}
       <div className="flex-1 flex min-h-0">
-        {/* Left: Chat */}
-        <div className="w-1/2 border-r border-gray-200 flex flex-col min-h-0 relative">
+        <div className="w-1/2 flex flex-col min-h-0 relative">
           <ChatPanel />
         </div>
 
-        {/* Right: Document / Graph */}
+        <div className="w-px bg-gray-200" />
+
         <div className="w-1/2 flex flex-col min-h-0">
-          {/* Tab switcher */}
-          <div className="flex border-b border-gray-100 bg-white shrink-0">
+          <div className="flex items-center gap-1 px-2 border-b border-gray-100 bg-white shrink-0">
             <button
               onClick={() => setRightTab("document")}
-              className={`px-4 py-2 text-xs font-medium transition-colors ${
+              className={`px-3 py-2.5 text-xs font-medium relative ${
                 rightTab === "document"
-                  ? "text-cerulean-600 border-b-2 border-cerulean-500"
+                  ? "text-cerulean-600"
                   : "text-muted hover:text-foreground"
               }`}
             >
               Document
+              {rightTab === "document" && (
+                <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-cerulean-500 rounded-full" />
+              )}
             </button>
             <button
               onClick={() => setRightTab("graph")}
-              className={`px-4 py-2 text-xs font-medium transition-colors ${
+              className={`px-3 py-2.5 text-xs font-medium relative ${
                 rightTab === "graph"
-                  ? "text-cerulean-600 border-b-2 border-cerulean-500"
+                  ? "text-cerulean-600"
                   : "text-muted hover:text-foreground"
               }`}
             >
               Graph
+              {rightTab === "graph" && (
+                <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-cerulean-500 rounded-full" />
+              )}
             </button>
           </div>
 
-          {/* Tab content */}
           <div className="flex-1 min-h-0">
             {rightTab === "document" ? <DocumentPanel /> : <GraphView />}
           </div>
         </div>
       </div>
 
-      {/* Bottom: Insight Tray */}
       <InsightTray />
 
-      {/* Settings panel */}
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-
-      {/* Exemplar upload modal */}
       <ExemplarUpload open={exemplarsOpen} onClose={() => setExemplarsOpen(false)} />
     </div>
   );

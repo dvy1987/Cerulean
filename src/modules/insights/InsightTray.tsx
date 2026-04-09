@@ -29,7 +29,6 @@ export default function InsightTray() {
   const activeInsights = insights.filter((i) => i.status !== "archived");
   const count = activeInsights.length;
 
-  // Contradiction detection
   const contradictions = useMemo(() => {
     return detectContradictions(
       activeInsights.map((i) => ({
@@ -48,7 +47,6 @@ export default function InsightTray() {
     return ids;
   }, [contradictions]);
 
-  // Advanced relevance ranking
   const rankedInsights = useMemo(() => {
     const docText = blocks.map((b) => b.content).join(" ");
     const scores = computeRelevanceScores(
@@ -98,31 +96,29 @@ export default function InsightTray() {
   const handleExplore = (insight: Insight) => {
     setInsightStatus(insight.insight_id, "discussing");
     const prompt = insightToPrompt(insight.title, insight.content);
-    // Dispatch custom event for ChatPanel to pick up
     window.dispatchEvent(
       new CustomEvent("insight-to-prompt", { detail: prompt })
     );
   };
 
   return (
-    <div className="border-t border-gray-200 bg-white">
-      {/* Tray header - always visible */}
+    <div className="border-t border-gray-200 bg-white shadow-[0_-1px_3px_0_rgba(0,0,0,0.03)]">
       <button
         onClick={toggleTray}
-        className="w-full flex items-center justify-between px-4 py-2 hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center justify-between px-5 py-2.5 hover:bg-gray-50"
       >
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-foreground">
+        <div className="flex items-center gap-2.5">
+          <span className="text-sm font-semibold text-foreground">
             Insights
           </span>
           {count > 0 && (
-            <span className="text-[10px] font-medium bg-cerulean-100 text-cerulean-700 px-1.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-semibold bg-cerulean-100 text-cerulean-700 px-2 py-0.5 rounded-full min-w-[20px] text-center">
               {count}
             </span>
           )}
         </div>
         <svg
-          className={`w-4 h-4 text-muted transition-transform ${
+          className={`w-4 h-4 text-muted ${
             isTrayOpen ? "rotate-180" : ""
           }`}
           fill="none"
@@ -138,10 +134,8 @@ export default function InsightTray() {
         </svg>
       </button>
 
-      {/* Tray content */}
       {isTrayOpen && (
-        <div className="px-4 pb-3 max-h-64 overflow-y-auto">
-          {/* Add insight button / form */}
+        <div className="px-5 pb-4 max-h-80 overflow-y-auto animate-slideDown">
           {isAdding ? (
             <div className="flex gap-2 mb-3">
               <input
@@ -154,18 +148,18 @@ export default function InsightTray() {
                 }}
                 placeholder="Type an insight..."
                 autoFocus
-                className="flex-1 text-sm border border-gray-200 rounded-md px-2 py-1.5
-                  focus:outline-none focus:border-cerulean-300 focus:ring-1 focus:ring-cerulean-200"
+                className="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-2
+                  focus:outline-none focus:border-cerulean-300 focus:ring-2 focus:ring-cerulean-100"
               />
               <button
                 onClick={handleAddInsight}
-                className="text-xs px-3 py-1.5 bg-cerulean-500 text-white rounded-md hover:bg-cerulean-600 transition-colors"
+                className="text-xs font-medium px-4 py-2 bg-cerulean-500 text-white rounded-lg hover:bg-cerulean-600"
               >
                 Save
               </button>
               <button
                 onClick={() => setIsAdding(false)}
-                className="text-xs px-2 py-1.5 text-muted hover:text-foreground transition-colors"
+                className="text-xs px-3 py-2 text-muted hover:text-foreground hover:bg-gray-50 rounded-lg"
               >
                 Cancel
               </button>
@@ -173,21 +167,19 @@ export default function InsightTray() {
           ) : (
             <button
               onClick={() => setIsAdding(true)}
-              className="text-xs text-cerulean-600 hover:text-cerulean-700 mb-3 flex items-center gap-1"
+              className="text-xs font-medium text-cerulean-600 hover:text-cerulean-700 hover:bg-cerulean-50 mb-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg"
             >
               <span className="text-sm">+</span> Add Insight
             </button>
           )}
 
-          {/* Insight list */}
-          {/* Contradiction warning */}
           {contradictions.length > 0 && (
-            <div className="mb-3 p-2 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-[11px] font-medium text-red-700">
+            <div className="mb-3 p-3 bg-danger-50 border border-danger-100 rounded-xl">
+              <p className="text-[11px] font-semibold text-danger-700">
                 {contradictions.length} potential contradiction{contradictions.length > 1 ? "s" : ""} detected
               </p>
               {contradictions.map((c, i) => (
-                <p key={i} className="text-[10px] text-red-600 mt-0.5">
+                <p key={i} className="text-[10px] text-danger-600 mt-0.5 leading-relaxed">
                   {c.description}
                 </p>
               ))}
@@ -195,11 +187,11 @@ export default function InsightTray() {
           )}
 
           {rankedInsights.length === 0 && (
-            <p className="text-xs text-muted text-center py-4">
+            <p className="text-xs text-muted text-center py-6">
               No insights yet. Capture ideas from chat or add them manually.
             </p>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {rankedInsights.map((insight) => (
               <InsightCard
                 key={insight.insight_id}

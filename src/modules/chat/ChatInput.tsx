@@ -41,7 +41,7 @@ export default function ChatInput({ onSend, disabled, initialValue }: ChatInputP
   };
 
   return (
-    <div className="border-t border-gray-100 p-3">
+    <div className="border-t border-gray-100 p-3 bg-white">
       <div className="flex items-end gap-2">
         <textarea
           ref={textareaRef}
@@ -51,15 +51,16 @@ export default function ChatInput({ onSend, disabled, initialValue }: ChatInputP
           placeholder="Type a message..."
           disabled={disabled}
           rows={1}
-          className="flex-1 resize-none rounded-lg border border-gray-200 px-3 py-2 text-sm
-            focus:outline-none focus:border-cerulean-300 focus:ring-1 focus:ring-cerulean-200
-            disabled:opacity-50 bg-white"
+          className="flex-1 resize-none rounded-xl border border-gray-200 px-4 py-2.5 text-sm
+            focus:outline-none focus:border-cerulean-300 focus:ring-2 focus:ring-cerulean-100
+            focus:shadow-soft disabled:opacity-50 bg-gray-50/50 placeholder:text-gray-400"
         />
         <button
           onClick={handleSubmit}
           disabled={disabled || !value.trim()}
-          className="rounded-lg bg-cerulean-500 px-4 py-2 text-sm text-white
-            hover:bg-cerulean-600 disabled:opacity-40 transition-colors shrink-0"
+          className="rounded-xl bg-cerulean-500 px-5 py-2.5 text-sm font-medium text-white
+            hover:bg-cerulean-600 hover:shadow-soft active:scale-[0.98]
+            disabled:opacity-40 disabled:hover:shadow-none shrink-0"
         >
           Send
         </button>

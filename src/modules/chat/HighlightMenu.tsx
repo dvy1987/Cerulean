@@ -22,7 +22,6 @@ export default function HighlightMenu({
   const [menuPosition, setMenuPosition] = useState<MenuPosition | null>(null);
 
   const handleMouseUp = useCallback(() => {
-    // Small delay to let selection finalize
     setTimeout(() => {
       const selection = window.getSelection();
       const text = selection?.toString().trim();
@@ -33,7 +32,6 @@ export default function HighlightMenu({
         return;
       }
 
-      // Check if selection is within our container
       const range = selection?.getRangeAt(0);
       if (!range || !containerRef.current.contains(range.commonAncestorContainer)) {
         setMenuPosition(null);
@@ -54,7 +52,6 @@ export default function HighlightMenu({
 
   const handleMouseDown = useCallback(
     (e: MouseEvent) => {
-      // If clicking outside the menu, close it
       const target = e.target as HTMLElement;
       if (!target.closest("[data-highlight-menu]")) {
         setMenuPosition(null);
@@ -78,7 +75,7 @@ export default function HighlightMenu({
   return (
     <div
       data-highlight-menu
-      className="absolute z-50 flex gap-1 rounded-lg bg-white shadow-lg border border-gray-200 p-1"
+      className="absolute z-50 flex gap-1 rounded-xl glass shadow-lifted border border-gray-200/60 p-1.5 animate-scaleIn"
       style={{
         left: menuPosition.x,
         top: menuPosition.y,
@@ -86,7 +83,7 @@ export default function HighlightMenu({
       }}
     >
       <button
-        className="px-3 py-1.5 text-xs font-medium rounded-md hover:bg-cerulean-50 text-cerulean-700 transition-colors whitespace-nowrap"
+        className="px-3.5 py-2 text-xs font-medium rounded-lg hover:bg-cerulean-50 text-cerulean-700 whitespace-nowrap"
         onClick={() => {
           onPromoteToDocument(selectedText);
           setMenuPosition(null);
@@ -96,8 +93,9 @@ export default function HighlightMenu({
       >
         Promote to Document
       </button>
+      <div className="w-px bg-gray-200 my-1" />
       <button
-        className="px-3 py-1.5 text-xs font-medium rounded-md hover:bg-amber-50 text-amber-700 transition-colors whitespace-nowrap"
+        className="px-3.5 py-2 text-xs font-medium rounded-lg hover:bg-warning-50 text-warning-700 whitespace-nowrap"
         onClick={() => {
           onSaveInsight(selectedText);
           setMenuPosition(null);

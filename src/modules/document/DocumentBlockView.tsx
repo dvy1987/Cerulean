@@ -91,14 +91,16 @@ export default function DocumentBlockView({
     }
   };
 
-  const bulletPrefix = block.block_type === "bullet" ? "• " : "";
+  const bulletPrefix = block.block_type === "bullet" ? "\u2022 " : "";
 
   return (
     <div
-      className={`group relative rounded-md px-3 py-2 transition-colors ${
+      className={`group relative rounded-lg px-4 py-2.5 border-l-2 ${
         isHighlighted
-          ? "bg-cerulean-50 border border-cerulean-200"
-          : "hover:bg-gray-50"
+          ? "bg-cerulean-50/80 border-l-cerulean-400 shadow-soft"
+          : isEditing
+          ? "bg-white border-l-cerulean-300 shadow-soft"
+          : "border-l-transparent hover:border-l-gray-200 hover:bg-white/60"
       }`}
     >
       {isEditing ? (
@@ -116,7 +118,7 @@ export default function DocumentBlockView({
             className={`w-full resize-none border-none outline-none bg-transparent ${BLOCK_STYLES[block.block_type]}`}
           />
           <p className="text-[10px] text-muted mt-1">
-            ⌘+Enter to save · Esc to cancel
+            Cmd+Enter to save / Esc to cancel
           </p>
         </div>
       ) : (
@@ -134,38 +136,36 @@ export default function DocumentBlockView({
         </div>
       )}
 
-      {/* Linked insights indicator */}
       {block.linked_insights.length > 0 && (
-        <div className="mt-1">
-          <span className="text-[9px] text-cerulean-500 bg-cerulean-50 px-1.5 py-0.5 rounded">
+        <div className="mt-1.5">
+          <span className="text-[9px] text-cerulean-600 bg-cerulean-50 px-2 py-0.5 rounded-md font-medium">
             {block.linked_insights.length} linked insight
             {block.linked_insights.length > 1 ? "s" : ""}
           </span>
         </div>
       )}
 
-      {/* Action buttons */}
-      <div className="absolute right-1 top-1 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="absolute right-2 top-2 flex gap-0.5 opacity-0 group-hover:opacity-100">
         <div className="relative">
           <button
             onClick={() => setShowAiMenu(!showAiMenu)}
             disabled={isAiLoading || !block.content}
-            className={`p-1 text-xs rounded ${
+            className={`px-2 py-1 text-[10px] font-medium rounded-md ${
               isAiLoading
-                ? "text-cerulean-400 animate-pulse"
-                : "text-muted hover:text-cerulean-600"
+                ? "text-cerulean-400 animate-pulse bg-cerulean-50"
+                : "text-cerulean-600 hover:bg-cerulean-50"
             }`}
             title="AI expand"
           >
             AI
           </button>
           {showAiMenu && (
-            <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-20 py-1 w-40">
+            <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lifted z-20 py-1 w-44 animate-scaleIn">
               {AI_OPERATIONS.map((op) => (
                 <button
                   key={op.key}
                   onClick={() => handleAiExpand(op.key)}
-                  className="block w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50"
+                  className="block w-full text-left px-3.5 py-2 text-xs hover:bg-gray-50"
                 >
                   {op.label}
                 </button>
@@ -175,17 +175,17 @@ export default function DocumentBlockView({
         </div>
         <button
           onClick={() => onAddBelow(block.block_id)}
-          className="p-1 text-muted hover:text-foreground text-xs"
+          className="px-1.5 py-1 text-muted hover:text-foreground hover:bg-gray-100 text-xs rounded-md"
           title="Add block below"
         >
           +
         </button>
         <button
           onClick={() => onRemove(block.block_id)}
-          className="p-1 text-muted hover:text-red-500 text-xs"
+          className="px-1.5 py-1 text-muted hover:text-danger-500 hover:bg-danger-50 text-xs rounded-md"
           title="Remove block"
         >
-          ×
+          x
         </button>
       </div>
     </div>

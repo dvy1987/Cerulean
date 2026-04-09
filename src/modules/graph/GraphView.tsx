@@ -5,7 +5,6 @@ import { useGraphStore } from "@/store/graphStore";
 import { useInsightStore } from "@/store/insightStore";
 import { useDocumentStore } from "@/store/documentStore";
 
-// Simple force-directed layout positions
 interface NodePosition {
   node_id: string;
   x: number;
@@ -17,7 +16,7 @@ interface NodePosition {
 const NODE_COLORS: Record<string, string> = {
   insight: "#f59e0b",
   document_block: "#0090f0",
-  topic: "#8b5cf6",
+  topic: "#0d9488",
   message: "#6b7280",
 };
 
@@ -35,9 +34,7 @@ export default function GraphView() {
   const insights = useInsightStore((s) => s.insights);
   const blocks = useDocumentStore((s) => s.blocks);
 
-  // Auto-populate graph from current state
   useEffect(() => {
-    // Add insight nodes
     for (const insight of insights) {
       if (insight.status !== "archived") {
         addNode({
@@ -48,7 +45,6 @@ export default function GraphView() {
       }
     }
 
-    // Add document block nodes
     for (const block of blocks) {
       if (block.content) {
         addNode({
@@ -57,7 +53,6 @@ export default function GraphView() {
           label: block.content.slice(0, 40),
         });
 
-        // Create edges from linked insights to blocks
         for (const insightId of block.linked_insights) {
           const insightNode = useGraphStore
             .getState()
@@ -77,7 +72,6 @@ export default function GraphView() {
     }
   }, [insights, blocks, addNode, addEdge]);
 
-  // Compute positions using simple force-directed placement
   const positions = useMemo(() => {
     if (nodes.length === 0) return [];
 
@@ -98,9 +92,7 @@ export default function GraphView() {
       };
     });
 
-    // Simple force simulation (few iterations for static layout)
     for (let iter = 0; iter < 50; iter++) {
-      // Repulsion between all nodes
       for (let i = 0; i < pos.length; i++) {
         for (let j = i + 1; j < pos.length; j++) {
           const dx = pos[j].x - pos[i].x;
@@ -116,7 +108,6 @@ export default function GraphView() {
         }
       }
 
-      // Attraction along edges
       for (const edge of edges) {
         const source = pos.find((p) => p.node_id === edge.source_node_id);
         const target = pos.find((p) => p.node_id === edge.target_node_id);
@@ -134,19 +125,16 @@ export default function GraphView() {
         }
       }
 
-      // Center gravity
       for (const p of pos) {
         p.vx += (centerX - p.x) * 0.005;
         p.vy += (centerY - p.y) * 0.005;
       }
 
-      // Apply velocities with damping
       for (const p of pos) {
         p.x += p.vx * 0.5;
         p.y += p.vy * 0.5;
         p.vx *= 0.8;
         p.vy *= 0.8;
-        // Constrain to bounds
         p.x = Math.max(30, Math.min(width - 30, p.x));
         p.y = Math.max(30, Math.min(height - 30, p.y));
       }
@@ -164,31 +152,34 @@ export default function GraphView() {
 
   if (nodes.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-muted text-sm">
-        <p>Knowledge graph is empty</p>
-        <p className="text-xs mt-1">
-          Add insights and promote them to see relationships
+      <div className="flex flex-col items-center justify-center h-full animate-fadeIn">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center mb-4">
+          <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+          </svg>
+        </div>
+        <p className="text-sm font-medium text-foreground mb-1">Knowledge graph is empty</p>
+        <p className="text-xs text-muted text-center max-w-[240px] leading-relaxed">
+          Add insights and promote them to see relationships form.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="h-full flex flex-col">
-      {/* Legend */}
-      <div className="flex flex-wrap gap-3 px-4 py-2 border-b border-gray-100">
+    <div className="h-full flex flex-col bg-gray-50/30">
+      <div className="flex flex-wrap items-center gap-4 px-5 py-2.5 border-b border-gray-100 bg-white">
         {Object.entries(NODE_COLORS).map(([type, color]) => (
-          <div key={type} className="flex items-center gap-1">
+          <div key={type} className="flex items-center gap-1.5">
             <div
-              className="w-2 h-2 rounded-full"
+              className="w-2.5 h-2.5 rounded-full"
               style={{ backgroundColor: color }}
             />
-            <span className="text-[10px] text-muted">{type.replace("_", " ")}</span>
+            <span className="text-[10px] text-muted font-medium capitalize">{type.replace("_", " ")}</span>
           </div>
         ))}
       </div>
 
-      {/* Graph SVG */}
       <div className="flex-1 overflow-hidden">
         <svg
           ref={svgRef}
@@ -196,7 +187,12 @@ export default function GraphView() {
           className="w-full h-full"
           preserveAspectRatio="xMidYMid meet"
         >
-          {/* Edges */}
+          <defs>
+            <filter id="nodeShadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="0" dy="1" stdDeviation="2" floodOpacity="0.1" />
+            </filter>
+          </defs>
+
           {edges.map((edge) => {
             const source = getPos(edge.source_node_id);
             const target = getPos(edge.target_node_id);
@@ -209,15 +205,15 @@ export default function GraphView() {
                   y2={target.y}
                   stroke={EDGE_COLORS[edge.relationship_type] || "#94a3b8"}
                   strokeWidth={1.5}
-                  strokeOpacity={0.5}
+                  strokeOpacity={0.4}
                 />
-                {/* Edge label */}
                 <text
                   x={(source.x + target.x) / 2}
                   y={(source.y + target.y) / 2 - 4}
                   fontSize={8}
                   fill="#94a3b8"
                   textAnchor="middle"
+                  fontFamily="Inter, sans-serif"
                 >
                   {edge.relationship_type}
                 </text>
@@ -225,18 +221,17 @@ export default function GraphView() {
             );
           })}
 
-          {/* Nodes */}
           {nodes.map((node) => {
             const pos = getPos(node.node_id);
             const color = NODE_COLORS[node.node_type] || "#6b7280";
             return (
-              <g key={node.node_id}>
+              <g key={node.node_id} filter="url(#nodeShadow)">
                 <circle
                   cx={pos.x}
                   cy={pos.y}
                   r={node.node_type === "insight" ? 8 : 6}
                   fill={color}
-                  fillOpacity={0.8}
+                  fillOpacity={0.85}
                   stroke="white"
                   strokeWidth={2}
                 />
@@ -247,6 +242,7 @@ export default function GraphView() {
                   fill="#475569"
                   textAnchor="middle"
                   className="select-none"
+                  fontFamily="Inter, sans-serif"
                 >
                   {node.label.length > 25
                     ? node.label.slice(0, 25) + "..."

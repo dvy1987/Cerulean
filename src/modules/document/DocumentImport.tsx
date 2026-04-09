@@ -47,12 +47,11 @@ export default function DocumentImport() {
         });
       }
 
-      showToast(`✓ ${extracted.length} insight${extracted.length > 1 ? "s" : ""} extracted from ${file.name}`);
+      showToast(`${extracted.length} insight${extracted.length > 1 ? "s" : ""} extracted from ${file.name}`);
     } catch {
       showToast("Failed to read file.");
     }
 
-    // Reset file input
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -69,13 +68,13 @@ export default function DocumentImport() {
       />
       <button
         onClick={() => fileInputRef.current?.click()}
-        className="text-xs text-muted hover:text-foreground px-2 py-1 rounded transition-colors"
+        className="text-xs text-muted hover:text-foreground hover:bg-gray-50 px-2.5 py-1.5 rounded-md"
         title="Import document (.md, .txt)"
       >
         Import
       </button>
       {toast && (
-        <div className="fixed top-14 right-4 bg-cerulean-600 text-white text-xs px-3 py-1.5 rounded-lg shadow-md z-50 animate-pulse">
+        <div className="fixed top-14 right-4 bg-cerulean-600 text-white text-xs font-medium px-4 py-2 rounded-lg shadow-medium z-50 animate-toastIn">
           {toast}
         </div>
       )}

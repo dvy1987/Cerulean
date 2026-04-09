@@ -67,43 +67,37 @@ export default function ExemplarUpload({ open, onClose }: ExemplarUploadProps) {
     setMarkdown("");
     setNotes("");
     setFileName(null);
-    showToast("✓ Exemplar added successfully");
+    showToast("Exemplar added successfully");
   };
 
   if (!open) return null;
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/20 z-40"
         onClick={onClose}
       />
 
-      {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl border border-gray-200 w-full max-w-lg max-h-[85vh] flex flex-col">
-          {/* Header */}
-          <div className="h-11 flex items-center justify-between px-4 border-b border-gray-200 shrink-0">
-            <h2 className="text-sm font-semibold text-cerulean-700">
+        <div className="bg-white rounded-2xl shadow-lifted border border-gray-200 w-full max-w-lg max-h-[85vh] flex flex-col animate-scaleIn">
+          <div className="h-12 flex items-center justify-between px-5 border-b border-gray-100 shrink-0">
+            <h2 className="text-sm font-semibold text-foreground">
               Exemplar Documents
             </h2>
             <button
               onClick={onClose}
-              className="text-muted hover:text-foreground text-lg leading-none transition-colors"
+              className="text-muted hover:text-foreground hover:bg-gray-50 w-7 h-7 rounded-md flex items-center justify-center text-lg leading-none"
             >
-              ×
+              x
             </button>
           </div>
 
-          {/* Content */}
-          <div className="p-4 overflow-y-auto flex-1">
-            {/* Upload section */}
-            <h3 className="text-xs font-medium text-muted uppercase tracking-wide mb-3">
+          <div className="p-5 overflow-y-auto flex-1">
+            <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
               Upload Exemplar
             </h3>
 
-            {/* File upload area */}
             <input
               ref={fileInputRef}
               type="file"
@@ -113,68 +107,64 @@ export default function ExemplarUpload({ open, onClose }: ExemplarUploadProps) {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="w-full border border-dashed border-gray-300 rounded-md py-3 px-4 text-xs text-muted hover:border-cerulean-400 hover:text-cerulean-600 transition-colors text-center"
+              className="w-full border-2 border-dashed border-gray-200 rounded-xl py-4 px-4 text-xs text-muted hover:border-cerulean-300 hover:text-cerulean-600 hover:bg-cerulean-50/30 text-center"
             >
               {fileName
                 ? `Selected: ${fileName}`
                 : "Click to upload a file (.md, .txt)"}
             </button>
 
-            {/* Title */}
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title"
-              className="mt-3 w-full border border-gray-200 rounded-md px-3 py-1.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-cerulean-400"
+              className="mt-3 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cerulean-100 focus:border-cerulean-300"
             />
 
-            {/* Notes */}
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="What did you like about this output? What should be different?"
               rows={3}
-              className="mt-3 w-full border border-gray-200 rounded-md px-3 py-1.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-cerulean-400 resize-none"
+              className="mt-3 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cerulean-100 focus:border-cerulean-300 resize-none"
             />
 
-            {/* Submit */}
             <button
               onClick={handleSubmit}
               disabled={!title.trim() || !markdown.trim()}
-              className="mt-3 w-full bg-cerulean-500 text-white text-xs font-medium py-1.5 rounded-md hover:bg-cerulean-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="mt-4 w-full bg-cerulean-500 text-white text-xs font-medium py-2.5 rounded-xl hover:bg-cerulean-600 hover:shadow-soft disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Add Exemplar
             </button>
 
-            {/* Existing exemplars */}
             {exemplars.length > 0 && (
               <>
-                <h3 className="text-xs font-medium text-muted uppercase tracking-wide mt-6 mb-3">
+                <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mt-6 mb-3">
                   Uploaded Exemplars
                 </h3>
                 <div className="space-y-2">
                   {exemplars.map((ex) => (
                     <div
                       key={ex.exemplar_id}
-                      className="flex items-start justify-between gap-2 border border-gray-100 rounded-md p-2"
+                      className="flex items-start justify-between gap-2 border border-gray-100 rounded-xl p-3 hover:shadow-soft"
                     >
                       <div className="min-w-0">
-                        <p className="text-sm text-foreground truncate">
+                        <p className="text-sm font-medium text-foreground truncate">
                           {ex.title}
                         </p>
                         {ex.userNotes && (
-                          <p className="text-xs text-muted mt-0.5 line-clamp-2">
+                          <p className="text-xs text-muted mt-0.5 line-clamp-2 leading-relaxed">
                             {ex.userNotes}
                           </p>
                         )}
                       </div>
                       <button
                         onClick={() => removeExemplar(ex.exemplar_id)}
-                        className="text-xs text-muted hover:text-red-500 shrink-0 transition-colors"
+                        className="text-xs text-muted hover:text-danger-500 hover:bg-danger-50 shrink-0 w-6 h-6 rounded-md flex items-center justify-center"
                         title="Remove exemplar"
                       >
-                        ×
+                        x
                       </button>
                     </div>
                   ))}
@@ -185,9 +175,8 @@ export default function ExemplarUpload({ open, onClose }: ExemplarUploadProps) {
         </div>
       </div>
 
-      {/* Toast */}
       {toast && (
-        <div className="fixed top-14 right-4 bg-cerulean-600 text-white text-xs px-3 py-1.5 rounded-lg shadow-md z-[60] animate-pulse">
+        <div className="fixed top-14 right-4 bg-cerulean-600 text-white text-xs font-medium px-4 py-2 rounded-lg shadow-medium z-[60] animate-toastIn">
           {toast}
         </div>
       )}

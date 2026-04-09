@@ -96,34 +96,33 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
       )}
 
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white border-l border-gray-200 shadow-lg z-50 transition-transform duration-200 ${
+        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lifted z-50 duration-200 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="h-11 flex items-center justify-between px-4 border-b border-gray-200">
-          <h2 className="text-sm font-semibold text-cerulean-700">Settings</h2>
+        <div className="h-12 flex items-center justify-between px-5 border-b border-gray-100">
+          <h2 className="text-sm font-semibold text-foreground">Settings</h2>
           <button
             onClick={onClose}
-            className="text-muted hover:text-foreground text-lg leading-none transition-colors"
+            className="text-muted hover:text-foreground hover:bg-gray-50 w-7 h-7 rounded-md flex items-center justify-center text-lg leading-none"
           >
-            ×
+            x
           </button>
         </div>
 
-        <div className="p-4 overflow-y-auto h-[calc(100%-2.75rem)] space-y-6">
-          {/* AI Provider */}
+        <div className="p-5 overflow-y-auto h-[calc(100%-3rem)] space-y-6">
           <div>
-            <h3 className="text-xs font-medium text-muted uppercase tracking-wide mb-3">
+            <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
               AI Provider
             </h3>
 
             <div className="space-y-3">
               <div>
-                <label className="text-xs text-muted block mb-1">Provider</label>
+                <label className="text-xs text-muted block mb-1.5">Provider</label>
                 <select
                   value={customProvider}
                   onChange={(e) => handleProviderChange(e.target.value)}
-                  className="w-full text-sm border border-gray-200 rounded-md px-2.5 py-1.5 bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-cerulean-400"
+                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-foreground focus:outline-none focus:ring-2 focus:ring-cerulean-100 focus:border-cerulean-300"
                 >
                   <option value="">Use server default</option>
                   <option value="anthropic">Anthropic</option>
@@ -135,11 +134,11 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               {customProvider && (
                 <>
                   <div>
-                    <label className="text-xs text-muted block mb-1">Model</label>
+                    <label className="text-xs text-muted block mb-1.5">Model</label>
                     <select
                       value={customModel}
                       onChange={(e) => setCustomModel(e.target.value)}
-                      className="w-full text-sm border border-gray-200 rounded-md px-2.5 py-1.5 bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-cerulean-400"
+                      className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-foreground focus:outline-none focus:ring-2 focus:ring-cerulean-100 focus:border-cerulean-300"
                     >
                       {activeModels.map((m) => (
                         <option key={m.value} value={m.value}>
@@ -150,19 +149,19 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                   </div>
 
                   <div>
-                    <label className="text-xs text-muted block mb-1">API Key</label>
+                    <label className="text-xs text-muted block mb-1.5">API Key</label>
                     <div className="relative">
                       <input
                         type={showKey ? "text" : "password"}
                         value={customApiKey}
                         onChange={(e) => setCustomApiKey(e.target.value)}
                         placeholder="sk-..."
-                        className="w-full text-sm border border-gray-200 rounded-md px-2.5 py-1.5 pr-14 bg-white text-foreground placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-cerulean-400"
+                        className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 pr-14 bg-white text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cerulean-100 focus:border-cerulean-300"
                       />
                       <button
                         type="button"
                         onClick={() => setShowKey((v) => !v)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted hover:text-foreground transition-colors"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted hover:text-foreground px-1.5 py-0.5 rounded"
                       >
                         {showKey ? "Hide" : "Show"}
                       </button>
@@ -170,10 +169,10 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                   </div>
 
                   <div
-                    className={`text-xs px-2.5 py-1.5 rounded-md ${
+                    className={`text-xs px-3 py-2 rounded-lg ${
                       isConfigured
-                        ? "bg-green-50 text-green-700 border border-green-200"
-                        : "bg-amber-50 text-amber-700 border border-amber-200"
+                        ? "bg-success-50 text-success-700 border border-success-100"
+                        : "bg-warning-50 text-warning-700 border border-warning-100"
                     }`}
                   >
                     {isConfigured
@@ -187,31 +186,30 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
 
           <div className="border-t border-gray-100" />
 
-          {/* Background Agents */}
           <div>
-            <h3 className="text-xs font-medium text-muted uppercase tracking-wide mb-3">
+            <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
               Background Agents
             </h3>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {agentToggles.map(({ key, label, description }) => (
                 <div key={key} className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-sm text-foreground">{label}</p>
-                    <p className="text-xs text-muted mt-0.5">{description}</p>
+                    <p className="text-sm font-medium text-foreground">{label}</p>
+                    <p className="text-xs text-muted mt-0.5 leading-relaxed">{description}</p>
                   </div>
                   <button
                     onClick={() => toggleBackgroundAgent(key)}
-                    className={`relative shrink-0 mt-0.5 w-8 h-[18px] rounded-full transition-colors ${
+                    className={`relative shrink-0 mt-0.5 w-9 h-5 rounded-full ${
                       backgroundAgents[key] ? "bg-cerulean-500" : "bg-gray-300"
                     }`}
                     aria-label={`Toggle ${label}`}
                   >
                     <div
-                      className={`absolute top-[2px] w-[14px] h-[14px] rounded-full bg-white shadow-sm transition-transform ${
+                      className={`absolute top-[3px] w-[14px] h-[14px] rounded-full bg-white shadow-sm ${
                         backgroundAgents[key]
-                          ? "translate-x-[16px]"
-                          : "translate-x-[2px]"
+                          ? "translate-x-[19px]"
+                          : "translate-x-[3px]"
                       }`}
                     />
                   </button>
