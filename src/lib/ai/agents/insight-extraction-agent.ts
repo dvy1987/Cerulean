@@ -2,15 +2,11 @@ import { AgentDefinition, AgentResult } from "../types";
 import { InsightExtractAction, InsightExtractResult } from "../actions";
 import { agentRegistry } from "../registry";
 import { extractInsightsFromText } from "../dev-ai";
+import { callAIForJSON } from "../call-ai";
 
 type ExtractInput = InsightExtractAction["input"];
 
-const insightExtractionAgent: AgentDefinition<ExtractInput, InsightExtractResult> = {
-  id: "insight_extraction",
-  name: "Insight Extraction Agent",
-  description:
-    "Ingests documents and text to extract supporting ideas, contradictions, and new insights.",
-  systemPrompt: `You are an insight extraction specialist inside Cerulean, a structured thinking workspace.
+const SYSTEM_PROMPT = `You are an insight extraction specialist inside Cerulean, a structured thinking workspace.
 
 When given imported text (documents, PDFs, notes), you extract discrete, meaningful insights:
 - **Supporting ideas**: Claims, evidence, or arguments that reinforce existing thinking.
@@ -22,13 +18,31 @@ Guidelines:
 - Prefer quality over quantity. Extract only insights that add genuine value.
 - Title each insight with a clear, descriptive phrase (not a sentence fragment).
 - Preserve the source's meaning accurately. Do not editorialize or inject opinions.
-- Skip purely formatting content, boilerplate, or metadata.`,
+- Skip purely formatting content, boilerplate, or metadata.`;
 
-  async run(
-    input: ExtractInput
-  ): Promise<AgentResult<InsightExtractResult>> {
+const insightExtractionAgent: AgentDefinition<ExtractInput, InsightExtractResult> = {
+  id: "insight_extraction",
+  name: "Insight Extraction Agent",
+  description:
+    "Ingests documents and text to extract supporting ideas, contradictions, and new insights.",
+  systemPrompt: SYSTEM_PROMPT,
+
+  async run(input: ExtractInput): Promise<AgentResult<InsightExtractResult>> {
+    const aiInsights = await callAIForJSON<Array<{ title: string; content: string }>>({
+      systemPrompt: SYSTEM_PROMPT,
+      userMessage: `Extract the most valuable insights from the following text. Return a JSON array of objects with "title" and "content" fields. Extract 3-8 insights maximum.\n\nText:\n${input.text}`,
+      fallback: [],
+    });
+
+    if (aiInsights.length > 0) {
+      return {
+        agentId: "insight_extraction",
+        success: true,
+        data: { insights: aiInsights },
+      };
+    }
+
     const insights = extractInsightsFromText(input.text);
-
     return {
       agentId: "insight_extraction",
       success: true,
