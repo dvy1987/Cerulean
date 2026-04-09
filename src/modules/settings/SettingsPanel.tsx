@@ -61,6 +61,7 @@ const PROVIDER_MODELS: Record<Exclude<CustomAiProvider, "">, { label: string; mo
   openrouter: {
     label: "OpenRouter",
     models: [
+      { value: "openrouter/auto:free", label: "Auto (Best Free)" },
       { value: "qwen/qwen3-235b-a22b:free", label: "Qwen3 235B [Free]" },
       { value: "qwen/qwen3-30b-a3b:free", label: "Qwen3 30B [Free]" },
       { value: "google/gemini-2.5-flash-preview:free", label: "Gemini 2.5 Flash [Free]" },
