@@ -104,7 +104,7 @@ const PROVIDERS: Record<Exclude<AiProvider, "dev">, ProviderSpec> = {
     },
   },
   anthropic: {
-    getUrl: () => "https://api.anthropic.com/v1/messages",
+    getUrl: () => `${process.env.ANTHROPIC_BASE_URL ?? "https://api.anthropic.com"}/v1/messages`,
     getHeaders: (apiKey) => ({
       "Content-Type": "application/json",
       "x-api-key": apiKey,
