@@ -58,6 +58,16 @@ const PROVIDER_MODELS: Record<Exclude<CustomAiProvider, "">, { label: string; mo
       { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro (Balanced)" },
     ],
   },
+  openrouter: {
+    label: "OpenRouter",
+    models: [
+      { value: "anthropic/claude-sonnet-4-20250514", label: "Claude Sonnet 4 (Anthropic)" },
+      { value: "openai/gpt-4o", label: "GPT-4o (OpenAI)" },
+      { value: "google/gemini-2.0-flash-001", label: "Gemini 2.0 Flash (Google)" },
+      { value: "meta-llama/llama-3.3-70b-instruct", label: "Llama 3.3 70B (Meta)" },
+      { value: "deepseek/deepseek-chat-v3-0324", label: "DeepSeek V3 (DeepSeek)" },
+    ],
+  },
 };
 
 export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
@@ -128,6 +138,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                   <option value="anthropic">Anthropic</option>
                   <option value="openai">OpenAI</option>
                   <option value="gemini">Gemini</option>
+                  <option value="openrouter">OpenRouter</option>
                 </select>
               </div>
 

@@ -2,7 +2,7 @@
 // Supports Gemini, OpenAI, and Anthropic via a unified interface.
 // Provider selection is based on which API key is configured.
 
-export type AiProvider = "gemini" | "openai" | "anthropic" | "dev";
+export type AiProvider = "gemini" | "openai" | "anthropic" | "openrouter" | "dev";
 
 export interface ChatMessage {
   role: "system" | "user" | "assistant";
@@ -116,6 +116,18 @@ const PROVIDERS: Record<Exclude<AiProvider, "dev">, ProviderSpec> = {
       return data.content?.[0]?.text ?? "";
     },
   },
+  openrouter: {
+    getUrl: () => "https://openrouter.ai/api/v1/chat/completions",
+    getHeaders: (apiKey) => ({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    }),
+    buildBody: (req, model) => ({ model, ...buildOpenAiBody(req) }),
+    parseResponse: (json) => {
+      const data = json as { choices?: Array<{ message?: { content?: string } }> };
+      return data.choices?.[0]?.message?.content ?? "";
+    },
+  },
 };
 
 /**
@@ -178,6 +190,14 @@ export function detectProviderConfig(): ProviderConfig {
       provider: "anthropic",
       model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-20250514",
       apiKey: process.env.ANTHROPIC_API_KEY,
+    };
+  }
+
+  if (process.env.OPENROUTER_API_KEY) {
+    return {
+      provider: "openrouter",
+      model: process.env.OPENROUTER_MODEL ?? "anthropic/claude-sonnet-4-20250514",
+      apiKey: process.env.OPENROUTER_API_KEY,
     };
   }
 

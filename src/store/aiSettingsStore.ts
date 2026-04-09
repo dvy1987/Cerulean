@@ -7,7 +7,7 @@ interface BackgroundAgentToggles {
   tonalAdjustment: boolean;
 }
 
-export type CustomAiProvider = "anthropic" | "openai" | "gemini" | "";
+export type CustomAiProvider = "anthropic" | "openai" | "gemini" | "openrouter" | "";
 
 interface AiSettingsState {
   backgroundAgents: BackgroundAgentToggles;
