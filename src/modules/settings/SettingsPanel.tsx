@@ -61,11 +61,17 @@ const PROVIDER_MODELS: Record<Exclude<CustomAiProvider, "">, { label: string; mo
   openrouter: {
     label: "OpenRouter",
     models: [
-      { value: "anthropic/claude-sonnet-4-20250514", label: "Claude Sonnet 4 (Anthropic)" },
-      { value: "openai/gpt-4o", label: "GPT-4o (OpenAI)" },
-      { value: "google/gemini-2.0-flash-001", label: "Gemini 2.0 Flash (Google)" },
-      { value: "meta-llama/llama-3.3-70b-instruct", label: "Llama 3.3 70B (Meta)" },
-      { value: "deepseek/deepseek-chat-v3-0324", label: "DeepSeek V3 (DeepSeek)" },
+      { value: "qwen/qwen3-235b-a22b:free", label: "Qwen3 235B [Free]" },
+      { value: "qwen/qwen3-30b-a3b:free", label: "Qwen3 30B [Free]" },
+      { value: "google/gemini-2.5-flash-preview:free", label: "Gemini 2.5 Flash [Free]" },
+      { value: "google/gemma-3-27b-it:free", label: "Gemma 3 27B [Free]" },
+      { value: "meta-llama/llama-4-maverick:free", label: "Llama 4 Maverick [Free]" },
+      { value: "deepseek/deepseek-chat-v3-0324:free", label: "DeepSeek V3 [Free]" },
+      { value: "anthropic/claude-sonnet-4-20250514", label: "Claude Sonnet 4" },
+      { value: "openai/gpt-4o", label: "GPT-4o" },
+      { value: "google/gemini-2.0-flash-001", label: "Gemini 2.0 Flash" },
+      { value: "meta-llama/llama-3.3-70b-instruct", label: "Llama 3.3 70B" },
+      { value: "deepseek/deepseek-chat-v3-0324", label: "DeepSeek V3" },
     ],
   },
 };

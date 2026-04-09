@@ -196,7 +196,7 @@ export function detectProviderConfig(): ProviderConfig {
   if (process.env.OPENROUTER_API_KEY) {
     return {
       provider: "openrouter",
-      model: process.env.OPENROUTER_MODEL ?? "anthropic/claude-sonnet-4-20250514",
+      model: process.env.OPENROUTER_MODEL ?? "qwen/qwen3-235b-a22b:free",
       apiKey: process.env.OPENROUTER_API_KEY,
     };
   }
