@@ -7,10 +7,19 @@ interface BackgroundAgentToggles {
   tonalAdjustment: boolean;
 }
 
+export type CustomAiProvider = "anthropic" | "openai" | "gemini" | "";
+
 interface AiSettingsState {
   backgroundAgents: BackgroundAgentToggles;
   toggleBackgroundAgent: (key: keyof BackgroundAgentToggles) => void;
   setBackgroundAgent: (key: keyof BackgroundAgentToggles, value: boolean) => void;
+
+  customProvider: CustomAiProvider;
+  customModel: string;
+  customApiKey: string;
+  setCustomProvider: (provider: CustomAiProvider) => void;
+  setCustomModel: (model: string) => void;
+  setCustomApiKey: (key: string) => void;
 }
 
 export const useAiSettingsStore = create<AiSettingsState>((set) => ({
@@ -36,4 +45,11 @@ export const useAiSettingsStore = create<AiSettingsState>((set) => ({
         [key]: value,
       },
     })),
+
+  customProvider: "",
+  customModel: "",
+  customApiKey: "",
+  setCustomProvider: (provider) => set({ customProvider: provider }),
+  setCustomModel: (model) => set({ customModel: model }),
+  setCustomApiKey: (key) => set({ customApiKey: key }),
 }));

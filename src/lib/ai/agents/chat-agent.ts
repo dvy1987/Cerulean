@@ -2,6 +2,7 @@ import { AgentDefinition, AgentContext, AgentResult } from "../types";
 import { ChatRespondAction, ChatRespondResult, InsightToPromptAction, InsightToPromptResult } from "../actions";
 import { agentRegistry } from "../registry";
 import { streamChatResponse, insightToPrompt } from "../dev-ai";
+import { useAiSettingsStore } from "@/store/aiSettingsStore";
 
 type ChatInput = ChatRespondAction["input"] | InsightToPromptAction["input"];
 type ChatOutput = ChatRespondResult | InsightToPromptResult;
@@ -50,10 +51,19 @@ async function callRealProvider(
     // Add the current user message
     messages.push({ role: "user", content: userMessage });
 
+    const { customProvider, customModel, customApiKey } = useAiSettingsStore.getState();
+
+    const payload: Record<string, unknown> = { messages };
+    if (customProvider && customModel && customApiKey) {
+      payload.clientProvider = customProvider;
+      payload.clientModel = customModel;
+      payload.clientApiKey = customApiKey;
+    }
+
     const response = await fetch("/api/ai/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
