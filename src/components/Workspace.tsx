@@ -146,11 +146,19 @@ export default function Workspace() {
         {!chatCollapsed && !docCollapsed && (
           <div
             onPointerDown={handlePointerDown}
-            className="shrink-0 w-3 cursor-col-resize relative z-20 group flex items-center justify-center"
+            className="shrink-0 cursor-col-resize relative z-20 group flex items-center justify-center"
+            style={{ width: 16 }}
           >
+            <div className="absolute inset-y-0 -left-2 -right-2" />
             <div
-              className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px transition-all duration-200
-                ${isDragging ? "bg-cerulean-300 w-0.5" : "bg-transparent group-hover:bg-gray-300"}`}
+              className={`
+                w-1 rounded-full backdrop-blur-sm
+                transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                ${isDragging
+                  ? "h-12 bg-cerulean-400 scale-100 opacity-100 shadow-sm"
+                  : "h-10 bg-gray-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+                }
+              `}
             />
           </div>
         )}
