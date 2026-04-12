@@ -2,9 +2,12 @@ import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
 import { Insight, InsightStatus } from "@/types";
 
+type TrayMode = "collapsed" | "open" | "fullscreen";
+
 interface InsightState {
   insights: Insight[];
   isTrayOpen: boolean;
+  trayMode: TrayMode;
   addInsight: (params: {
     title: string;
     content: string;
@@ -17,12 +20,15 @@ interface InsightState {
   archiveInsight: (insightId: string) => void;
   toggleTray: () => void;
   setTrayOpen: (open: boolean) => void;
+  setTrayMode: (mode: TrayMode) => void;
+  cycleTrayMode: () => void;
   getActiveInsights: () => Insight[];
 }
 
 export const useInsightStore = create<InsightState>((set, get) => ({
   insights: [],
   isTrayOpen: false,
+  trayMode: "collapsed" as TrayMode,
 
   addInsight: ({ title, content, conversationId = null, sourceMessageIds = [] }) => {
     const now = new Date().toISOString();
@@ -81,9 +87,25 @@ export const useInsightStore = create<InsightState>((set, get) => ({
     get().setInsightStatus(insightId, "archived");
   },
 
-  toggleTray: () => set((state) => ({ isTrayOpen: !state.isTrayOpen })),
+  toggleTray: () =>
+    set((state) => {
+      const next = state.trayMode === "collapsed" ? "open" : "collapsed";
+      return { isTrayOpen: next !== "collapsed", trayMode: next };
+    }),
 
-  setTrayOpen: (open) => set({ isTrayOpen: open }),
+  setTrayOpen: (open) =>
+    set({ isTrayOpen: open, trayMode: open ? "open" : "collapsed" }),
+
+  setTrayMode: (mode) =>
+    set({ trayMode: mode, isTrayOpen: mode !== "collapsed" }),
+
+  cycleTrayMode: () =>
+    set((state) => {
+      const order: TrayMode[] = ["collapsed", "open", "fullscreen"];
+      const idx = order.indexOf(state.trayMode);
+      const next = order[(idx + 1) % order.length];
+      return { trayMode: next, isTrayOpen: next !== "collapsed" };
+    }),
 
   getActiveInsights: () =>
     get().insights.filter((i) => i.status !== "archived"),
