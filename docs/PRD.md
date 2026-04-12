@@ -519,7 +519,8 @@ Important behaviors:
 
 - tray is collapsed by default
 - expanding reveals insights
-- insights are ranked by AI relevance to the document. Relevance can evolve with the document
+- tray auto-opens whenever a new insight is added (from any source)
+- insights are ranked by relevance to the current document content (keyword overlap + recency scoring). Relevance re-computes as the document evolves
 - users can override ranking
 
 Example tray:
@@ -540,6 +541,51 @@ Insights can originate from:
 - manual input
 - imported documents
 - AI suggestions
+
+## Insight Card Visual Design
+
+Each insight is displayed as a card in a responsive grid (1 column on mobile, up to 3 columns on wide screens).
+
+Each card contains:
+
+- title (truncated to one line)
+- content preview (clamped to 2 lines)
+- status badge pill (colored per status)
+- colored left border accent per status:
+
+```
+captured    → amber/warning
+discussing  → cerulean/blue
+resolved    → green/success
+promoted    → cerulean/blue
+archived    → gray
+```
+
+If the insight has a detected contradiction, the card renders with a danger (red) border and left accent, plus a small "Potential contradiction" label below the content preview.
+
+## Hover-Revealed Actions
+
+The three action buttons on each card are hidden by default and only appear on hover:
+
+```
+Promote   — generates a document patch and sends it for review
+Explore   — converts the insight into a chat prompt (sets status = discussing)
+Archive   — soft-removes the insight (sets status = archived, hides from active list)
+```
+
+Promote is hidden once the insight is already in "promoted" status.
+Archive is hidden once the insight is already in "archived" status.
+
+Archive is a soft delete only — the insight record is retained with status = archived.
+
+## Contradiction Detection UI
+
+When contradictions are detected across active insights:
+
+1. A warning banner appears at the top of the tray body listing the number of contradictions and a short description of each conflict.
+2. Each individual card involved in a contradiction also shows a card-level "Potential contradiction" label and switches to danger border styling.
+
+Both the banner and the card-level indicators update reactively as insights change.
 
 ---
 
