@@ -117,17 +117,22 @@ export default function Workspace() {
         {chatCollapsed ? (
           <button
             onClick={restoreChat}
-            className="shrink-0 w-7 flex flex-col items-center justify-center gap-1
-              bg-gray-50 hover:bg-gray-100 border-r border-gray-200
-              transition-colors duration-150 group"
+            className="shrink-0 w-5 self-start mt-4 ml-0.5 flex items-center justify-center
+              h-12 rounded-r-md bg-gray-100 hover:bg-cerulean-50 border border-l-0 border-gray-200
+              hover:border-cerulean-200 transition-all duration-150 group shadow-sm"
             title="Expand Chat"
           >
-            <span
-              className="text-[10px] font-medium text-muted group-hover:text-foreground
-                [writing-mode:vertical-lr] rotate-180 tracking-wide"
+            <svg
+              className="w-3 h-3 text-gray-400 group-hover:text-cerulean-500 transition-colors"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              Chat
-            </span>
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
           </button>
         ) : (
           <div
@@ -155,17 +160,22 @@ export default function Workspace() {
         {docCollapsed ? (
           <button
             onClick={restoreDoc}
-            className="shrink-0 w-7 flex flex-col items-center justify-center gap-1
-              bg-gray-50 hover:bg-gray-100 border-l border-gray-200
-              transition-colors duration-150 group"
+            className="shrink-0 w-5 self-start mt-4 mr-0.5 flex items-center justify-center
+              h-12 rounded-l-md bg-gray-100 hover:bg-cerulean-50 border border-r-0 border-gray-200
+              hover:border-cerulean-200 transition-all duration-150 group shadow-sm ml-auto"
             title="Expand Document"
           >
-            <span
-              className="text-[10px] font-medium text-muted group-hover:text-foreground
-                [writing-mode:vertical-lr] tracking-wide"
+            <svg
+              className="w-3 h-3 text-gray-400 group-hover:text-cerulean-500 transition-colors"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              Document
-            </span>
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
           </button>
         ) : (
           <div
