@@ -22,14 +22,21 @@ export default function Workspace() {
 
   const [splitFraction, setSplitFraction] = useState(0.5);
   const [isDragging, setIsDragging] = useState(false);
+  const [approachSide, setApproachSide] = useState<"left" | "right">("left");
+  const [isNearDivider, setIsNearDivider] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const lastDragX = useRef<number | null>(null);
 
   const chatCollapsed = splitFraction === 0;
   const docCollapsed = splitFraction === 1;
 
+  const PROXIMITY_PX = 20;
+
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     e.preventDefault();
     setIsDragging(true);
+    lastDragX.current = e.clientX;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }, []);
 
@@ -46,6 +53,14 @@ export default function Workspace() {
         fraction = 1;
       }
 
+      if (lastDragX.current !== null) {
+        const delta = e.clientX - lastDragX.current;
+        if (Math.abs(delta) > 2) {
+          setApproachSide(delta > 0 ? "right" : "left");
+        }
+      }
+      lastDragX.current = e.clientX;
+
       setSplitFraction(fraction);
     },
     [isDragging]
@@ -53,7 +68,22 @@ export default function Workspace() {
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
+    lastDragX.current = null;
   }, []);
+
+  const handleProximityMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (isDragging || !dividerRef.current) return;
+      const dividerRect = dividerRef.current.getBoundingClientRect();
+      const dividerCenter = dividerRect.left + dividerRect.width / 2;
+      const dist = Math.abs(e.clientX - dividerCenter);
+      setIsNearDivider(dist <= PROXIMITY_PX);
+      if (dist <= PROXIMITY_PX) {
+        setApproachSide(e.clientX < dividerCenter ? "left" : "right");
+      }
+    },
+    [isDragging]
+  );
 
   useEffect(() => {
     if (isDragging) {
@@ -111,8 +141,12 @@ export default function Workspace() {
       <div
         ref={containerRef}
         className="flex-1 flex min-h-0 relative"
-        onPointerMove={isDragging ? handlePointerMove : undefined}
+        onPointerMove={(e) => {
+          if (isDragging) handlePointerMove(e);
+          else handleProximityMove(e);
+        }}
         onPointerUp={isDragging ? handlePointerUp : undefined}
+        onPointerLeave={() => { if (!isDragging) setIsNearDivider(false); }}
       >
         {chatCollapsed ? (
           <button
@@ -145,16 +179,33 @@ export default function Workspace() {
 
         {!chatCollapsed && !docCollapsed && (
           <div
+            ref={dividerRef}
             onPointerDown={handlePointerDown}
-            className={`shrink-0 w-[3px] cursor-col-resize relative z-20 group
-              flex items-center justify-center groove-divider
-              ${isDragging ? "groove-active" : ""}`}
+            className="shrink-0 w-[3px] cursor-col-resize relative z-20 groove-divider"
+            style={{ zIndex: 20 }}
           >
-            <div className="absolute inset-y-0 -left-[5px] -right-[5px]" />
-            <div className="flex flex-col items-center gap-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-              <span className={`block w-[3px] h-[3px] rounded-full ${isDragging ? "bg-cerulean-400" : "bg-gray-400"}`} />
-              <span className={`block w-[3px] h-[3px] rounded-full ${isDragging ? "bg-cerulean-400" : "bg-gray-400"}`} />
-              <span className={`block w-[3px] h-[3px] rounded-full ${isDragging ? "bg-cerulean-400" : "bg-gray-400"}`} />
+            <div className="absolute inset-y-0 -left-[18px] -right-[18px] cursor-col-resize" />
+
+            <div
+              className={`absolute top-1/2 -translate-y-1/2 flex items-center justify-center
+                w-[14px] h-[40px] transition-all duration-150
+                ${approachSide === "left" ? "right-full rounded-l-md" : "left-full rounded-r-md"}
+                ${(isNearDivider || isDragging)
+                  ? "opacity-100 scale-100"
+                  : "opacity-0 scale-95 pointer-events-none"
+                }
+                ${isDragging
+                  ? "bg-cerulean-100 border-cerulean-300 shadow-md"
+                  : "bg-white border-gray-200 shadow-soft hover:bg-cerulean-50 hover:border-cerulean-200"
+                }
+                border ${approachSide === "left" ? "border-r-0" : "border-l-0"}
+              `}
+            >
+              <div className="flex flex-col items-center gap-[3px]">
+                <span className={`block w-[3px] h-[3px] rounded-full transition-colors ${isDragging ? "bg-cerulean-400" : "bg-gray-300"}`} />
+                <span className={`block w-[3px] h-[3px] rounded-full transition-colors ${isDragging ? "bg-cerulean-400" : "bg-gray-300"}`} />
+                <span className={`block w-[3px] h-[3px] rounded-full transition-colors ${isDragging ? "bg-cerulean-400" : "bg-gray-300"}`} />
+              </div>
             </div>
           </div>
         )}
