@@ -31,6 +31,8 @@ export function buildAgentContext(): AgentContext {
       title: i.title,
       content: i.content,
       status: i.status,
+      relevance: i.relevance,
+      maturity: i.maturity,
       created_at: i.created_at,
     })),
     blocks: docState.blocks.map((b) => ({

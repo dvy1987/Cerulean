@@ -18,6 +18,21 @@ const STATUS_STYLES: Record<string, { badge: string; accent: string }> = {
   archived: { badge: "bg-gray-100 text-gray-500", accent: "border-l-gray-300" },
 };
 
+function getRelevanceDotClass(score: number): string {
+  if (score === 0) return "bg-gray-300";
+  if (score <= 3) return "bg-gray-400";
+  if (score <= 6) return "bg-cerulean-400";
+  if (score <= 8) return "bg-cerulean-500";
+  return "bg-cerulean-600 shadow-[0_0_4px_rgba(56,189,248,0.5)]";
+}
+
+function getMaturityBarClass(score: number): string {
+  if (score <= 3) return "bg-amber-400";
+  if (score <= 6) return "bg-cerulean-300";
+  if (score <= 8) return "bg-cerulean-400";
+  return "bg-emerald-400";
+}
+
 export default function InsightCard({
   insight,
   onPromote,
@@ -49,12 +64,27 @@ export default function InsightCard({
             </span>
           )}
         </div>
-        <span
-          className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${styles.badge}`}
-        >
-          {insight.status}
-        </span>
+        <div className="flex items-center gap-2 shrink-0">
+          <div
+            className={`w-2 h-2 rounded-full transition-colors duration-500 ${getRelevanceDotClass(insight.relevance)}`}
+            title={insight.relevance === 0 ? "Relevance: scoring..." : `Relevance: ${insight.relevance}/10`}
+          />
+          <span
+            className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${styles.badge}`}
+          >
+            {insight.status}
+          </span>
+        </div>
       </div>
+      {insight.maturity > 0 && (
+        <div className="mt-2 h-0.5 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all duration-700 ease-out ${getMaturityBarClass(insight.maturity)}`}
+            style={{ width: `${insight.maturity * 10}%` }}
+            title={`Maturity: ${insight.maturity}/10`}
+          />
+        </div>
+      )}
       <div className="flex gap-1.5 mt-2.5 opacity-0 group-hover:opacity-100">
         {insight.status !== "promoted" && (
           <button

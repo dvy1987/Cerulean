@@ -13,6 +13,7 @@ interface InsightState {
   }) => Insight;
   updateInsight: (insightId: string, updates: Partial<Insight>) => void;
   setInsightStatus: (insightId: string, status: InsightStatus) => void;
+  setInsightScores: (insightId: string, relevance: number, maturity: number) => void;
   archiveInsight: (insightId: string) => void;
   toggleTray: () => void;
   setTrayOpen: (open: boolean) => void;
@@ -32,6 +33,8 @@ export const useInsightStore = create<InsightState>((set, get) => ({
       content,
       status: "captured",
       priority: get().insights.length,
+      relevance: 0,
+      maturity: 0,
       conversation_id: conversationId,
       source_message_ids: sourceMessageIds,
       created_at: now,
@@ -59,6 +62,16 @@ export const useInsightStore = create<InsightState>((set, get) => ({
       insights: state.insights.map((i) =>
         i.insight_id === insightId
           ? { ...i, status, updated_at: new Date().toISOString() }
+          : i
+      ),
+    }));
+  },
+
+  setInsightScores: (insightId, relevance, maturity) => {
+    set((state) => ({
+      insights: state.insights.map((i) =>
+        i.insight_id === insightId
+          ? { ...i, relevance, maturity, updated_at: new Date().toISOString() }
           : i
       ),
     }));

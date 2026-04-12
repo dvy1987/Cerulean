@@ -141,7 +141,7 @@ export interface ContradictionResult {
 }
 
 export interface RankingResult {
-  scores: Record<string, number>;
+  scores: Record<string, { relevance: number; maturity: number }>;
 }
 
 export interface GraphUpdateResult {

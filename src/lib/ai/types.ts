@@ -17,7 +17,7 @@ export interface WorkspaceSnapshot {
   conversationId: string;
   documentId: string;
   messages: Array<{ message_id: string; role: string; content: string }>;
-  insights: Array<{ insight_id: string; title: string; content: string; status: string; created_at: string }>;
+  insights: Array<{ insight_id: string; title: string; content: string; status: string; relevance: number; maturity: number; created_at: string }>;
   blocks: Array<{ block_id: string; content: string; block_type: string; position: number; linked_insights: string[]; source_messages: string[] }>;
   graphNodes: Array<{ node_id: string; node_type: string; entity_id: string; label: string }>;
   graphEdges: Array<{ edge_id: string; source_node_id: string; target_node_id: string; relationship_type: string }>;

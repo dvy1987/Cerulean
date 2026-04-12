@@ -25,6 +25,8 @@ export interface Insight {
   content: string;
   status: InsightStatus;
   priority: number;
+  relevance: number;
+  maturity: number;
   conversation_id: string | null;
   source_message_ids: string[];
   created_at: string;

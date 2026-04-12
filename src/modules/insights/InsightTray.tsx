@@ -7,7 +7,6 @@ import {
   generatePromotionPatch,
   insightToPrompt,
   detectContradictions,
-  computeRelevanceScores,
 } from "@/lib/ai";
 import { Insight } from "@/types";
 import { v4 as uuidv4 } from "uuid";
@@ -48,19 +47,15 @@ export default function InsightTray() {
   }, [contradictions]);
 
   const rankedInsights = useMemo(() => {
-    const docText = blocks.map((b) => b.content).join(" ");
-    const scores = computeRelevanceScores(
-      activeInsights.map((i) => ({
-        insight_id: i.insight_id,
-        content: i.content,
-        created_at: i.created_at,
-      })),
-      docText
-    );
-    return [...activeInsights].sort(
-      (a, b) => (scores.get(b.insight_id) || 0) - (scores.get(a.insight_id) || 0)
-    );
-  }, [activeInsights, blocks]);
+    return [...activeInsights].sort((a, b) => {
+      const aScored = a.relevance > 0 ? 1 : 0;
+      const bScored = b.relevance > 0 ? 1 : 0;
+      if (aScored !== bScored) return bScored - aScored;
+      if (b.relevance !== a.relevance) return b.relevance - a.relevance;
+      if (b.maturity !== a.maturity) return b.maturity - a.maturity;
+      return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    });
+  }, [activeInsights]);
 
   const handleAddInsight = () => {
     const text = newInsightText.trim();

@@ -20,6 +20,7 @@ export function routeAction(action: AiAction, context: AgentContext): RoutingDec
         backgroundAgents: [
           ...(bg.suggestion ? ["suggestion" as AgentId] : []),
           ...(bg.knowledgeGraph ? ["knowledge_graph" as AgentId] : []),
+          ...(bg.ranking ? ["ranking" as AgentId] : []),
         ],
       };
 

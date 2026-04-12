@@ -26,5 +26,4 @@ export {
   extractInsightsFromText,
   detectContradictions,
   generateThinkingSuggestions,
-  computeRelevanceScores,
 } from "./dev-ai";
