@@ -146,14 +146,16 @@ export default function Workspace() {
         {!chatCollapsed && !docCollapsed && (
           <div
             onPointerDown={handlePointerDown}
-            className={`shrink-0 w-1.5 cursor-col-resize relative z-20 group
-              flex items-center justify-center
-              ${isDragging ? "bg-cerulean-200" : "bg-gray-200 hover:bg-cerulean-300"}`}
+            className={`shrink-0 w-[3px] cursor-col-resize relative z-20 group
+              flex items-center justify-center groove-divider
+              ${isDragging ? "groove-active" : ""}`}
           >
-            <div
-              className={`w-0.5 h-8 rounded-full transition-colors duration-100
-                ${isDragging ? "bg-cerulean-500" : "bg-gray-400 group-hover:bg-cerulean-400"}`}
-            />
+            <div className="absolute inset-y-0 -left-[5px] -right-[5px]" />
+            <div className="flex flex-col items-center gap-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+              <span className={`block w-[3px] h-[3px] rounded-full ${isDragging ? "bg-cerulean-400" : "bg-gray-400"}`} />
+              <span className={`block w-[3px] h-[3px] rounded-full ${isDragging ? "bg-cerulean-400" : "bg-gray-400"}`} />
+              <span className={`block w-[3px] h-[3px] rounded-full ${isDragging ? "bg-cerulean-400" : "bg-gray-400"}`} />
+            </div>
           </div>
         )}
 
