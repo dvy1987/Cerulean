@@ -11,7 +11,11 @@ import ChatInput from "./ChatInput";
 import HighlightMenu from "./HighlightMenu";
 import ThinkingSuggestions from "./ThinkingSuggestions";
 
-export default function ChatPanel() {
+interface ChatPanelProps {
+  onHeaderDoubleClick?: () => void;
+}
+
+export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
   const {
     messages,
     isStreaming,
@@ -92,7 +96,10 @@ export default function ChatPanel() {
 
   return (
     <div className="flex flex-col h-full bg-gray-50/50">
-      <div className="px-5 py-3.5 border-b border-gray-100 bg-white">
+      <div
+        className="px-5 py-3.5 border-b border-gray-100 bg-white cursor-default select-none"
+        onDoubleClick={onHeaderDoubleClick}
+      >
         <h2 className="text-sm font-semibold text-foreground">Chat</h2>
         <p className="text-[11px] text-muted mt-0.5">Explore ideas with AI</p>
       </div>

@@ -176,9 +176,8 @@ export default function Workspace() {
           <div
             className="flex flex-col min-h-0 relative"
             style={{ width: `${splitFraction * 100}%` }}
-            onDoubleClick={handleChatDoubleClick}
           >
-            <ChatPanel />
+            <ChatPanel onHeaderDoubleClick={handleChatDoubleClick} />
           </div>
         )}
 
@@ -218,9 +217,11 @@ export default function Workspace() {
           <div
             className="flex flex-col min-h-0"
             style={{ width: `${(1 - splitFraction) * 100}%` }}
-            onDoubleClick={handleDocDoubleClick}
           >
-            <div className="flex items-center gap-1 px-2 border-b border-gray-100 bg-white shrink-0">
+            <div
+              className="flex items-center gap-1 px-2 border-b border-gray-100 bg-white shrink-0 cursor-default select-none"
+              onDoubleClick={handleDocDoubleClick}
+            >
               <button
                 onClick={() => setRightTab("document")}
                 className={`px-3 py-2.5 text-xs font-medium relative ${
