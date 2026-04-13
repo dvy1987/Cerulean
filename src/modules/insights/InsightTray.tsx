@@ -237,6 +237,10 @@ export default function InsightTray() {
     <div className="border-t border-gray-200 bg-white shadow-[0_-1px_3px_0_rgba(0,0,0,0.03)]">
       <button
         onClick={toggleTray}
+        onDoubleClick={(e) => {
+          e.stopPropagation();
+          setTrayMode(isFullscreen ? "open" : "fullscreen");
+        }}
         className="w-full flex items-center justify-between px-5 py-2.5 hover:bg-gray-50"
       >
         <div className="flex items-center gap-2.5">

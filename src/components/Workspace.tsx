@@ -23,6 +23,7 @@ export default function Workspace() {
   const [splitFraction, setSplitFraction] = useState(0.5);
   const [isDragging, setIsDragging] = useState(false);
   const [isNearDivider, setIsNearDivider] = useState(false);
+  const preDblClickFraction = useRef(0.5);
   const containerRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
 
@@ -86,6 +87,24 @@ export default function Workspace() {
 
   const restoreChat = () => setSplitFraction(SNAP_RESTORE);
   const restoreDoc = () => setSplitFraction(SNAP_RESTORE);
+
+  const handleChatDoubleClick = useCallback(() => {
+    if (splitFraction === 1) {
+      setSplitFraction(preDblClickFraction.current);
+    } else {
+      preDblClickFraction.current = splitFraction;
+      setSplitFraction(1);
+    }
+  }, [splitFraction]);
+
+  const handleDocDoubleClick = useCallback(() => {
+    if (splitFraction === 0) {
+      setSplitFraction(preDblClickFraction.current);
+    } else {
+      preDblClickFraction.current = splitFraction;
+      setSplitFraction(0);
+    }
+  }, [splitFraction]);
 
   return (
     <div className="h-screen flex flex-col bg-background">
@@ -157,6 +176,7 @@ export default function Workspace() {
           <div
             className="flex flex-col min-h-0 relative"
             style={{ width: `${splitFraction * 100}%` }}
+            onDoubleClick={handleChatDoubleClick}
           >
             <ChatPanel />
           </div>
@@ -198,6 +218,7 @@ export default function Workspace() {
           <div
             className="flex flex-col min-h-0"
             style={{ width: `${(1 - splitFraction) * 100}%` }}
+            onDoubleClick={handleDocDoubleClick}
           >
             <div className="flex items-center gap-1 px-2 border-b border-gray-100 bg-white shrink-0">
               <button
