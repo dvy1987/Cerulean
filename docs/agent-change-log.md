@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-04 - Rebuild knowledge graph (full repo)
 - Author: agent
-- Commit: not committed yet
+- Commit: 16588ca
 - Summary: `build_graph.py --force` — 258 nodes, 305 edges, skill-library mode; 106 skills, 99 modules, 29 docs.
 - Files:
   - `docs/knowledge-graph/graph.json`
@@ -41,7 +41,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-04 - Apply agent-loom library sync
 - Author: agent
-- Commit: not committed yet
+- Commit: 16588ca
 - Summary: Applied `agent-loom-sync --apply` (101 skills @ upstream `c97a3df`). Restored `.next` in `build_graph.py` SKIP_DIRS. Merged ROUTING (agent-loom-sync row) and aligned SKILL-INDEX with upstream.
 - Files:
   - `.agents/skills/` (101 updated)
@@ -53,7 +53,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-04 - Add agent-loom-sync skill
 - Author: agent
-- Commit: not committed yet
+- Commit: 16588ca
 - Summary: Copied `agent-loom-sync` from agent-loom; bootstrapped `.agents/agent-loom-sync.json`; marked `cerulean-*` skills `origin: project-local`; dry-run shows 101 library skills to update @ upstream `c97a3df` (not applied).
 - Files:
   - `.agents/skills/agent-loom-sync/`
