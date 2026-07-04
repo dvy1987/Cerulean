@@ -27,6 +27,14 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-04 - Remove MCP node_modules from version control
+- Author: Cursor agent
+- Commit: a6313e7
+- Summary: Fixed accidental commit of `packages/cerulean-mcp/node_modules` and `dist/`; updated `.gitignore`.
+- Files:
+  - `.gitignore`
+- Notes: Run `npm install && npm run build` inside `packages/cerulean-mcp` after clone.
+
 ### 2026-07-03 - Review fixes: username auth, persistence gaps, MCP sync, tests
 - Author: Cursor agent
 - Commit: 0547638
@@ -56,7 +64,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-22 - AI provider abstraction layer (Gemini, OpenAI, Anthropic)
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Created a provider abstraction that supports Gemini, OpenAI, and Anthropic APIs. Added a Next.js API route for server-side API calls (keeps keys secret). Updated chat agent to try the real provider first, falling back to dev-ai. Updated `.env.example` with all three provider keys + model overrides. Auto-detects provider based on which key is set (priority: Gemini > OpenAI > Anthropic > dev). Build passes clean.
 - Files:
   - `src/lib/ai/provider.ts` — provider abstraction (callProvider, detectProviderConfig)
@@ -67,7 +75,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Full multi-agent build complete + ESLint fixes + roadmap item
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Built complete multi-agent AI architecture. Fixed ESLint unused-variable errors. Added Memory Management UI as a roadmap item in PRD. Updated shared context to reflect fully implemented state. Production build passes clean.
 - Files:
   - `src/lib/ai/agents/insight-extraction-agent.ts` — removed unused `_context` param
@@ -79,7 +87,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Wired multi-agent system into app (index.ts + DocumentBlockView AI menu)
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Updated `src/lib/ai/index.ts` to register all 10 agents via side-effect imports and re-export both orchestrator (`runAiAction`) and backward-compatible dev-ai functions. Added AI expansion menu to `DocumentBlockView` — hover shows "AI" button with dropdown (Expand argument, Add example, Add counterpoint, Clarify language) that calls `runAiAction` with `document.expand` action and creates a pending patch. All existing UI components remain unchanged (they still import from `@/lib/ai` and get the same functions). `npx tsc --noEmit` passes cleanly.
 - Files:
   - `src/lib/ai/index.ts` — side-effect agent imports + runAiAction export
@@ -88,7 +96,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Implemented 4 analysis/background agent implementations (suggestion, knowledge-graph, ranking, tonal-adjustment)
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Created 4 agent files for analysis/background agents. Suggestion agent wraps generateThinkingSuggestions + detectContradictions. Knowledge Graph agent handles both graph.update and insight.detect_contradictions with input-shape dispatch. Ranking agent wraps computeRelevanceScores. Tonal Adjustment agent has new dev-mode logic for match_document and user_directed modes. Fixed Map iteration issue in ranking-agent (used forEach instead of for-of to avoid downlevelIteration). All files compile cleanly.
 - Files:
   - `src/lib/ai/agents/suggestion-agent.ts` — suggestion agent (suggestion.generate)
@@ -99,7 +107,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Implemented 4 core agent implementations (chat, document-integration, document-expansion, insight-extraction)
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Created 4 agent files that wrap existing dev-ai.ts functions, register with agentRegistry, and define system prompts. Chat agent handles chat.respond (streaming) and insight.to_prompt. Document Integration agent handles document.promote. Document Expansion agent handles document.expand with new simulated expansion logic (4 operation types). Insight Extraction agent handles insight.extract. All 4 files compile cleanly.
 - Files:
   - `src/lib/ai/agents/chat-agent.ts` — chat agent (chat.respond, insight.to_prompt)
@@ -110,7 +118,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Implemented memory-management and exemplar-learning agents
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Created first two agent implementations that register with agentRegistry. Memory Management Agent handles memory compaction and learning promotion across 4 triggers. Exemplar Learning Agent extracts quality learnings from exemplars and routes them to target agents. Both pass `npx tsc --noEmit`.
 - Files:
   - `src/lib/ai/agents/memory-management-agent.ts` — memory_management agent
@@ -119,7 +127,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Built multi-agent AI architecture foundation
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Created the foundational code for the 11-agent multi-agent architecture: agent type system, discriminated action union, context snapshot builder, agent registry, dev-mode rule-based router, background agent scheduler, orchestrator entry point, and two new Zustand stores (aiSettingsStore, memoryStore). All files compile cleanly (`npx tsc --noEmit` passes).
 - Files:
   - `src/lib/ai/types.ts` — AgentId, WorkspaceSnapshot, AgentContext, AgentResult, AgentDefinition
@@ -135,7 +143,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Finalized multi-agent architecture decisions (11 agents)
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: User made key architecture decisions: LLM-based orchestrator routing, hub-and-spoke communication, background agents with Settings toggle, Tonal Adjustment dual-mode, dedicated Exemplar upload UI, per-document + generalized agent memory (markdown), new Memory Management Agent (11th agent). Updated all docs.
 - Files:
   - `AGENTS.md` — updated to 11 agents, added architecture decisions (routing, communication, background, memory)
@@ -146,7 +154,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Documented multi-agent AI architecture (initial 10 agents, Google ADK)
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Identified 13 AI jobs in Cerulean, analyzed tradeoffs, merged to 10 agents (user approved). Documented architecture in AGENTS.md, PRD §22, and agent-shared-context.md including full tradeoff rationale.
 - Files:
   - `AGENTS.md` — added Multi-Agent AI Architecture table and merge rationale
@@ -157,7 +165,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-03-21 - Standardized repo with template-based shared docs
 - Author: Amp agent
-- Commit: 0547638
+- Commit: not committed yet
 - Summary: Merged template AGENTS.md with Cerulean-specific content. Created `agent-shared-context.md`, `agent-change-log.md`, and `surprise.md` from templates with project-specific context filled in.
 - Files:
   - `AGENTS.md`
