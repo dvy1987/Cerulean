@@ -1,6 +1,6 @@
 # Cerulean Shared Context
 
-Last updated: 2026-07-03
+Last updated: 2026-07-04
 Status: Active working context for humans and AI agents
 
 ## Purpose
@@ -40,7 +40,7 @@ Update this file when:
 - State Management: Zustand
 - Database: Supabase Postgres (when env configured) + in-memory fallback locally
 - AI/ML: Multi-agent architecture via Google ADK (11 agents). Dev AI mode for now; all AI goes through `/src/lib/ai`
-- Hosting: TBD
+- Hosting: Railway (app) + self-hosted Supabase on Railway — **not deployed yet**
 - Key dependencies: next 14.2.35, react 18, zustand 5, uuid 13
 
 ## User Decisions & Clarifications
@@ -51,7 +51,14 @@ Update this file when:
 - 2026-03-21: Background agents (KG, Ranking, Suggestion, Tonal Adjustment on promoted content) run automatically but user can toggle them off via Settings
 - 2026-03-21: Tonal Adjustment runs in two modes — background (matches existing document tone for promoted content) and on-demand (user provides description or example)
 - 2026-03-21: Exemplar Learning Agent gets a dedicated upload UI. Roadmap idea (not decided): pasting exemplar text into chat
-- 2026-03-21: Agent memory is per-document + generalized cross-document learnings, managed by Memory Management Agent, stored as markdown files. Memory UI deferred.
+- 2026-07-03: User chose Railway + **self-hosted Supabase** (not Supabase Cloud) for persistence and auth
+- 2026-07-03: **Username + password** auth — username in `profiles`, passwords in Supabase Auth only
+- 2026-07-03: MCP server for Cursor/Antigravity — IDE AI does thinking; Cerulean stores structure. API keys per user (`cer_...`)
+- 2026-07-04: Three commits on `main` (`0547638`, `a6313e7`, `15c06c7`) — **not pushed to origin**
+
+## Handoff
+- **Start here:** `docs/HANDOFF.md` — architecture, file map, deploy checklist, known quirks, suggested next work
+- README updated with quick start and doc index
 
 ## Current Reality In Code
 
@@ -141,14 +148,17 @@ It is not advice, not a recommended plan, and not a task list for autonomous exe
 - Do not start implementing anything from this file unless the user explicitly asks for that work in the current conversation.
 
 ## Open Questions
-<!-- Unresolved decisions or things to figure out. Remove when resolved. -->
-- What database will be used when moving past MVP? (PRD/master-prompt mention Supabase)
-- When should auth be introduced?
+<!-- Unresolved decisions. Remove when resolved. -->
 - Should the app work on mobile/tablets?
-- Will TipTap and dnd-kit be added as specified in master-prompt, or use a different approach?
-- Which LLM provider(s) will back each agent? (PRD mentions OpenAI; Google ADK supports multiple) — user will decide later
-- What additional settings should be exposed in Settings beyond background agent toggles?
-- Should memory management UI be added? (deferred for now)
+- Will TipTap and dnd-kit be added as specified in master-prompt, or keep custom block editor?
+- Which LLM provider(s) will back each agent in production? (web chat supports Gemini/OpenAI/Anthropic via env)
+- What additional settings beyond background agent toggles?
+- Should memory management UI be added? (deferred)
+- When to add error monitoring (Sentry etc.) — before first real deployment recommended
+
+## Resolved (was open)
+- Database: Supabase Postgres with RLS (`supabase/migrations/`)
+- Auth: username + password via Supabase Auth + `profiles.username`
 
 ## Decision Log
 <!-- Timestamped record of key decisions. Append new entries at the bottom. -->
@@ -158,3 +168,5 @@ It is not advice, not a recommended plan, and not a task list for autonomous exe
 - 2026-03-21: Orchestrator uses LLM routing, hub-and-spoke communication model
 - 2026-03-21: Background agents toggleable via Settings; Tonal Adjustment dual-mode (background + on-demand)
 - 2026-03-21: Agent memory: per-document + generalized, stored as markdown, managed by Memory Management Agent
+- 2026-07-03: Railway + self-hosted Supabase; username/password auth; MCP with API keys
+- 2026-07-04: Handoff docs prepared (`docs/HANDOFF.md`, README updated)

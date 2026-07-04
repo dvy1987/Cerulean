@@ -1,4 +1,44 @@
 # Cerulean
-A thinking writing partner where you work over and finish your ideas with an AI thought partners
 
-Cerulean is a thinking workspace that converts AI conversations into structured documents without losing the reasoning behind them.
+A thinking workspace that converts AI conversations into structured documents.
+
+**Exploration → Insight capture → Structured composition**
+
+## Quick start (local, no database)
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). Data is in-memory only — refreshing clears everything.
+
+## With persistence (Supabase)
+
+1. Copy `.env.example` → `.env.local` and fill Supabase vars
+2. Apply migrations in `supabase/migrations/` to your Postgres
+3. `npm run dev` → sign up at `/login`
+
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for Railway deployment.
+
+## MCP (Cursor / Antigravity)
+
+Connect your IDE to a deployed Cerulean instance via API key. See [`docs/WHAT-IS-MCP.md`](docs/WHAT-IS-MCP.md) and [`packages/cerulean-mcp/README.md`](packages/cerulean-mcp/README.md).
+
+## Handoff & docs
+
+| Doc | What |
+|-----|------|
+| [`docs/HANDOFF.md`](docs/HANDOFF.md) | **Start here** for new agents or developers |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Railway + Supabase setup |
+| [`AGENTS.md`](AGENTS.md) | Agent working rules |
+| [`docs/PRD.md`](docs/PRD.md) | Product requirements |
+
+## Scripts
+
+```bash
+npm run dev      # local dev server
+npm run build    # production build
+npm run lint     # ESLint
+npm test         # smoke tests
+```

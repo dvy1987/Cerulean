@@ -1,6 +1,6 @@
 # Cerulean Change Log
 
-Last updated: 2026-03-21
+Last updated: 2026-07-04
 Purpose: Shared historical log of repo changes, reviews, and context updates made by AI agents or humans during active collaboration
 
 ## How To Use
@@ -26,6 +26,17 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ## Entries
 <!-- New entries go here, newest first -->
+
+### 2026-07-04 - Handoff documentation
+- Author: Cursor agent
+- Commit: not committed yet
+- Summary: Created `docs/HANDOFF.md` (architecture, file map, deploy checklist, quirks, next work). Updated README with quick start. Refreshed `agent-shared-context.md` with resolved questions and unpushed commit state. Added HANDOFF to AGENTS.md key references.
+- Files:
+  - `docs/HANDOFF.md`
+  - `README.md`
+  - `docs/agent-shared-context.md`
+  - `AGENTS.md`
+- Notes: Three feature commits (`0547638`–`15c06c7`) still not pushed to origin.
 
 ### 2026-07-04 - Remove MCP node_modules from version control
 - Author: Cursor agent

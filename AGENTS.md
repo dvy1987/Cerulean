@@ -258,6 +258,7 @@ The user will create a `docs/PRD.md` with their product vision. When you first e
 6. Do NOT start building until the PRD has enough clarity to proceed without guessing
 
 ## Key References
+- [Handoff](docs/HANDOFF.md) — Start here for new agents/developers
 - [PRD](docs/PRD.md) — Product requirements
 - [Master Prompt](docs/master-prompt.md) — System architecture
 - [Shared Context](docs/agent-shared-context.md) — Current project state
