@@ -27,6 +27,16 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-04 - Lean AGENTS.md merge from agent-loom
+- Author: Cursor agent
+- Commit: not committed yet
+- Summary: Compressed AGENTS.md to ≤200 lines per project-setup/retroactive guidance. Merged agent-loom skill loading, security invariant, orchestration map, boundaries. Moved verbose Cerulean rules to cerulean-project/references/agents-extended.md — no content loss.
+- Files:
+  - `AGENTS.md`
+  - `.agents/skills/cerulean-project/SKILL.md`
+  - `.agents/skills/cerulean-project/references/agents-extended.md`
+- Notes: Cerulean objectives preserved; detail lives in skill reference per agent-loom pattern.
+
 ### 2026-07-04 - Sync agent skills from agent-loom
 - Author: Cursor agent
 - Commit: db4c445

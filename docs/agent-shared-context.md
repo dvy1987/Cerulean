@@ -58,7 +58,7 @@ Update this file when:
 
 ## Handoff
 - **Start here:** `docs/HANDOFF.md` — architecture, file map, deploy checklist
-- **Agent skills:** `.agents/skills/` — 102 from agent-loom + 3 Cerulean domain (`cerulean-project`, `cerulean-deployment`, `cerulean-mcp`)
+- **Agent skills:** `.agents/skills/` — 105 skills; `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
 - **Skill index:** `docs/SKILL-INDEX.md` | **Routing:** `.agents/ROUTING.md`
 - **Memory:** `docs/memory/` bridged with `docs/agent-shared-context.md`
 

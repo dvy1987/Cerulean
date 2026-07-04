@@ -15,6 +15,7 @@ metadata:
   resources:
     references:
       - conventions.md
+      - agents-extended.md
 ---
 # Cerulean Project
 
@@ -58,14 +59,15 @@ Minimal cerulean theme — calm, single font, subtle AI-change highlights, no da
 
 ## Key References
 
-- `AGENTS.md` — full Cerulean rules (this skill does not replace it)
+- `AGENTS.md` — lean entry point (≤200 lines); extended rules in `references/agents-extended.md`
 - `docs/HANDOFF.md` — architecture and file map
 - `docs/agent-shared-context.md` — current state
 - `docs/PRD.md` — product vision
 
 ## Workflow
 
-1. Read `docs/agent-shared-context.md` before substantial work.
+1. Read `AGENTS.md` and `docs/agent-shared-context.md` before substantial work.
+2. For full Cerulean rules (11-agent table, PRD workflow, prompt crafting): read `references/agents-extended.md`.
 2. Identify the correct module; modify only necessary files.
 3. If persistence enabled, wire through `workspaceApi` — do not write to Supabase from components directly.
 4. After changes: update `docs/agent-change-log.md`; update shared context if repo-wide understanding changed.
