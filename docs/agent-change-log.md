@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-04 - Sync agent skills from agent-loom
 - Author: Cursor agent
-- Commit: not committed yet
+- Commit: db4c445
 - Summary: Copied `.agents/` from agent-loom (102 skills, no symlinks). Added Cerulean domain skills: cerulean-project, cerulean-deployment, cerulean-mcp. Bridged docs/memory/ with existing HANDOFF and shared context. Merged skill invocation into AGENTS.md without removing Cerulean rules.
 - Files:
   - `.agents/` (105 skills + ROUTING.md)
