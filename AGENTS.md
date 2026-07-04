@@ -1,5 +1,39 @@
 # Cerulean — Agent Instructions
 
+**Skill reference:** `docs/SKILL-INDEX.md` — read before invoking any skill.  
+**Skill priority:** `.agents/ROUTING.md` — read on startup to resolve skill conflicts.  
+**Cerulean handoff:** `docs/HANDOFF.md` + `docs/agent-shared-context.md`
+
+---
+
+## Skill Invocation — Non-Negotiable
+
+Skills in `.agents/skills/` are mandatory workflows, not optional reference. When a request matches a skill — by its `description` triggers, User Entry Points, or `.agents/ROUTING.md` — you MUST open that `SKILL.md` and follow its steps BEFORE answering or acting.
+
+- Match before acting: scan `.agents/skills/` for a matching skill before any non-trivial task.
+- **Cerulean work:** prefer `cerulean-project`, `cerulean-deployment`, or `cerulean-mcp` over generic skills (see ROUTING.md).
+- Invoking = opening `SKILL.md` and executing its workflow. Naming it does not count.
+- If multiple skills match, resolve with `.agents/ROUTING.md`.
+- Skip ONLY if the user explicitly says "don't use skills" / "skip the skill".
+
+---
+
+## Session Lifecycle — Mandatory
+
+### Session Start
+The first user message triggers `memory-startup` unless the user says "fresh start" or "ignore prior context".
+
+1. Invoke `memory-startup` — loads `docs/memory/` + consult `docs/HANDOFF.md` and `docs/agent-shared-context.md`.
+2. Run `git status` and `git log --oneline -5`.
+3. In 2–4 lines: recovered context, planned next action, any drift from handoff.
+
+### During & End of Session
+Before ending a session or after major commits, consult `.agents/skills/memory/SKILL.md` → Mandatory Auto-Trigger Checkpoints.
+
+Cerulean shared docs (`docs/agent-shared-context.md`, `docs/agent-change-log.md`) remain required per § Multi-Agent Collaboration below.
+
+---
+
 ## Project Overview
 Cerulean is a thinking workspace that converts AI conversations into structured documents.
 
@@ -63,9 +97,9 @@ If the user postpones and there is a **serious tradeoff** (e.g., postponing auth
 - **Frontend:** Next.js 14 (React 18, TypeScript)
 - **Styling:** Tailwind CSS
 - **State Management:** Zustand
-- **Database:** None for MVP
-- **AI/ML:** Development AI mode (no external API keys yet). All AI integrations go through `/src/lib/ai`.
-- **Hosting:** TBD
+- **Database:** Supabase Postgres (when env configured) + in-memory fallback locally
+- **AI/ML:** Multi-agent architecture (11 agents). Dev mode + optional Gemini/OpenAI/Anthropic. All AI through `/src/lib/ai`.
+- **Hosting:** Railway + self-hosted Supabase (target; see `docs/DEPLOYMENT.md`)
 
 ## Code Conventions
 - Follow ESLint defaults (eslint-config-next)
@@ -78,6 +112,9 @@ If the user postpones and there is a **serious tradeoff** (e.g., postponing auth
 ## File Structure
 ```
 Cerulean/
+├── .agents/
+│   ├── ROUTING.md
+│   └── skills/              ← agent skills (from agent-loom + cerulean-*)
 ├── AGENTS.md
 ├── docs/
 │   ├── PRD.md
@@ -259,6 +296,8 @@ The user will create a `docs/PRD.md` with their product vision. When you first e
 
 ## Key References
 - [Handoff](docs/HANDOFF.md) — Start here for new agents/developers
+- [Skill Index](docs/SKILL-INDEX.md) — All agent skills (105 in `.agents/skills/`)
+- [Skill Routing](.agents/ROUTING.md) — Priority and conflict rules
 - [PRD](docs/PRD.md) — Product requirements
 - [Master Prompt](docs/master-prompt.md) — System architecture
 - [Shared Context](docs/agent-shared-context.md) — Current project state

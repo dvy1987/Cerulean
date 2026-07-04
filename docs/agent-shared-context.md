@@ -57,8 +57,10 @@ Update this file when:
 - 2026-07-04: Three commits on `main` (`0547638`, `a6313e7`, `15c06c7`) — **not pushed to origin**
 
 ## Handoff
-- **Start here:** `docs/HANDOFF.md` — architecture, file map, deploy checklist, known quirks, suggested next work
-- README updated with quick start and doc index
+- **Start here:** `docs/HANDOFF.md` — architecture, file map, deploy checklist
+- **Agent skills:** `.agents/skills/` — 102 from agent-loom + 3 Cerulean domain (`cerulean-project`, `cerulean-deployment`, `cerulean-mcp`)
+- **Skill index:** `docs/SKILL-INDEX.md` | **Routing:** `.agents/ROUTING.md`
+- **Memory:** `docs/memory/` bridged with `docs/agent-shared-context.md`
 
 ## Current Reality In Code
 

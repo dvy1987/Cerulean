@@ -244,6 +244,8 @@ Priority order if continuing development:
 | Doc | Purpose |
 |-----|---------|
 | `AGENTS.md` | Rules for AI agents working in this repo |
+| `.agents/ROUTING.md` | Skill priority and conflict resolution |
+| `docs/SKILL-INDEX.md` | Full skill catalog (105 skills) |
 | `docs/HANDOFF.md` | This file — session handoff |
 | `docs/agent-shared-context.md` | Living state + decisions |
 | `docs/agent-change-log.md` | Change history with commit hashes |

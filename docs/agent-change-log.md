@@ -27,6 +27,17 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-04 - Sync agent skills from agent-loom
+- Author: Cursor agent
+- Commit: not committed yet
+- Summary: Copied `.agents/` from agent-loom (102 skills, no symlinks). Added Cerulean domain skills: cerulean-project, cerulean-deployment, cerulean-mcp. Bridged docs/memory/ with existing HANDOFF and shared context. Merged skill invocation into AGENTS.md without removing Cerulean rules.
+- Files:
+  - `.agents/` (105 skills + ROUTING.md)
+  - `.agents/skills/cerulean-{project,deployment,mcp}/`
+  - `docs/SKILL-INDEX.md`, `docs/memory/`, `docs/skill-outputs/`
+  - `AGENTS.md`, `docs/HANDOFF.md`, `README.md`
+- Notes: Cerulean had no pre-existing `.agents/` skills — zero regression on skill files. AGENTS.md Cerulean-Specific Rules preserved intact.
+
 ### 2026-07-04 - Handoff documentation
 - Author: Cursor agent
 - Commit: 5819898

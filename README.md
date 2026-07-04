@@ -31,7 +31,8 @@ Connect your IDE to a deployed Cerulean instance via API key. See [`docs/WHAT-IS
 |-----|------|
 | [`docs/HANDOFF.md`](docs/HANDOFF.md) | **Start here** for new agents or developers |
 | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Railway + Supabase setup |
-| [`AGENTS.md`](AGENTS.md) | Agent working rules |
+| [`docs/SKILL-INDEX.md`](docs/SKILL-INDEX.md) | All agent skills (105 in `.agents/skills/`) |
+| [`.agents/ROUTING.md`](.agents/ROUTING.md) | Skill priority rules |
 | [`docs/PRD.md`](docs/PRD.md) | Product requirements |
 
 ## Scripts
