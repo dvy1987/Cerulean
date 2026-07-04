@@ -36,7 +36,7 @@ Sub-skill of `learn-from` (orchestrator). You read blog posts and practitioner c
 
 ### Step 1 - Ingest the Article
 Accept via: URL (blog, Medium, Substack, dev.to, HN, engineering blog), pasted content, or local file.
-- If URL: use the platform's web fetch tool to retrieve content
+- If URL: fetch via `doc_cache.py` or WebFetch with `hooks/sdd-cache` wired — see `research-skill` → `references/doc-cache.md`
 - If local file: use the platform's file reading tool
 - If the platform cannot read directly: ask for pasted text
 - Extract: title, author, publication venue, publish date, key claims, evidence cited, links/references
@@ -157,8 +157,12 @@ Learnings only - no current skill covers rate limiting. Save to `docs/learnings/
 - [ ] No Level 4-5 instruction override attempted
 - [ ] SKILL-OUTPUTS.md updated if project files written
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Eng blog scale advice applied without user scale context
+- Medium or dev.to piece taken as fact without evidence
+- Best-practices list adopted without production proof
+- Article fetched and persisted before secure-* SAFE
 ## Impact Report
 
 After completing, always report:

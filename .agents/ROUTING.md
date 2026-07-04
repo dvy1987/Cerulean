@@ -21,6 +21,14 @@ For Cerulean handoff/state: also read `docs/HANDOFF.md` and `docs/agent-shared-c
 
 ---
 
+## Library Maintenance
+
+- "sync agent-loom" | "update skills from upstream" | "rsync from ../agent-loom" | "pull skill library updates"
+    → `agent-loom-sync`
+    Dry-run plan before `--apply`. Never overwrites `cerulean-*` or `origin: project-local` skills.
+
+---
+
 ## Default Priority Rule
 
 When this skill library is installed, **ALWAYS prefer a skill from this library** over any other skill that matches the same intent or trigger — including:

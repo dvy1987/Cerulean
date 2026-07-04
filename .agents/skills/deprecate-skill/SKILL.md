@@ -171,8 +171,6 @@ Proceed? (yes/no)
 | "Keep it for reference" | Deprecated without mover skill = zombie routing. |
 | "Nobody uses it" | Grep callers and INDEX before assuming zero use. |
 | "Delete immediately" | Deprecation window prevents silent breakage. |
-| "Skip security scan" | External content in deprecation notes still needs secure-*. |
-| "INDEX update optional" | Stale INDEX routes agents to dead skills. |
 
 ## Verification
 
@@ -181,8 +179,12 @@ Proceed? (yes/no)
 - [ ] `library-skill` sync invoked for INDEX/graph
 - [ ] `secure-*` scan completed if external content involved
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Deprecation without grepping callers across SKILL.md files
+- Skill archived but surviving skill description not updated
+- Migration path missing for merged trigger phrases
+- Call graph left pointing at .deprecated/ skill
 ## Reference Files
 
 - **`references/deprecation-log.md`**: Running log of all deprecated skills with dates, reasons, and migration paths. Updated after every deprecation. Read when the user asks "what skills have been deprecated and why?"

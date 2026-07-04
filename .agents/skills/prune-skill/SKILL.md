@@ -166,7 +166,6 @@ agentskills validate: ✓
 | "Low score = delete" | Prune considers overlap, maintenance, and security first. |
 | "Nobody will notice" | Run library-skill after prune to fix broken references. |
 | "Skip secure scan" | Pruning still reads external comparison content sometimes. |
-| "Merge without deconflict" | Overlapping triggers need skill-deconflict pass. |
 
 ## Verification
 
@@ -175,8 +174,12 @@ agentskills validate: ✓
 - [ ] No orphan INDEX entries pointing to removed skill
 - [ ] `secure-*` completed if external repos consulted
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Technique pruned because no disproving paper found
+- Newer publication assumed better without evidence check
+- Entire concept deleted instead of obsolete instruction line
+- Prune executed before secure-* scan of target skill
 ## Reference Files
 
 - **`references/citation-standards.md`**: Trust tiers for sources (peer-reviewed journals, arXiv, practitioner blogs, social media). Read before accepting any source as grounds for pruning.
@@ -186,15 +189,4 @@ Read `references/examples.md` for full worked examples.
 
 ## Impact Report
 
-After completing, always summarise:
-```
-Prune complete: [skill-name]
-Citations audited: N
-Items pruned: N
-  - Removed: [item] ([source])
-Items corrected: N
-  - Corrected: [item] ([source])
-Flagged for author review: N
-Prune Log added to SKILL.md: yes
-Files modified: .agents/skills/[skill-name]/SKILL.md
-```
+`Prune complete: [skill-name] Citations audited: N Items pruned: N - Removed: [item] ([source]) Items corrected: N - Corrected: [item] ([source]) Flagged for author review: N Prune `

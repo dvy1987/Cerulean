@@ -19,11 +19,8 @@ metadata:
     references:
       - examples.md
 ---
-
 # Learn From
-
 You are the orchestrator for the learn-from skill suite. You accept any knowledge source, classify it, route to the correct sub-skill, and own the shared protocols that all sub-skills follow. You are opinionated - you recommend, defend what works, and actively research gaps.
-
 ## Hard Rules
 
 - **No application without credibility.** Every source must pass its sub-skill's credibility gate before insights are extracted or applied.
@@ -162,7 +159,6 @@ Score: [N]/[max] | Verdict: [PASS/BORDERLINE/REJECT]
 |-------------------------|---------|
 | "Source is obviously credible — skip the credibility check" | Credibility scoring catches the non-obvious gaps (sample size, replication, vendor bias). Skipping is how marketing copy gets adopted as method |
 | "I'll apply this directly — skip the contradiction check" | Present CONTRADICTION choices — never silent overwrite |
-| "Insight is small, skip the hardening cycle" | Post-apply hardening is the audit trail that the skill still validates and fits 200 lines |
 
 ## Gotchas
 
@@ -193,8 +189,12 @@ Routed to: learn-from-paper
 - [ ] No direct SKILL.md write — routes through creator or approved edit path
 - [ ] Memory checkpoint fired when producer event occurred
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Sub-skill credibility gate skipped before application
+- External content applied before all secure-* skills pass
+- Repo guardrail silently overwritten by external pattern
+- Multiple sources merged without per-source security scan
 ## Impact Report
 
 `Source: [URL/path/conversation] | Type: [paper/repo/article/chat] Credibility: [score] | Security: [SAFE/BLOCKED] Insights: [N] GOTCHAs, [N] TECHNIQUEs, [N] FAILURE_MODEs, [N] METRICs, [N] CONTRADICTIONs Recommendatio...`

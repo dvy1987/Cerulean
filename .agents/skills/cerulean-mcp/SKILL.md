@@ -9,6 +9,7 @@ metadata:
   author: dvy1987
   version: "1.0"
   category: domain
+  origin: project-local
   sources: docs/WHAT-IS-MCP.md, docs/MCP-AGENT-GUIDE.md, packages/cerulean-mcp
 ---
 # Cerulean MCP

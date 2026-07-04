@@ -174,8 +174,12 @@ Observe user response to the competitor's feature in the next 2 weeks. If 3+ use
 - [ ] Next loop trigger defined (metric, date, or event)
 - [ ] Completed within one session — not a multi-week framework deck
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Stuck in Orient debating meaning while action delayed
+- Observe step skipped — acting on assumptions only
+- OODA loop never closes with explicit Act step
+- Competitive response modeled as static not adaptive
 ## Impact Report
 
 ```

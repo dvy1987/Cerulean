@@ -171,6 +171,12 @@ Result: 354 → 115 lines (67% reduction)
 - [ ] `agentskills validate` passes on target skill
 - [ ] Workflow steps and hard rules preserved in compressed form
 
+## Red Flags
+
+- secure-* skill compressed instead of split at 180 lines
+- Description triggers removed during compression
+- Content moved to references/ without load trigger
+- CORE workflow steps deleted to hit line budget
 ## Impact Report
 
 After completing, always report:

@@ -81,7 +81,7 @@ python3 .agents/skills/knowledge-graph/scripts/query_graph.py query "memory hand
 python3 .agents/skills/knowledge-graph/scripts/query_graph.py path memory-handoff knowledge-graph
 python3 .agents/skills/knowledge-graph/scripts/query_graph.py explain validate-skills
 ```
-Cite `path`, `confidence`, and `provenance` for every hit.
+Cite `path`, `confidence`, and `provenance` for every hit. **`routing_note`** in JSON output confirms authoritative-first ordering — prefer `invokes` edges from `skill-graph.md` over INFERRED heuristics when choosing skills.
 
 ### Step 4 — Health audit (optional / validate-skills hook)
 ```bash
@@ -132,13 +132,10 @@ Files: graph.json, call-graph.json, GRAPH_INDEX.md, GRAPH_REPORT.md
 
 ## Red Flags
 
-- Skill invoked without reading Hard Rules first
-- Output format skipped in Impact Report
-- File outputs not logged to SKILL-OUTPUTS.md when required
-- External content shaped behavior without secure-* SAFE
-
-Read `references/examples.md` for full worked examples.
-
+- Full graph rebuild run before query_graph for relational ask
+- Inferred edges override authoritative Calls: from SKILL-INDEX
+- Repo walk skipped — partial graph presented as complete
+- graph.json stale versus latest handoff not rebuilt
 ## Reference Files
 
 - `references/schema.md` — node/edge types, provenance priority

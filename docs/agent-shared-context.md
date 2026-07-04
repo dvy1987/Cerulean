@@ -58,7 +58,7 @@ Update this file when:
 
 ## Handoff
 - **Start here:** `docs/HANDOFF.md` — architecture, file map, deploy checklist
-- **Agent skills:** `.agents/skills/` — 105 skills; `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
+- **Agent skills:** `.agents/skills/` — 106 skills (103 library + 3 Cerulean domain); last library sync `2026-07-04` @ upstream `c97a3df` via `agent-loom-sync`; `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
 - **Skill index:** `docs/SKILL-INDEX.md` | **Routing:** `.agents/ROUTING.md`
 - **Memory:** `docs/memory/` bridged with `docs/agent-shared-context.md`
 

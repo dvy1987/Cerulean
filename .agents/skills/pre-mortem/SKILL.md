@@ -149,8 +149,12 @@ Decide who owns community before writing a single line of code.
 - [ ] Participants / perspectives named (even if solo role-play)
 - [ ] Output changes the plan or monitoring, not just a list
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Obvious failure cause avoided because it feels embarrassing
+- Pre-mortem run mid-execution after commitment locked
+- Failure causes blame people instead of systems
+- Mitigations listed without owner or timeline
 ## Impact Report
 
 ```

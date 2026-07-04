@@ -127,8 +127,12 @@ Then the real question isn't community vs. core product. The question is: do you
 - [ ] Questions tie to the decision at hand, not generic coaching
 - [ ] Session converges toward clarity or explicit uncertainty
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- User's surface question answered before probing
+- Short answer accepted without one deeper follow-up
+- Socratic used for simple binary decision
+- Session ends without surfacing deepest unresolved question
 ## Impact Report
 
 ```

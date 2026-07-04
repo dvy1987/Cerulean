@@ -6,7 +6,7 @@ Complete reference for all skills in this repo.
 Agents: read this when deciding which skill to invoke or checking what a skill produces.
 Humans: read this for a full picture of what's available and what each skill outputs.
 
-Last updated: 2026-07-04 (synced from agent-loom; Cerulean domain extensions below)
+Last updated: 2026-07-04 (library sync @ c97a3df; Cerulean domain extensions below)
 
 ---
 
@@ -643,6 +643,18 @@ Install globally: `~/.agents/skills/`. Output files land inside the current proj
 **Logged to:** `docs/skill-outputs/SKILL-OUTPUTS.md`
 **Impact report:** Repo, mode (single/multi), files created, sub-skills invoked, `[INFERRED — confirm]` tag count, source files modified (always 0), synthetic handoff seeded
 **Pairs with:** `project-setup` (interview-first, new/forward-looking projects) — this is the archaeology-first counterpart for legacy repos.
+
+---
+
+### `agent-loom-sync`
+**Triggers:** "sync agent-loom", "update skills from upstream", "rsync from ../agent-loom", "pull skill library updates", "refresh .agents folder", "merge agent-loom improvements", "update my agent skills without losing custom skills"
+**What it does:** Merges upstream agent-loom library skills into the project's `.agents/skills/` via per-skill rsync while preserving project-local and forked skills. Builds a dry-run plan (add / update / unchanged / local-only / forked), requires user confirmation before apply, writes `.agents/agent-loom-sync.json`, and recommends post-sync `validate-skills`. Never deletes local-only skills or overwrites `metadata.origin: project-local` skills.
+**Calls:** `validate-skills` (post-sync)
+**Output files:** `.agents/agent-loom-sync.json` (config); updated skill directories under `.agents/skills/`
+**Logged to:** `docs/skill-outputs/SKILL-OUTPUTS.md`
+**Impact report:** Upstream commit, add/update/protected/forked counts, applied yes/no
+**References:** `references/sync-policy.md`, `references/examples.md`, `scripts/sync_agent_loom.py`, `templates/agent-loom-sync.json`
+**Pairs with:** `project-setup` / `retroactive-project-setup` (initial `.agents` install) — this skill is the ongoing upgrade path.
 
 ---
 

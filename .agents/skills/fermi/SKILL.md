@@ -165,8 +165,12 @@ At $20/month and 5% market penetration (675 users), ARR = $162,000. This determi
 - [ ] Most uncertain factor identified for follow-up research
 - [ ] Estimate enables a decision (go / no-go / investigate)
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Most uncertain factor not identified or bounded
+- Estimate presented for legal or budget commitment
+- Independent approaches disagree by order of magnitude unresolved
+- Population or rate assumptions stated without source
 ## Impact Report
 
 ```

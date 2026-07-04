@@ -155,8 +155,12 @@ No edits needed.
 - [ ] No broken skill name references after edit
 - [ ] SKILL-OUTPUTS.md logged if files changed
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Description edited to remove skill names used as triggers
+- Examples rewritten to break illustrative skill references
+- Functional invoke links stripped from workflow steps
+- Call graph updated without checking reverse references
 ## Impact Report
 
 ```

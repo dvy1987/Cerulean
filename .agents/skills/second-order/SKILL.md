@@ -169,8 +169,12 @@ This decision should be evaluated at 12 months post-launch with conversion rate 
 - [ ] Time horizons used (not all consequences treated as immediate)
 - [ ] One hidden risk or opportunity surfaced beyond the obvious
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Only first-order benefits listed for the decision
+- Competitor response not modeled for strategic move
+- Human behavior change assumed instant not resisted
+- Consequence chain stops at one hop
 ## Impact Report
 
 ```

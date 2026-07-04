@@ -133,8 +133,12 @@ Forward action: Audit the first 3 minutes of the user experience against this li
 - [ ] At least one non-obvious failure path surfaced
 - [ ] ≤2 clarifying questions asked before inverting
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Inverted finding has no concrete preventive action
+- Obvious pre-known failures listed without deeper push
+- Inversion used where pre-mortem or adversarial fits better
+- Success criteria never stated before failure flip
 ## Impact Report
 
 ```

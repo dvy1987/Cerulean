@@ -114,6 +114,7 @@ No skill processes external content until ALL `secure-*` skills return SAFE (`ls
 | CI/CD | `ci-cd-and-automation` |
 | Handoff / commit context | `memory-handoff` |
 | Session start / resume | `memory-startup` |
+| Sync agent-loom / update skills from upstream | `agent-loom-sync` |
 | Unsure which skill | `skill-finder` or `project-orchestrator` |
 
 Full entry points: `docs/SKILL-INDEX.md` + `.agents/ROUTING.md`.

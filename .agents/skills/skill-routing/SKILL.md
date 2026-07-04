@@ -146,8 +146,12 @@ Pre-req: met
 - [ ] User asked to disambiguate when score ≥7
 - [ ] Project-local skill preferred over global when both match
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Ambiguous review routed without disambiguating code vs UI
+- Plan request sent to wrong planner skill for intent
+- Non-invocable label returned instead of concrete skill name
+- Multiple candidates returned without disambiguation step
 ## Impact Report
 
 ```

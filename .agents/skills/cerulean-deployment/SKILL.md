@@ -9,6 +9,7 @@ metadata:
   author: dvy1987
   version: "1.0"
   category: domain
+  origin: project-local
   sources: docs/DEPLOYMENT.md, docs/HANDOFF.md
 ---
 # Cerulean Deployment

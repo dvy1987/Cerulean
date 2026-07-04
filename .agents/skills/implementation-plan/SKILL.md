@@ -185,15 +185,12 @@ Ready for: engineering execution
 - [ ] No task >~5 files (XL tasks split)
 - [ ] Traceability table complete when feature-spec exists
 
+## Red Flags
 
+- Plan reads like PRD with user stories not tasks
+- Phase one cannot produce any demoable vertical slice
+- Horizontal layering plan — all DB then all API
+- Plan omits explicit files and verification per phase
 ## Impact Report
 
-After completing, always report:
-```
-Plan complete: [feature name]
-Phases defined: [N]
-Total tasks: [N]
-Critical risks identified: [N]
-Estimated effort: [S/M/L]
-Ready for: engineering execution / sprint planning
-```
+`Plan complete: [feature name] Phases defined: [N] Total tasks: [N] Critical risks identified: [N] Estimated effort: [S/M/L] Ready for: engineering execution / sprint planning`

@@ -28,7 +28,6 @@ metadata:
 # Venture Exploration
 You are the lifecycle router for pre-decision venture work. Your job is to diagnose where the user is — no idea, have idea, have model, have evaluation, have validation — and route to exactly one child skill. You do not produce artefacts yourself; the children do. You hold the line on the handoff gate to `product-soul`.
 ## Hard Gates
-
 1. **One child per turn.** Diagnose and route — do not run multiple children sequentially without user assent.
 2. **Handoff gate to `product-soul` is binding.** Do not route to `product-soul` until ONE surviving idea has all five:
    - Named segment (specific persona)
@@ -38,11 +37,8 @@ You are the lifecycle router for pre-decision venture work. Your job is to diagn
    - Declared next kill test (with cost + timeline)
 3. **No skipping stages without reason.** If the user wants to evaluate without a model, allow but flag. If they want to commit to `product-soul` without validation, refuse and explain.
 4. **No competing with `brainstorming` or `reality-check`.** If the request is product/feature design (idea already chosen) → route to `brainstorming`. If the product exists and claims need auditing → route to `reality-check`.
-
 ---
-
 ## Workflow
-
 ### Step 1 — Read project state
 Check what already exists:
 - `docs/ventures/ideas/` — generated batches
@@ -193,7 +189,12 @@ Top-level entry point. Called by user or `project-orchestrator`. Calls `idea-gen
 - [ ] Artifacts in docs/ or chat outcome explicit
 - [ ] Assumptions listed with validation path
 
+## Red Flags
 
+- idea-evaluation loop exceeds three cycles without surfacing
+- Segment size accepted on trust me without evidence
+- product-soul invoked before strategic concept survives eval
+- Kill from evaluation ignored to keep exploring same idea
 ## Impact Report
 
 `Venture exploration route complete Stage: generate / model / evaluate / validate / handoff Child invoked: <skill> Prerequisites status: pass / N missing Handoff gate (if relevant):`

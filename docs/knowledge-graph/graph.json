@@ -1,10 +1,10 @@
 {
   "version": "2.2",
-  "generated_at": "2026-07-04T09:08:47.225598+00:00",
+  "generated_at": "2026-07-04T14:12:08.483496+00:00",
   "mode": "skill-library",
   "mode_reason": "skill-library label: docs/skill-graph.md + docs/SKILL-INDEX.md present → adds authoritative skill invoke edges. Still scans full repo (not skills-only).",
   "scan_layers": [
-    "skills (105 in .agents/skills)",
+    "skills (106 in .agents/skills)",
     "repo-wide source ((root), packages, src, tests)",
     "docs (AGENTS.md, README.md, docs/**/*.md)",
     "memory (docs/memory, handoffs)",
@@ -15,33 +15,33 @@
   ],
   "root": "/Users/divya/Projects/Building-apps/Cerulean",
   "stats": {
-    "nodes": 256,
-    "edges": 369,
-    "authoritative_edges": 170,
-    "extracted_edges": 297,
-    "inferred_edges": 72,
+    "nodes": 258,
+    "edges": 305,
+    "authoritative_edges": 171,
+    "extracted_edges": 300,
+    "inferred_edges": 5,
     "node_types": {
       "config": 5,
-      "directory": 6,
+      "directory": 7,
       "doc": 29,
       "handoff": 1,
       "memory": 9,
       "module": 99,
       "package": 2,
-      "skill": 105
+      "skill": 106
     }
   },
   "god_nodes": [
+    "secure-skill",
     "universal-skill-creator",
     "types.ts (module)",
-    "secure-skill",
     "venture-exploration",
     "registry.ts (module)",
-    "actions.ts (module)",
-    "index.ts (module)",
     "experimentation",
-    "improve-skills",
-    "validate-skills"
+    "actions.ts (module)",
+    "validate-skills",
+    "index.ts (module)",
+    "improve-skills"
   ],
   "surprising_connections": [
     {
@@ -105,15 +105,21 @@
     "How does project-orchestrator (project) connect to skill-routing (skill)?",
     "How does project-orchestrator (project) connect to process-decomposer (process)?",
     "How does publish-skill (publish) connect to validate-skills (validate)?",
+    "What depends on secure-skill, and what does secure-skill invoke?",
     "What depends on universal-skill-creator, and what does universal-skill-creator invoke?",
-    "What depends on types.ts (module), and what does types.ts (module) invoke?",
-    "What depends on secure-skill, and what does secure-skill invoke?"
+    "What depends on types.ts (module), and what does types.ts (module) invoke?"
   ],
   "communities": {
-    "pre": [
+    "cerulean": [
+      "cerulean-deployment",
+      "cerulean-mcp",
+      "cerulean-project"
+    ],
+    "memory": [
       "adversarial-hat",
       "agent-builder",
       "agent-launcher",
+      "agent-loom-sync",
       "agent-system-architecture",
       "api-and-interface-design",
       "api-deprecation-and-migration",
@@ -200,7 +206,7 @@
       "validate-skills",
       "venture-exploration"
     ],
-    "design": [
+    "shipping": [
       "app-security-hardening",
       "browser-testing-with-devtools",
       "ci-cd-and-automation",
@@ -216,16 +222,11 @@
       "code-simplification",
       "technical-debt-audit"
     ],
-    "debug": [
-      "debug-and-fix"
-    ],
     "context": [
       "context-engineering"
     ],
-    "cerulean": [
-      "cerulean-deployment",
-      "cerulean-mcp",
-      "cerulean-project"
+    "debug": [
+      "debug-and-fix"
     ]
   },
   "nodes": [
@@ -762,7 +763,7 @@
       "label": "validate-skills",
       "type": "skill",
       "path": ".agents/skills/validate-skills/SKILL.md",
-      "category": "project-specific",
+      "category": "meta",
       "community": "validate"
     },
     {
@@ -836,6 +837,14 @@
       "path": ".agents/skills/cerulean-project/SKILL.md",
       "category": "domain",
       "community": "cerulean"
+    },
+    {
+      "id": "skill_agent_loom_sync",
+      "label": "agent-loom-sync",
+      "type": "skill",
+      "path": ".agents/skills/agent-loom-sync/SKILL.md",
+      "category": "project-specific",
+      "community": "agent"
     },
     {
       "id": "skill_secure_skill_repo_ingestion",
@@ -2198,6 +2207,13 @@
       "community": "structure"
     },
     {
+      "id": "directory_hooks",
+      "label": "hooks",
+      "type": "directory",
+      "path": "hooks",
+      "community": "structure"
+    },
+    {
       "id": "directory_packages",
       "label": "packages",
       "type": "directory",
@@ -2742,6 +2758,15 @@
     },
     {
       "source": "skill_project_setup",
+      "target": "skill_agent_loom_sync",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/project-setup/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_project_setup",
       "target": "skill_retroactive_project_setup",
       "relation": "invokes",
       "confidence": "EXTRACTED",
@@ -2787,6 +2812,15 @@
     },
     {
       "source": "skill_retroactive_project_setup",
+      "target": "skill_agent_loom_sync",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/retroactive-project-setup/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_retroactive_project_setup",
       "target": "skill_memory_capture",
       "relation": "invokes",
       "confidence": "EXTRACTED",
@@ -2829,6 +2863,15 @@
       "confidence_score": 1.0,
       "source_file": ".agents/skills/memory-promote/SKILL.md",
       "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_agent_loom_sync",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
     },
     {
       "source": "skill_universal_skill_creator",
@@ -3855,609 +3898,6 @@
       "confidence_score": 1.0,
       "source_file": "src/modules/insights/InsightTray.tsx",
       "provenance": "ts-import"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_cerulean_project",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_cerulean_deployment",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_cerulean_mcp",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_memory_startup",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_universal_skill_creator",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_split_skill",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_shipping_and_launch",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_debug_and_fix",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_code_review_crsp",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_brainstorming",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_incremental_implementation",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_prd_writing",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_implementation_plan",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_test_driven_development",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_app_security_hardening",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_ci_cd_and_automation",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_memory_handoff",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_skill_finder",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_agents_md",
-      "target": "skill_project_orchestrator",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "AGENTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_handoff_md",
-      "target": "module_tests_smoke_test_mjs",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/HANDOFF.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_handoff_md",
-      "target": "module_src_lib_config_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/HANDOFF.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_handoff_md",
-      "target": "module_src_lib_auth_api_keys_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/HANDOFF.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_context_from_db_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_api_workspace_client_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_hooks_useworkspacesync_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_modules_settings_settingspanel_tsx",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_packages_cerulean_mcp_src_client_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_tests_smoke_test_mjs",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_db_workspace_service_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_middleware_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_app_login_page_tsx",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_provider_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_app_api_ai_chat_route_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_chat_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_insight_extraction_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_orchestrator_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_index_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_modules_document_documentblockview_tsx",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_suggestion_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_ranking_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_tonal_adjustment_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_document_integration_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_document_expansion_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_memory_management_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_agents_exemplar_learning_agent_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_types_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_actions_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_context_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_registry_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_dev_router_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_lib_ai_background_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_store_aisettingsstore_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_agent_change_log_md",
-      "target": "module_src_store_memorystore_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/agent-change-log.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_memory_current_state_md",
-      "target": "skill_cerulean_project",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/memory/current-state.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_memory_current_state_md",
-      "target": "skill_cerulean_deployment",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/memory/current-state.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_memory_current_state_md",
-      "target": "skill_cerulean_mcp",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/memory/current-state.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_memory_agent_handoffs_md",
-      "target": "skill_cerulean_project",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/memory/agent-handoffs.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_memory_agent_handoffs_md",
-      "target": "skill_cerulean_deployment",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/memory/agent-handoffs.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_memory_agent_handoffs_md",
-      "target": "skill_cerulean_mcp",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/memory/agent-handoffs.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_memory_agent_handoffs_md",
-      "target": "skill_memory_startup",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/memory/agent-handoffs.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_memory_agent_handoffs_md",
-      "target": "skill_shipping_and_launch",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/memory/agent-handoffs.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_speclets_llm_scored_relevance_and_maturity_md",
-      "target": "module_src_types_index_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/speclets/llm-scored-relevance-and-maturity.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_speclets_llm_scored_relevance_and_maturity_md",
-      "target": "module_src_lib_ai_background_ts",
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "docs/speclets/llm-scored-relevance-and-maturity.md",
-      "provenance": "doc-path"
-    },
-    {
-      "source": "doc_docs_skill_outputs_skill_outputs_md",
-      "target": "skill_cerulean_project",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/skill-outputs/SKILL-OUTPUTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_skill_outputs_skill_outputs_md",
-      "target": "skill_cerulean_deployment",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/skill-outputs/SKILL-OUTPUTS.md",
-      "provenance": "doc-mention"
-    },
-    {
-      "source": "doc_docs_skill_outputs_skill_outputs_md",
-      "target": "skill_cerulean_mcp",
-      "relation": "mentions",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "docs/skill-outputs/SKILL-OUTPUTS.md",
-      "provenance": "doc-mention"
     },
     {
       "source": "handoff_2026_07_04_agent_skills_sync_from_agent_loom",

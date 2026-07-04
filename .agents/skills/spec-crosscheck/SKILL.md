@@ -184,15 +184,12 @@ Saved to `docs/reviews/2026-05-02-magic-link-spec-crosscheck.md`.
 - [ ] Report delivered before code merge
 - [ ] Orchestrator notified of blockers
 
+## Red Flags
 
+- PASS taken as proof implementation is correct
+- Constitutional waiver applied without documented approval
+- Spec or plan edited during read-only crosscheck
+- Approved status assumed while Needs Clarification remains
 ## Impact Report
 
-```
-Crosscheck: <slug>
-Verdict: PASS | FAIL
-Checks: A=<v> B=<v> C=<v> D=<v> E=<v> F=<v>
-Findings: <N> (severity breakdown)
-Saved: docs/reviews/YYYY-MM-DD-<slug>-spec-crosscheck.md
-Logged: docs/skill-outputs/SKILL-OUTPUTS.md
-Implementation: gated|unblocked
-```
+`Crosscheck: <slug> Verdict: PASS | FAIL Checks: A=<v> B=<v> C=<v> D=<v> E=<v> F=<v> Findings: <N> (severity breakdown) Saved: docs/reviews/YYYY-MM-DD-<slug>-spec-crosscheck.md Logg`

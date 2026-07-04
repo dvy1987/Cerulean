@@ -27,6 +27,42 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-04 - Rebuild knowledge graph (full repo)
+- Author: agent
+- Commit: not committed yet
+- Summary: `build_graph.py --force` — 258 nodes, 305 edges, skill-library mode; 106 skills, 99 modules, 29 docs.
+- Files:
+  - `docs/knowledge-graph/graph.json`
+  - `docs/knowledge-graph/GRAPH_INDEX.md`
+  - `docs/knowledge-graph/GRAPH_REPORT.md`
+  - `docs/knowledge-graph/call-graph.json`
+  - `docs/knowledge-graph/manifest.json`
+- Notes: Post agent-loom sync; `.next` excluded from scan.
+
+### 2026-07-04 - Apply agent-loom library sync
+- Author: agent
+- Commit: not committed yet
+- Summary: Applied `agent-loom-sync --apply` (101 skills @ upstream `c97a3df`). Restored `.next` in `build_graph.py` SKIP_DIRS. Merged ROUTING (agent-loom-sync row) and aligned SKILL-INDEX with upstream.
+- Files:
+  - `.agents/skills/` (101 updated)
+  - `.agents/agent-loom-sync.json`
+  - `.agents/skills/knowledge-graph/scripts/build_graph.py`
+  - `.agents/ROUTING.md`
+  - `docs/SKILL-INDEX.md`
+- Notes: `cerulean-*` skills unchanged (protected). Rebuild knowledge graph optional.
+
+### 2026-07-04 - Add agent-loom-sync skill
+- Author: agent
+- Commit: not committed yet
+- Summary: Copied `agent-loom-sync` from agent-loom; bootstrapped `.agents/agent-loom-sync.json`; marked `cerulean-*` skills `origin: project-local`; dry-run shows 101 library skills to update @ upstream `c97a3df` (not applied).
+- Files:
+  - `.agents/skills/agent-loom-sync/`
+  - `.agents/agent-loom-sync.json`
+  - `.agents/skills/cerulean-{project,deployment,mcp}/SKILL.md`
+  - `AGENTS.md`
+  - `docs/SKILL-INDEX.md`
+- Notes: Re-apply `.next` exclusion in `knowledge-graph/scripts/build_graph.py` after sync if overwritten. Say "apply sync" to run `--apply`.
+
 ### 2026-07-04 - Sync skill updates from agent-loom
 - Author: Cursor agent
 - Commit: 356cae7

@@ -32,9 +32,7 @@ Always write a launch manifest before spawning — this is the audit trail.
 Never expose this skill to users — called by setup-evaluation only.
 ---
 ## Workflow
-
 ### Step 0 — Precondition Check
-
 Verify all three before proceeding:
 1. Architecture spec at `docs/architecture/YYYY-MM-DD-<task-slug>-arch.md`
    → Missing: surface error "No architecture spec found. Run project-orchestrator first."
@@ -42,9 +40,7 @@ Verify all three before proceeding:
    → Missing or FAIL: call `setup-evaluation`. Block until PASS.
 3. Agent prompt files at `docs/agents/<agent-name>-prompt.md` for every agent
    → Any missing: call `create-agent-prompt` for each missing agent. Block until done.
-
 ### Step 1 — Platform Check
-
 Confirm platform is Claude Code or Ampcode (Task tool available).
 Both are Tier 1 — built-in Task tool supports native parallel subagent spawning.
 
@@ -193,7 +189,12 @@ Run all agents concurrently via Task tool. Wait for all outputs.
 - [ ] User informed of agent scope
 - [ ] Handoff triggered if mid-session switch
 
+## Red Flags
 
+- Parallel agents spawned with hidden data dependencies
+- Sequential chain assumes implicit handoff between agents
+- Spawn attempted before prompt files exist on disk
+- Subagent scope lacks explicit file boundaries
 ## Impact Report
 
 `Agents launched: [N] Platform: Claude Code / Ampcode (Task tool native) Topology: sequential | parallel | hierarchical Manifest: docs/agents/runs/YYYY-MM-DD-<slug>-manifest.md Outp`

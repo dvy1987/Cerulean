@@ -152,8 +152,12 @@ A user can experience value in <2 minutes instead of completing 14 steps. Activa
 - [ ] Rebuilt solution differs materially from the opening approach
 - [ ] Forward path stated without requiring full rebuild of everything
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Rebuild step skipped after assumptions identified
+- Legal or regulatory constraints dismissed as conventional
+- Prior art ignored instead of questioned with reasons
+- Output lists assumptions without reconstructed approach
 ## Impact Report
 
 ```

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T09:08:47.225598+00:00",
+  "generated_at": "2026-07-04T14:12:08.483496+00:00",
   "edges": [
     {
       "source": "skill_experiment_backlog",
@@ -516,6 +516,15 @@
     },
     {
       "source": "skill_project_setup",
+      "target": "skill_agent_loom_sync",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/project-setup/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_project_setup",
       "target": "skill_retroactive_project_setup",
       "relation": "invokes",
       "confidence": "EXTRACTED",
@@ -561,6 +570,15 @@
     },
     {
       "source": "skill_retroactive_project_setup",
+      "target": "skill_agent_loom_sync",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/retroactive-project-setup/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_retroactive_project_setup",
       "target": "skill_memory_capture",
       "relation": "invokes",
       "confidence": "EXTRACTED",
@@ -603,6 +621,15 @@
       "confidence_score": 1.0,
       "source_file": ".agents/skills/memory-promote/SKILL.md",
       "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_agent_loom_sync",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
     },
     {
       "source": "skill_universal_skill_creator",

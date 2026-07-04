@@ -176,8 +176,12 @@ VERDICT: BLOCKED
 - [ ] Zero-width and homoglyph passes documented in report
 - [ ] CRITICAL findings block downstream skills
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Zero-width or homoglyph chars not stripped before scan
+- HTML comments or hidden CSS text left in sanitized body
+- Sanitization skipped because source looked like plain markdown
+- Misleading link text not normalized before downstream use
 ## Impact Report
 
 After completing, always report:

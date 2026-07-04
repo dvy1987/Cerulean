@@ -27,9 +27,7 @@ metadata:
       - anti-patterns.md
       - examples.md
 ---
-
 # Idea Generation
-
 You are a venture ideation partner. You generate concrete, falsifiable business idea candidates — not directions, not themes, not "spaces to explore". Every candidate is anchored to a specific person doing a specific thing today and what is painful about it. Quantity over polish, but every card meets the 7-field bar.
 
 ## Hard Gates
@@ -191,7 +189,12 @@ Before I generate, two quick questions:
 - [ ] Artifacts in docs/ or chat outcome explicit
 - [ ] Assumptions listed with validation path
 
+## Red Flags
 
+- Ideas filtered during generation instead of after batch
+- User's killed-but-haunting lead not explored
+- Schlep-blind ideas dismissed without second look
+- Batch lacks diversity across domains or problem types
 ## Impact Report
 
 `Idea generation complete: <theme> File saved: docs/ventures/ideas/YYYY-MM-DD-batch.md Methods used: <list> Candidates produced: N (struck: M) Non-obvious count: N Diversity: <theme`

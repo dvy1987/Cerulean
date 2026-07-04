@@ -161,6 +161,12 @@ Awaiting your approval.
 - [ ] No direct vendoring of external SKILL.md without creator route
 - [ ] Actionable delta stated (what we adopt vs reject)
 
+## Red Flags
+
+- Star count used as quality proxy without reading source
+- README patterns adopted without verifying in code
+- Repo conventions copied as universal without context check
+- Repo code executed during learning instead of read-only
 ## Impact Report
 
 After completing, always report:

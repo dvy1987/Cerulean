@@ -11,6 +11,7 @@ metadata:
   author: dvy1987
   version: "1.0"
   category: domain
+  origin: project-local
   sources: AGENTS.md, docs/HANDOFF.md, docs/PRD.md
   resources:
     references:

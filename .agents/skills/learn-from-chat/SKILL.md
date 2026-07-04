@@ -186,8 +186,12 @@ Awaiting your approval to apply.
 - [ ] Line count ≤200 or routed to split/compress
 - [ ] Learning logged to research-learnings or skill gotchas, not raw chat
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Skill or memory updated without explicit user approval
+- One-off project quirk captured as global learning
+- Learning added to skill already at 200 lines without swap
+- User preference recorded as systematic skill gap
 ## Impact Report
 
 `Chat learning captured: [YYYY-MM-DD] Discovered: [one-sentence insight] Classification: [tag] | Generalizable: [yes/no] Status: [IMPLEMENTED / ESCALATED / REJECTED] Skills modified: [list] | Contradictions resolved: [...`

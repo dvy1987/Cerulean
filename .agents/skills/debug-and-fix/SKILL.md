@@ -177,7 +177,6 @@ Update HID-42 status to "Done"?
 | "I know the bug, I'll just fix it" | Unreproduced fixes often miss root cause. |
 | "The test is wrong, skip it" | Verify; fix test or code — don't skip. |
 | "Works on my machine" | Compare CI, config, dependencies. |
-| "I'll add the test later" | Later never comes; guard now. |
 
 ## Verification
 
@@ -188,14 +187,12 @@ Update HID-42 status to "Done"?
 
 ---
 
+## Red Flags
 
+- Fix applied against minified path without source mapping
+- Linear ticket claims accepted without codebase verification
+- Suite green but reproduction test does not exercise bug
+- Root cause declared before minimal repro exists
 ## Impact Report
 
-```
-Bug fixed: [one-line summary]
-Root cause: [one-line explanation]
-Files changed: [list]
-Tests: [command + pass/fail count]
-Linear updated: [yes — issue ID / no / N/A]
-Next: [next bug in queue, or "all clear"]
-```
+`Bug fixed: [one-line summary] Root cause: [one-line explanation] Files changed: [list] Tests: [command + pass/fail count] Linear updated: [yes — issue ID / no / N/A] Next: [next bu`

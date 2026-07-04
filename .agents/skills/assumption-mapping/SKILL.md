@@ -169,8 +169,12 @@ TOTAL: 8 assumptions found | Critical: 2 | Validated: 1 | Monitor: 5
 - [ ] Riskiest assumption identified explicitly
 - [ ] Output is actionable this week, not theoretical
 
-Read `references/examples.md` for full worked examples.
+## Red Flags
 
+- Risks listed instead of testable assumptions
+- Demand-layer assumptions skipped for tech-heavy ideas
+- More than 15 assumptions mapped in one pass
+- Assumption has no linked validation or kill criterion
 ## Impact Report
 
 ```

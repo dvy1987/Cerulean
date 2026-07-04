@@ -105,7 +105,10 @@ Classify every block before finalising. Over 60% of skill bodies in the wild are
 | Output format / schema | Extra examples beyond 2 | — |
 
 ### Step 7 — Size Check and Resize
-Run `wc -l .agents/skills/<skill-name>/SKILL.md`. If ≤200 → Step 8. Over 200: BACKGROUND/EDGE_CASE excess → `compress-skill`; distinct sub-capability → `split-skill`; unsure → `compress-skill` first (it escalates to `split-skill` if CORE still over).
+Run `wc -l .agents/skills/<skill-name>/SKILL.md`. If ≤200 → Step 7b. Over 200: BACKGROUND/EDGE_CASE excess → `compress-skill`; distinct sub-capability → `split-skill`; unsure → `compress-skill` first (it escalates to `split-skill` if CORE still over).
+
+### Step 7b — Stamp project-local origin
+Consumer repos: `python3 .agents/skills/universal-skill-creator/scripts/project_local_origin.py --stamp .agents/skills/<skill-name>` — auto-adds `origin: project-local`; never ask the user. Skips agent-loom library (`--is-library` → yes).
 
 ### Step 8 — Deconflict Name and Triggers
 Invoke `skill-deconflict` in single-skill mode. RENAME → rename before proceeding; REVISE → fix trigger overlap or add missing triggers; only proceed on PASS.
@@ -139,7 +142,12 @@ After generating, always state: tier + why · compatible platforms · install pa
 Every skill MUST include:
 1. **`
 
+## Red Flags
 
+- SKILL.md written directly bypassing creator Step 8 chain
+- secure-* gate skipped at Step 2 or Step 9
+- Description trigger phrases removed during edit
+- validate-skills or skill-deconflict not run after create
 ## Impact Report`** — skill-specific format, in-chat after every run.
 2. **File-output logging** — if skill writes project files, append `| YYYY-MM-DD HH:MM | [skill-name] | [path] | [description] |` to `docs/skill-outputs/SKILL-OUTPUTS.md` and notify user.
 3. **Learnings provenance** — if from `docs/learnings/*.md`, update source entry with skill name + path + date.
