@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-04 - Handoff documentation
 - Author: Cursor agent
-- Commit: not committed yet
+- Commit: 5819898
 - Summary: Created `docs/HANDOFF.md` (architecture, file map, deploy checklist, quirks, next work). Updated README with quick start. Refreshed `agent-shared-context.md` with resolved questions and unpushed commit state. Added HANDOFF to AGENTS.md key references.
 - Files:
   - `docs/HANDOFF.md`
