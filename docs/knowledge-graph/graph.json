@@ -1,0 +1,5552 @@
+{
+  "version": "2.2",
+  "generated_at": "2026-07-04T09:08:47.225598+00:00",
+  "mode": "skill-library",
+  "mode_reason": "skill-library label: docs/skill-graph.md + docs/SKILL-INDEX.md present → adds authoritative skill invoke edges. Still scans full repo (not skills-only).",
+  "scan_layers": [
+    "skills (105 in .agents/skills)",
+    "repo-wide source ((root), packages, src, tests)",
+    "docs (AGENTS.md, README.md, docs/**/*.md)",
+    "memory (docs/memory, handoffs)",
+    "packages (package.json workspaces)",
+    "config (.agents/ROUTING.md, tsconfig, pyproject, etc.)",
+    "top-level directories",
+    "authoritative invokes (skill-graph.md + SKILL-INDEX.md)"
+  ],
+  "root": "/Users/divya/Projects/Building-apps/Cerulean",
+  "stats": {
+    "nodes": 256,
+    "edges": 369,
+    "authoritative_edges": 170,
+    "extracted_edges": 297,
+    "inferred_edges": 72,
+    "node_types": {
+      "config": 5,
+      "directory": 6,
+      "doc": 29,
+      "handoff": 1,
+      "memory": 9,
+      "module": 99,
+      "package": 2,
+      "skill": 105
+    }
+  },
+  "god_nodes": [
+    "universal-skill-creator",
+    "types.ts (module)",
+    "secure-skill",
+    "venture-exploration",
+    "registry.ts (module)",
+    "actions.ts (module)",
+    "index.ts (module)",
+    "experimentation",
+    "improve-skills",
+    "validate-skills"
+  ],
+  "surprising_connections": [
+    {
+      "from": "project-orchestrator",
+      "to": "skill-routing",
+      "relation": "invokes",
+      "from_community": "project",
+      "to_community": "skill"
+    },
+    {
+      "from": "project-orchestrator",
+      "to": "process-decomposer",
+      "relation": "invokes",
+      "from_community": "project",
+      "to_community": "process"
+    },
+    {
+      "from": "publish-skill",
+      "to": "validate-skills",
+      "relation": "invokes",
+      "from_community": "publish",
+      "to_community": "validate"
+    },
+    {
+      "from": "publish-skill",
+      "to": "improve-skills",
+      "relation": "invokes",
+      "from_community": "publish",
+      "to_community": "improve"
+    },
+    {
+      "from": "customer-discovery",
+      "to": "venture-exploration",
+      "relation": "invokes",
+      "from_community": "customer",
+      "to_community": "venture"
+    },
+    {
+      "from": "reality-check",
+      "to": "assumption-mapping",
+      "relation": "invokes",
+      "from_community": "reality",
+      "to_community": "assumption"
+    },
+    {
+      "from": "reality-check",
+      "to": "adversarial-hat",
+      "relation": "invokes",
+      "from_community": "reality",
+      "to_community": "adversarial"
+    },
+    {
+      "from": "business-modeling",
+      "to": "venture-exploration",
+      "relation": "invokes",
+      "from_community": "business",
+      "to_community": "venture"
+    }
+  ],
+  "suggested_questions": [
+    "How does project-orchestrator (project) connect to skill-routing (skill)?",
+    "How does project-orchestrator (project) connect to process-decomposer (process)?",
+    "How does publish-skill (publish) connect to validate-skills (validate)?",
+    "What depends on universal-skill-creator, and what does universal-skill-creator invoke?",
+    "What depends on types.ts (module), and what does types.ts (module) invoke?",
+    "What depends on secure-skill, and what does secure-skill invoke?"
+  ],
+  "communities": {
+    "pre": [
+      "adversarial-hat",
+      "agent-builder",
+      "agent-launcher",
+      "agent-system-architecture",
+      "api-and-interface-design",
+      "api-deprecation-and-migration",
+      "apply-paper-to-project",
+      "architectural-decision-log",
+      "assumption-mapping",
+      "brainstorming",
+      "business-modeling",
+      "codebase-understanding",
+      "compress-skill",
+      "create-agent-prompt",
+      "cross-link-skills",
+      "customer-discovery",
+      "deep-thinking",
+      "deprecate-skill",
+      "eval-judge",
+      "eval-output",
+      "eval-pipeline",
+      "eval-rubric-design",
+      "experiment-backlog",
+      "experiment-readout",
+      "experiment-runbook",
+      "experiment-spec",
+      "experimentation",
+      "feature-spec",
+      "fermi",
+      "first-principles",
+      "generate-changelog",
+      "git-workflow-and-versioning",
+      "idea-evaluation",
+      "idea-generation",
+      "implementation-plan",
+      "improve-skills",
+      "incremental-implementation",
+      "inversion",
+      "knowledge-graph",
+      "learn-from",
+      "learn-from-article",
+      "learn-from-chat",
+      "learn-from-paper",
+      "learn-from-repo",
+      "library-skill",
+      "memory",
+      "memory-audit",
+      "memory-capture",
+      "memory-compact",
+      "memory-decision",
+      "memory-forget",
+      "memory-handoff",
+      "memory-promote",
+      "memory-recall",
+      "memory-startup",
+      "ooda",
+      "prd-writing",
+      "pre-mortem",
+      "problem-to-plan",
+      "process-decomposer",
+      "product-soul",
+      "project-constitution",
+      "project-orchestrator",
+      "project-setup",
+      "prune-skill",
+      "publish-skill",
+      "reality-check",
+      "research-skill",
+      "retroactive-project-setup",
+      "second-order",
+      "secure-skill",
+      "secure-skill-content-sanitization",
+      "secure-skill-repo-ingestion",
+      "secure-skill-runtime",
+      "setup-evaluation",
+      "skill-deconflict",
+      "skill-finder",
+      "skill-routing",
+      "socratic",
+      "source-driven-development",
+      "spec-crosscheck",
+      "spec-driven-development",
+      "split-skill",
+      "test-driven-development",
+      "tool-finder",
+      "universal-skill-creator",
+      "validate-skills",
+      "venture-exploration"
+    ],
+    "design": [
+      "app-security-hardening",
+      "browser-testing-with-devtools",
+      "ci-cd-and-automation",
+      "design-direction",
+      "design-review",
+      "design-system",
+      "frontend-design",
+      "performance-optimization",
+      "shipping-and-launch"
+    ],
+    "code": [
+      "code-review-crsp",
+      "code-simplification",
+      "technical-debt-audit"
+    ],
+    "debug": [
+      "debug-and-fix"
+    ],
+    "context": [
+      "context-engineering"
+    ],
+    "cerulean": [
+      "cerulean-deployment",
+      "cerulean-mcp",
+      "cerulean-project"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "skill_experiment_backlog",
+      "label": "experiment-backlog",
+      "type": "skill",
+      "path": ".agents/skills/experiment-backlog/SKILL.md",
+      "category": "project-specific",
+      "community": "experiment"
+    },
+    {
+      "id": "skill_api_deprecation_and_migration",
+      "label": "api-deprecation-and-migration",
+      "type": "skill",
+      "path": ".agents/skills/api-deprecation-and-migration/SKILL.md",
+      "category": "project-specific",
+      "community": "api"
+    },
+    {
+      "id": "skill_project_orchestrator",
+      "label": "project-orchestrator",
+      "type": "skill",
+      "path": ".agents/skills/project-orchestrator/SKILL.md",
+      "category": "project-specific",
+      "community": "project"
+    },
+    {
+      "id": "skill_memory_recall",
+      "label": "memory-recall",
+      "type": "skill",
+      "path": ".agents/skills/memory-recall/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_agent_system_architecture",
+      "label": "agent-system-architecture",
+      "type": "skill",
+      "path": ".agents/skills/agent-system-architecture/SKILL.md",
+      "category": "project-specific",
+      "community": "agent"
+    },
+    {
+      "id": "skill_app_security_hardening",
+      "label": "app-security-hardening",
+      "type": "skill",
+      "path": ".agents/skills/app-security-hardening/SKILL.md",
+      "category": "project-specific",
+      "community": "app"
+    },
+    {
+      "id": "skill_learn_from_chat",
+      "label": "learn-from-chat",
+      "type": "skill",
+      "path": ".agents/skills/learn-from-chat/SKILL.md",
+      "category": "meta",
+      "community": "learn"
+    },
+    {
+      "id": "skill_publish_skill",
+      "label": "publish-skill",
+      "type": "skill",
+      "path": ".agents/skills/publish-skill/SKILL.md",
+      "category": "meta",
+      "community": "publish"
+    },
+    {
+      "id": "skill_customer_discovery",
+      "label": "customer-discovery",
+      "type": "skill",
+      "path": ".agents/skills/customer-discovery/SKILL.md",
+      "category": "project-specific",
+      "community": "customer"
+    },
+    {
+      "id": "skill_test_driven_development",
+      "label": "test-driven-development",
+      "type": "skill",
+      "path": ".agents/skills/test-driven-development/SKILL.md",
+      "category": "project-specific",
+      "community": "test"
+    },
+    {
+      "id": "skill_reality_check",
+      "label": "reality-check",
+      "type": "skill",
+      "path": ".agents/skills/reality-check/SKILL.md",
+      "category": "project-specific",
+      "community": "reality"
+    },
+    {
+      "id": "skill_business_modeling",
+      "label": "business-modeling",
+      "type": "skill",
+      "path": ".agents/skills/business-modeling/SKILL.md",
+      "category": "project-specific",
+      "community": "business"
+    },
+    {
+      "id": "skill_pre_mortem",
+      "label": "pre-mortem",
+      "type": "skill",
+      "path": ".agents/skills/pre-mortem/SKILL.md",
+      "category": "thinking",
+      "community": "pre"
+    },
+    {
+      "id": "skill_split_skill",
+      "label": "split-skill",
+      "type": "skill",
+      "path": ".agents/skills/split-skill/SKILL.md",
+      "category": "meta",
+      "community": "split"
+    },
+    {
+      "id": "skill_cerulean_deployment",
+      "label": "cerulean-deployment",
+      "type": "skill",
+      "path": ".agents/skills/cerulean-deployment/SKILL.md",
+      "category": "domain",
+      "community": "cerulean"
+    },
+    {
+      "id": "skill_incremental_implementation",
+      "label": "incremental-implementation",
+      "type": "skill",
+      "path": ".agents/skills/incremental-implementation/SKILL.md",
+      "category": "project-specific",
+      "community": "incremental"
+    },
+    {
+      "id": "skill_memory",
+      "label": "memory",
+      "type": "skill",
+      "path": ".agents/skills/memory/SKILL.md",
+      "category": "project-specific",
+      "community": "core"
+    },
+    {
+      "id": "skill_experimentation",
+      "label": "experimentation",
+      "type": "skill",
+      "path": ".agents/skills/experimentation/SKILL.md",
+      "category": "project-specific",
+      "community": "core"
+    },
+    {
+      "id": "skill_agent_launcher",
+      "label": "agent-launcher",
+      "type": "skill",
+      "path": ".agents/skills/agent-launcher/SKILL.md",
+      "category": "project-specific",
+      "community": "agent"
+    },
+    {
+      "id": "skill_spec_crosscheck",
+      "label": "spec-crosscheck",
+      "type": "skill",
+      "path": ".agents/skills/spec-crosscheck/SKILL.md",
+      "category": "project-specific",
+      "community": "spec"
+    },
+    {
+      "id": "skill_improve_skills",
+      "label": "improve-skills",
+      "type": "skill",
+      "path": ".agents/skills/improve-skills/SKILL.md",
+      "category": "project-specific",
+      "community": "improve"
+    },
+    {
+      "id": "skill_experiment_runbook",
+      "label": "experiment-runbook",
+      "type": "skill",
+      "path": ".agents/skills/experiment-runbook/SKILL.md",
+      "category": "project-specific",
+      "community": "experiment"
+    },
+    {
+      "id": "skill_memory_decision",
+      "label": "memory-decision",
+      "type": "skill",
+      "path": ".agents/skills/memory-decision/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_memory_startup",
+      "label": "memory-startup",
+      "type": "skill",
+      "path": ".agents/skills/memory-startup/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_inversion",
+      "label": "inversion",
+      "type": "skill",
+      "path": ".agents/skills/inversion/SKILL.md",
+      "category": "thinking",
+      "community": "core"
+    },
+    {
+      "id": "skill_deprecate_skill",
+      "label": "deprecate-skill",
+      "type": "skill",
+      "path": ".agents/skills/deprecate-skill/SKILL.md",
+      "category": "meta",
+      "community": "deprecate"
+    },
+    {
+      "id": "skill_api_and_interface_design",
+      "label": "api-and-interface-design",
+      "type": "skill",
+      "path": ".agents/skills/api-and-interface-design/SKILL.md",
+      "category": "project-specific",
+      "community": "api"
+    },
+    {
+      "id": "skill_memory_audit",
+      "label": "memory-audit",
+      "type": "skill",
+      "path": ".agents/skills/memory-audit/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_knowledge_graph",
+      "label": "knowledge-graph",
+      "type": "skill",
+      "path": ".agents/skills/knowledge-graph/SKILL.md",
+      "category": "project-specific",
+      "community": "knowledge"
+    },
+    {
+      "id": "skill_setup_evaluation",
+      "label": "setup-evaluation",
+      "type": "skill",
+      "path": ".agents/skills/setup-evaluation/SKILL.md",
+      "category": "project-specific",
+      "community": "setup"
+    },
+    {
+      "id": "skill_experiment_spec",
+      "label": "experiment-spec",
+      "type": "skill",
+      "path": ".agents/skills/experiment-spec/SKILL.md",
+      "category": "project-specific",
+      "community": "experiment"
+    },
+    {
+      "id": "skill_memory_forget",
+      "label": "memory-forget",
+      "type": "skill",
+      "path": ".agents/skills/memory-forget/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_learn_from",
+      "label": "learn-from",
+      "type": "skill",
+      "path": ".agents/skills/learn-from/SKILL.md",
+      "category": "meta",
+      "community": "learn"
+    },
+    {
+      "id": "skill_skill_routing",
+      "label": "skill-routing",
+      "type": "skill",
+      "path": ".agents/skills/skill-routing/SKILL.md",
+      "category": "meta",
+      "community": "skill"
+    },
+    {
+      "id": "skill_tool_finder",
+      "label": "tool-finder",
+      "type": "skill",
+      "path": ".agents/skills/tool-finder/SKILL.md",
+      "category": "project-specific",
+      "community": "tool"
+    },
+    {
+      "id": "skill_second_order",
+      "label": "second-order",
+      "type": "skill",
+      "path": ".agents/skills/second-order/SKILL.md",
+      "category": "thinking",
+      "community": "second"
+    },
+    {
+      "id": "skill_agent_builder",
+      "label": "agent-builder",
+      "type": "skill",
+      "path": ".agents/skills/agent-builder/SKILL.md",
+      "category": "project-specific",
+      "community": "agent"
+    },
+    {
+      "id": "skill_skill_deconflict",
+      "label": "skill-deconflict",
+      "type": "skill",
+      "path": ".agents/skills/skill-deconflict/SKILL.md",
+      "category": "meta",
+      "community": "skill"
+    },
+    {
+      "id": "skill_compress_skill",
+      "label": "compress-skill",
+      "type": "skill",
+      "path": ".agents/skills/compress-skill/SKILL.md",
+      "category": "meta",
+      "community": "compress"
+    },
+    {
+      "id": "skill_learn_from_article",
+      "label": "learn-from-article",
+      "type": "skill",
+      "path": ".agents/skills/learn-from-article/SKILL.md",
+      "category": "meta",
+      "community": "learn"
+    },
+    {
+      "id": "skill_ci_cd_and_automation",
+      "label": "ci-cd-and-automation",
+      "type": "skill",
+      "path": ".agents/skills/ci-cd-and-automation/SKILL.md",
+      "category": "project-specific",
+      "community": "ci"
+    },
+    {
+      "id": "skill_codebase_understanding",
+      "label": "codebase-understanding",
+      "type": "skill",
+      "path": ".agents/skills/codebase-understanding/SKILL.md",
+      "category": "project-specific",
+      "community": "codebase"
+    },
+    {
+      "id": "skill_ooda",
+      "label": "ooda",
+      "type": "skill",
+      "path": ".agents/skills/ooda/SKILL.md",
+      "category": "thinking",
+      "community": "core"
+    },
+    {
+      "id": "skill_adversarial_hat",
+      "label": "adversarial-hat",
+      "type": "skill",
+      "path": ".agents/skills/adversarial-hat/SKILL.md",
+      "category": "thinking",
+      "community": "adversarial"
+    },
+    {
+      "id": "skill_context_engineering",
+      "label": "context-engineering",
+      "type": "skill",
+      "path": ".agents/skills/context-engineering/SKILL.md",
+      "category": "project-specific",
+      "community": "context"
+    },
+    {
+      "id": "skill_generate_changelog",
+      "label": "generate-changelog",
+      "type": "skill",
+      "path": ".agents/skills/generate-changelog/SKILL.md",
+      "category": "project-specific",
+      "community": "generate"
+    },
+    {
+      "id": "skill_technical_debt_audit",
+      "label": "technical-debt-audit",
+      "type": "skill",
+      "path": ".agents/skills/technical-debt-audit/SKILL.md",
+      "category": "project-specific",
+      "community": "technical"
+    },
+    {
+      "id": "skill_fermi",
+      "label": "fermi",
+      "type": "skill",
+      "path": ".agents/skills/fermi/SKILL.md",
+      "category": "thinking",
+      "community": "core"
+    },
+    {
+      "id": "skill_code_review_crsp",
+      "label": "code-review-crsp",
+      "type": "skill",
+      "path": ".agents/skills/code-review-crsp/SKILL.md",
+      "category": "project-specific",
+      "community": "code"
+    },
+    {
+      "id": "skill_venture_exploration",
+      "label": "venture-exploration",
+      "type": "skill",
+      "path": ".agents/skills/venture-exploration/SKILL.md",
+      "category": "project-specific",
+      "community": "venture"
+    },
+    {
+      "id": "skill_project_constitution",
+      "label": "project-constitution",
+      "type": "skill",
+      "path": ".agents/skills/project-constitution/SKILL.md",
+      "category": "project-specific",
+      "community": "project"
+    },
+    {
+      "id": "skill_process_decomposer",
+      "label": "process-decomposer",
+      "type": "skill",
+      "path": ".agents/skills/process-decomposer/SKILL.md",
+      "category": "project-specific",
+      "community": "process"
+    },
+    {
+      "id": "skill_library_skill",
+      "label": "library-skill",
+      "type": "skill",
+      "path": ".agents/skills/library-skill/SKILL.md",
+      "category": "meta",
+      "community": "library"
+    },
+    {
+      "id": "skill_cross_link_skills",
+      "label": "cross-link-skills",
+      "type": "skill",
+      "path": ".agents/skills/cross-link-skills/SKILL.md",
+      "category": "meta",
+      "community": "cross"
+    },
+    {
+      "id": "skill_assumption_mapping",
+      "label": "assumption-mapping",
+      "type": "skill",
+      "path": ".agents/skills/assumption-mapping/SKILL.md",
+      "category": "thinking",
+      "community": "assumption"
+    },
+    {
+      "id": "skill_eval_judge",
+      "label": "eval-judge",
+      "type": "skill",
+      "path": ".agents/skills/eval-judge/SKILL.md",
+      "category": "project-specific",
+      "community": "eval"
+    },
+    {
+      "id": "skill_apply_paper_to_project",
+      "label": "apply-paper-to-project",
+      "type": "skill",
+      "path": ".agents/skills/apply-paper-to-project/SKILL.md",
+      "category": "project-specific",
+      "community": "apply"
+    },
+    {
+      "id": "skill_product_soul",
+      "label": "product-soul",
+      "type": "skill",
+      "path": ".agents/skills/product-soul/SKILL.md",
+      "category": "project-specific",
+      "community": "product"
+    },
+    {
+      "id": "skill_shipping_and_launch",
+      "label": "shipping-and-launch",
+      "type": "skill",
+      "path": ".agents/skills/shipping-and-launch/SKILL.md",
+      "category": "project-specific",
+      "community": "shipping"
+    },
+    {
+      "id": "skill_implementation_plan",
+      "label": "implementation-plan",
+      "type": "skill",
+      "path": ".agents/skills/implementation-plan/SKILL.md",
+      "category": "project-specific",
+      "community": "implementation"
+    },
+    {
+      "id": "skill_spec_driven_development",
+      "label": "spec-driven-development",
+      "type": "skill",
+      "path": ".agents/skills/spec-driven-development/SKILL.md",
+      "category": "project-specific",
+      "community": "spec"
+    },
+    {
+      "id": "skill_project_setup",
+      "label": "project-setup",
+      "type": "skill",
+      "path": ".agents/skills/project-setup/SKILL.md",
+      "category": "project-specific",
+      "community": "project"
+    },
+    {
+      "id": "skill_idea_generation",
+      "label": "idea-generation",
+      "type": "skill",
+      "path": ".agents/skills/idea-generation/SKILL.md",
+      "category": "project-specific",
+      "community": "idea"
+    },
+    {
+      "id": "skill_problem_to_plan",
+      "label": "problem-to-plan",
+      "type": "skill",
+      "path": ".agents/skills/problem-to-plan/SKILL.md",
+      "category": "project-specific",
+      "community": "problem"
+    },
+    {
+      "id": "skill_cerulean_mcp",
+      "label": "cerulean-mcp",
+      "type": "skill",
+      "path": ".agents/skills/cerulean-mcp/SKILL.md",
+      "category": "domain",
+      "community": "cerulean"
+    },
+    {
+      "id": "skill_eval_rubric_design",
+      "label": "eval-rubric-design",
+      "type": "skill",
+      "path": ".agents/skills/eval-rubric-design/SKILL.md",
+      "category": "project-specific",
+      "community": "eval"
+    },
+    {
+      "id": "skill_validate_skills",
+      "label": "validate-skills",
+      "type": "skill",
+      "path": ".agents/skills/validate-skills/SKILL.md",
+      "category": "project-specific",
+      "community": "validate"
+    },
+    {
+      "id": "skill_retroactive_project_setup",
+      "label": "retroactive-project-setup",
+      "type": "skill",
+      "path": ".agents/skills/retroactive-project-setup/SKILL.md",
+      "category": "project-specific",
+      "community": "retroactive"
+    },
+    {
+      "id": "skill_debug_and_fix",
+      "label": "debug-and-fix",
+      "type": "skill",
+      "path": ".agents/skills/debug-and-fix/SKILL.md",
+      "category": "project-specific",
+      "community": "debug"
+    },
+    {
+      "id": "skill_brainstorming",
+      "label": "brainstorming",
+      "type": "skill",
+      "path": ".agents/skills/brainstorming/SKILL.md",
+      "category": "thinking",
+      "community": "core"
+    },
+    {
+      "id": "skill_architectural_decision_log",
+      "label": "architectural-decision-log",
+      "type": "skill",
+      "path": ".agents/skills/architectural-decision-log/SKILL.md",
+      "category": "project-specific",
+      "community": "architectural"
+    },
+    {
+      "id": "skill_memory_handoff",
+      "label": "memory-handoff",
+      "type": "skill",
+      "path": ".agents/skills/memory-handoff/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_memory_promote",
+      "label": "memory-promote",
+      "type": "skill",
+      "path": ".agents/skills/memory-promote/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_prune_skill",
+      "label": "prune-skill",
+      "type": "skill",
+      "path": ".agents/skills/prune-skill/SKILL.md",
+      "category": "meta",
+      "community": "prune"
+    },
+    {
+      "id": "skill_first_principles",
+      "label": "first-principles",
+      "type": "skill",
+      "path": ".agents/skills/first-principles/SKILL.md",
+      "category": "thinking",
+      "community": "first"
+    },
+    {
+      "id": "skill_cerulean_project",
+      "label": "cerulean-project",
+      "type": "skill",
+      "path": ".agents/skills/cerulean-project/SKILL.md",
+      "category": "domain",
+      "community": "cerulean"
+    },
+    {
+      "id": "skill_secure_skill_repo_ingestion",
+      "label": "secure-skill-repo-ingestion",
+      "type": "skill",
+      "path": ".agents/skills/secure-skill-repo-ingestion/SKILL.md",
+      "category": "meta",
+      "community": "secure"
+    },
+    {
+      "id": "skill_universal_skill_creator",
+      "label": "universal-skill-creator",
+      "type": "skill",
+      "path": ".agents/skills/universal-skill-creator/SKILL.md",
+      "category": "project-specific",
+      "community": "universal"
+    },
+    {
+      "id": "skill_deep_thinking",
+      "label": "deep-thinking",
+      "type": "skill",
+      "path": ".agents/skills/deep-thinking/SKILL.md",
+      "category": "thinking",
+      "community": "deep"
+    },
+    {
+      "id": "skill_skill_finder",
+      "label": "skill-finder",
+      "type": "skill",
+      "path": ".agents/skills/skill-finder/SKILL.md",
+      "category": "project-specific",
+      "community": "skill"
+    },
+    {
+      "id": "skill_learn_from_repo",
+      "label": "learn-from-repo",
+      "type": "skill",
+      "path": ".agents/skills/learn-from-repo/SKILL.md",
+      "category": "meta",
+      "community": "learn"
+    },
+    {
+      "id": "skill_frontend_design",
+      "label": "frontend-design",
+      "type": "skill",
+      "path": ".agents/skills/frontend-design/SKILL.md",
+      "category": "project-specific",
+      "community": "frontend"
+    },
+    {
+      "id": "skill_create_agent_prompt",
+      "label": "create-agent-prompt",
+      "type": "skill",
+      "path": ".agents/skills/create-agent-prompt/SKILL.md",
+      "category": "project-specific",
+      "community": "create"
+    },
+    {
+      "id": "skill_design_review",
+      "label": "design-review",
+      "type": "skill",
+      "path": ".agents/skills/design-review/SKILL.md",
+      "category": "project-specific",
+      "community": "design"
+    },
+    {
+      "id": "skill_design_direction",
+      "label": "design-direction",
+      "type": "skill",
+      "path": ".agents/skills/design-direction/SKILL.md",
+      "category": "project-specific",
+      "community": "design"
+    },
+    {
+      "id": "skill_code_simplification",
+      "label": "code-simplification",
+      "type": "skill",
+      "path": ".agents/skills/code-simplification/SKILL.md",
+      "category": "project-specific",
+      "community": "code"
+    },
+    {
+      "id": "skill_source_driven_development",
+      "label": "source-driven-development",
+      "type": "skill",
+      "path": ".agents/skills/source-driven-development/SKILL.md",
+      "category": "project-specific",
+      "community": "source"
+    },
+    {
+      "id": "skill_idea_evaluation",
+      "label": "idea-evaluation",
+      "type": "skill",
+      "path": ".agents/skills/idea-evaluation/SKILL.md",
+      "category": "project-specific",
+      "community": "idea"
+    },
+    {
+      "id": "skill_secure_skill_runtime",
+      "label": "secure-skill-runtime",
+      "type": "skill",
+      "path": ".agents/skills/secure-skill-runtime/SKILL.md",
+      "category": "meta",
+      "community": "secure"
+    },
+    {
+      "id": "skill_eval_pipeline",
+      "label": "eval-pipeline",
+      "type": "skill",
+      "path": ".agents/skills/eval-pipeline/SKILL.md",
+      "category": "project-specific",
+      "community": "eval"
+    },
+    {
+      "id": "skill_research_skill",
+      "label": "research-skill",
+      "type": "skill",
+      "path": ".agents/skills/research-skill/SKILL.md",
+      "category": "meta",
+      "community": "research"
+    },
+    {
+      "id": "skill_performance_optimization",
+      "label": "performance-optimization",
+      "type": "skill",
+      "path": ".agents/skills/performance-optimization/SKILL.md",
+      "category": "project-specific",
+      "community": "performance"
+    },
+    {
+      "id": "skill_eval_output",
+      "label": "eval-output",
+      "type": "skill",
+      "path": ".agents/skills/eval-output/SKILL.md",
+      "category": "project-specific",
+      "community": "eval"
+    },
+    {
+      "id": "skill_design_system",
+      "label": "design-system",
+      "type": "skill",
+      "path": ".agents/skills/design-system/SKILL.md",
+      "category": "project-specific",
+      "community": "design"
+    },
+    {
+      "id": "skill_socratic",
+      "label": "socratic",
+      "type": "skill",
+      "path": ".agents/skills/socratic/SKILL.md",
+      "category": "thinking",
+      "community": "core"
+    },
+    {
+      "id": "skill_browser_testing_with_devtools",
+      "label": "browser-testing-with-devtools",
+      "type": "skill",
+      "path": ".agents/skills/browser-testing-with-devtools/SKILL.md",
+      "category": "project-specific",
+      "community": "browser"
+    },
+    {
+      "id": "skill_feature_spec",
+      "label": "feature-spec",
+      "type": "skill",
+      "path": ".agents/skills/feature-spec/SKILL.md",
+      "category": "project-specific",
+      "community": "feature"
+    },
+    {
+      "id": "skill_experiment_readout",
+      "label": "experiment-readout",
+      "type": "skill",
+      "path": ".agents/skills/experiment-readout/SKILL.md",
+      "category": "project-specific",
+      "community": "experiment"
+    },
+    {
+      "id": "skill_secure_skill",
+      "label": "secure-skill",
+      "type": "skill",
+      "path": ".agents/skills/secure-skill/SKILL.md",
+      "category": "meta",
+      "community": "secure"
+    },
+    {
+      "id": "skill_memory_capture",
+      "label": "memory-capture",
+      "type": "skill",
+      "path": ".agents/skills/memory-capture/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_prd_writing",
+      "label": "prd-writing",
+      "type": "skill",
+      "path": ".agents/skills/prd-writing/SKILL.md",
+      "category": "project-specific",
+      "community": "prd"
+    },
+    {
+      "id": "skill_git_workflow_and_versioning",
+      "label": "git-workflow-and-versioning",
+      "type": "skill",
+      "path": ".agents/skills/git-workflow-and-versioning/SKILL.md",
+      "category": "project-specific",
+      "community": "git"
+    },
+    {
+      "id": "skill_secure_skill_content_sanitization",
+      "label": "secure-skill-content-sanitization",
+      "type": "skill",
+      "path": ".agents/skills/secure-skill-content-sanitization/SKILL.md",
+      "category": "meta",
+      "community": "secure"
+    },
+    {
+      "id": "skill_memory_compact",
+      "label": "memory-compact",
+      "type": "skill",
+      "path": ".agents/skills/memory-compact/SKILL.md",
+      "category": "project-specific",
+      "community": "memory"
+    },
+    {
+      "id": "skill_learn_from_paper",
+      "label": "learn-from-paper",
+      "type": "skill",
+      "path": ".agents/skills/learn-from-paper/SKILL.md",
+      "category": "meta",
+      "community": "learn"
+    },
+    {
+      "id": "module_next_env_d_ts",
+      "label": "next-env.d.ts",
+      "type": "module",
+      "path": "next-env.d.ts",
+      "community": "code",
+      "language": "ts"
+    },
+    {
+      "id": "module_next_config_mjs",
+      "label": "next.config.mjs",
+      "type": "module",
+      "path": "next.config.mjs",
+      "community": "code",
+      "language": "mjs"
+    },
+    {
+      "id": "module_packages_cerulean_mcp_src_client_ts",
+      "label": "client.ts",
+      "type": "module",
+      "path": "packages/cerulean-mcp/src/client.ts",
+      "community": "packages",
+      "language": "ts"
+    },
+    {
+      "id": "module_packages_cerulean_mcp_src_config_ts",
+      "label": "config.ts",
+      "type": "module",
+      "path": "packages/cerulean-mcp/src/config.ts",
+      "community": "packages",
+      "language": "ts"
+    },
+    {
+      "id": "module_packages_cerulean_mcp_src_errors_ts",
+      "label": "errors.ts",
+      "type": "module",
+      "path": "packages/cerulean-mcp/src/errors.ts",
+      "community": "packages",
+      "language": "ts"
+    },
+    {
+      "id": "module_packages_cerulean_mcp_src_helpers_ts",
+      "label": "helpers.ts",
+      "type": "module",
+      "path": "packages/cerulean-mcp/src/helpers.ts",
+      "community": "packages",
+      "language": "ts"
+    },
+    {
+      "id": "module_packages_cerulean_mcp_src_index_ts",
+      "label": "index.ts",
+      "type": "module",
+      "path": "packages/cerulean-mcp/src/index.ts",
+      "community": "packages",
+      "language": "ts"
+    },
+    {
+      "id": "module_packages_cerulean_mcp_src_responses_ts",
+      "label": "responses.ts",
+      "type": "module",
+      "path": "packages/cerulean-mcp/src/responses.ts",
+      "community": "packages",
+      "language": "ts"
+    },
+    {
+      "id": "module_packages_cerulean_mcp_src_tools_ts",
+      "label": "tools.ts",
+      "type": "module",
+      "path": "packages/cerulean-mcp/src/tools.ts",
+      "community": "packages",
+      "language": "ts"
+    },
+    {
+      "id": "module_postcss_config_mjs",
+      "label": "postcss.config.mjs",
+      "type": "module",
+      "path": "postcss.config.mjs",
+      "community": "code",
+      "language": "mjs"
+    },
+    {
+      "id": "module_src_app_api_ai_chat_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/ai/chat/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_auth_login_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/auth/login/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_auth_logout_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/auth/logout/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_auth_signup_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/auth/signup/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_ai_run_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/ai/run/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_api_keys_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/api-keys/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_blocks_id_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/blocks/[id]/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_blocks_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/blocks/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_document_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/document/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_exemplars_id_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/exemplars/[id]/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_exemplars_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/exemplars/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_export_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/export/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_graph_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/graph/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_graph_sync_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/graph/sync/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_insights_id_promote_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/insights/[id]/promote/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_insights_id_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/insights/[id]/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_insights_extract_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/insights/extract/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_insights_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/insights/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_insights_to_prompt_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/insights/to-prompt/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_messages_id_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/messages/[id]/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_messages_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/messages/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_patches_accept_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/patches/accept/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_patches_reject_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/patches/reject/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_patches_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/patches/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_settings_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/settings/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_workspace_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/workspace/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_auth_callback_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/auth/callback/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_layout_tsx",
+      "label": "layout.tsx",
+      "type": "module",
+      "path": "src/app/layout.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_app_login_page_tsx",
+      "label": "page.tsx",
+      "type": "module",
+      "path": "src/app/login/page.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_app_page_tsx",
+      "label": "page.tsx",
+      "type": "module",
+      "path": "src/app/page.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_components_workspace_tsx",
+      "label": "Workspace.tsx",
+      "type": "module",
+      "path": "src/components/Workspace.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_hooks_useworkspacesync_ts",
+      "label": "useWorkspaceSync.ts",
+      "type": "module",
+      "path": "src/hooks/useWorkspaceSync.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_actions_ts",
+      "label": "actions.ts",
+      "type": "module",
+      "path": "src/lib/ai/actions.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_chat_agent_ts",
+      "label": "chat-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/chat-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_document_expansion_agent_ts",
+      "label": "document-expansion-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/document-expansion-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_document_integration_agent_ts",
+      "label": "document-integration-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/document-integration-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_exemplar_learning_agent_ts",
+      "label": "exemplar-learning-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/exemplar-learning-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_insight_extraction_agent_ts",
+      "label": "insight-extraction-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/insight-extraction-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
+      "label": "knowledge-graph-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/knowledge-graph-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_memory_management_agent_ts",
+      "label": "memory-management-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/memory-management-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_ranking_agent_ts",
+      "label": "ranking-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/ranking-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_suggestion_agent_ts",
+      "label": "suggestion-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/suggestion-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_agents_tonal_adjustment_agent_ts",
+      "label": "tonal-adjustment-agent.ts",
+      "type": "module",
+      "path": "src/lib/ai/agents/tonal-adjustment-agent.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_background_ts",
+      "label": "background.ts",
+      "type": "module",
+      "path": "src/lib/ai/background.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_call_ai_ts",
+      "label": "call-ai.ts",
+      "type": "module",
+      "path": "src/lib/ai/call-ai.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_context_from_db_ts",
+      "label": "context-from-db.ts",
+      "type": "module",
+      "path": "src/lib/ai/context-from-db.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_context_ts",
+      "label": "context.ts",
+      "type": "module",
+      "path": "src/lib/ai/context.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_dev_ai_ts",
+      "label": "dev-ai.ts",
+      "type": "module",
+      "path": "src/lib/ai/dev-ai.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_dev_router_ts",
+      "label": "dev-router.ts",
+      "type": "module",
+      "path": "src/lib/ai/dev-router.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_index_ts",
+      "label": "index.ts",
+      "type": "module",
+      "path": "src/lib/ai/index.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_orchestrator_ts",
+      "label": "orchestrator.ts",
+      "type": "module",
+      "path": "src/lib/ai/orchestrator.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_provider_ts",
+      "label": "provider.ts",
+      "type": "module",
+      "path": "src/lib/ai/provider.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_registry_ts",
+      "label": "registry.ts",
+      "type": "module",
+      "path": "src/lib/ai/registry.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_types_ts",
+      "label": "types.ts",
+      "type": "module",
+      "path": "src/lib/ai/types.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_api_route_helpers_ts",
+      "label": "route-helpers.ts",
+      "type": "module",
+      "path": "src/lib/api/route-helpers.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_api_workspace_client_ts",
+      "label": "workspace-client.ts",
+      "type": "module",
+      "path": "src/lib/api/workspace-client.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_auth_api_keys_ts",
+      "label": "api-keys.ts",
+      "type": "module",
+      "path": "src/lib/auth/api-keys.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_auth_rate_limit_ts",
+      "label": "rate-limit.ts",
+      "type": "module",
+      "path": "src/lib/auth/rate-limit.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_auth_request_auth_ts",
+      "label": "request-auth.ts",
+      "type": "module",
+      "path": "src/lib/auth/request-auth.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_auth_username_ts",
+      "label": "username.ts",
+      "type": "module",
+      "path": "src/lib/auth/username.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_config_ts",
+      "label": "config.ts",
+      "type": "module",
+      "path": "src/lib/config.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_db_workspace_service_ts",
+      "label": "workspace-service.ts",
+      "type": "module",
+      "path": "src/lib/db/workspace-service.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_supabase_admin_ts",
+      "label": "admin.ts",
+      "type": "module",
+      "path": "src/lib/supabase/admin.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_supabase_client_ts",
+      "label": "client.ts",
+      "type": "module",
+      "path": "src/lib/supabase/client.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_supabase_server_ts",
+      "label": "server.ts",
+      "type": "module",
+      "path": "src/lib/supabase/server.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_middleware_ts",
+      "label": "middleware.ts",
+      "type": "module",
+      "path": "src/middleware.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_modules_chat_chatinput_tsx",
+      "label": "ChatInput.tsx",
+      "type": "module",
+      "path": "src/modules/chat/ChatInput.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_chat_chatmessage_tsx",
+      "label": "ChatMessage.tsx",
+      "type": "module",
+      "path": "src/modules/chat/ChatMessage.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_chat_chatpanel_tsx",
+      "label": "ChatPanel.tsx",
+      "type": "module",
+      "path": "src/modules/chat/ChatPanel.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_chat_highlightmenu_tsx",
+      "label": "HighlightMenu.tsx",
+      "type": "module",
+      "path": "src/modules/chat/HighlightMenu.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_chat_thinkingsuggestions_tsx",
+      "label": "ThinkingSuggestions.tsx",
+      "type": "module",
+      "path": "src/modules/chat/ThinkingSuggestions.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_document_documentblockview_tsx",
+      "label": "DocumentBlockView.tsx",
+      "type": "module",
+      "path": "src/modules/document/DocumentBlockView.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_document_documentimport_tsx",
+      "label": "DocumentImport.tsx",
+      "type": "module",
+      "path": "src/modules/document/DocumentImport.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_document_documentpanel_tsx",
+      "label": "DocumentPanel.tsx",
+      "type": "module",
+      "path": "src/modules/document/DocumentPanel.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_document_patchreview_tsx",
+      "label": "PatchReview.tsx",
+      "type": "module",
+      "path": "src/modules/document/PatchReview.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_graph_graphview_tsx",
+      "label": "GraphView.tsx",
+      "type": "module",
+      "path": "src/modules/graph/GraphView.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_insights_insightcard_tsx",
+      "label": "InsightCard.tsx",
+      "type": "module",
+      "path": "src/modules/insights/InsightCard.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_insights_insighttray_tsx",
+      "label": "InsightTray.tsx",
+      "type": "module",
+      "path": "src/modules/insights/InsightTray.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_settings_exemplarupload_tsx",
+      "label": "ExemplarUpload.tsx",
+      "type": "module",
+      "path": "src/modules/settings/ExemplarUpload.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_settings_settingspanel_tsx",
+      "label": "SettingsPanel.tsx",
+      "type": "module",
+      "path": "src/modules/settings/SettingsPanel.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_store_aisettingsstore_ts",
+      "label": "aiSettingsStore.ts",
+      "type": "module",
+      "path": "src/store/aiSettingsStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_store_chatstore_ts",
+      "label": "chatStore.ts",
+      "type": "module",
+      "path": "src/store/chatStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_store_documentstore_ts",
+      "label": "documentStore.ts",
+      "type": "module",
+      "path": "src/store/documentStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_store_graphstore_ts",
+      "label": "graphStore.ts",
+      "type": "module",
+      "path": "src/store/graphStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_store_insightstore_ts",
+      "label": "insightStore.ts",
+      "type": "module",
+      "path": "src/store/insightStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_store_memorystore_ts",
+      "label": "memoryStore.ts",
+      "type": "module",
+      "path": "src/store/memoryStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_types_index_ts",
+      "label": "index.ts",
+      "type": "module",
+      "path": "src/types/index.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_tailwind_config_ts",
+      "label": "tailwind.config.ts",
+      "type": "module",
+      "path": "tailwind.config.ts",
+      "community": "code",
+      "language": "ts"
+    },
+    {
+      "id": "module_tests_smoke_test_mjs",
+      "label": "smoke.test.mjs",
+      "type": "module",
+      "path": "tests/smoke.test.mjs",
+      "community": "tests",
+      "language": "mjs"
+    },
+    {
+      "id": "package_cerulean_app",
+      "label": "cerulean-app",
+      "type": "package",
+      "path": ".",
+      "community": "packages"
+    },
+    {
+      "id": "package_cerulean_mcp_server",
+      "label": "@cerulean/mcp-server",
+      "type": "package",
+      "path": "packages/cerulean-mcp",
+      "community": "packages"
+    },
+    {
+      "id": "config_package_json",
+      "label": "package.json",
+      "type": "config",
+      "path": "package.json",
+      "community": "config"
+    },
+    {
+      "id": "config_tsconfig_json",
+      "label": "tsconfig.json",
+      "type": "config",
+      "path": "tsconfig.json",
+      "community": "config"
+    },
+    {
+      "id": "config_packages_cerulean_mcp_package_json",
+      "label": "package.json",
+      "type": "config",
+      "path": "packages/cerulean-mcp/package.json",
+      "community": "config"
+    },
+    {
+      "id": "config_packages_cerulean_mcp_tsconfig_json",
+      "label": "tsconfig.json",
+      "type": "config",
+      "path": "packages/cerulean-mcp/tsconfig.json",
+      "community": "config"
+    },
+    {
+      "id": "config_agents_routing_md",
+      "label": "ROUTING.md",
+      "type": "config",
+      "path": ".agents/ROUTING.md",
+      "community": "agents"
+    },
+    {
+      "id": "doc_agents_md",
+      "label": "AGENTS",
+      "type": "doc",
+      "path": "AGENTS.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_readme_md",
+      "label": "README",
+      "type": "doc",
+      "path": "README.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_package_json",
+      "label": "package",
+      "type": "doc",
+      "path": "package.json",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_surprise_md",
+      "label": "surprise",
+      "type": "doc",
+      "path": "docs/surprise.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_prd_md",
+      "label": "PRD",
+      "type": "doc",
+      "path": "docs/PRD.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_what_is_mcp_md",
+      "label": "WHAT-IS-MCP",
+      "type": "doc",
+      "path": "docs/WHAT-IS-MCP.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_master_prompt_md",
+      "label": "master-prompt",
+      "type": "doc",
+      "path": "docs/master-prompt.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_mcp_agent_guide_md",
+      "label": "MCP-AGENT-GUIDE",
+      "type": "doc",
+      "path": "docs/MCP-AGENT-GUIDE.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_skill_index_md",
+      "label": "SKILL-INDEX",
+      "type": "doc",
+      "path": "docs/SKILL-INDEX.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_deployment_md",
+      "label": "DEPLOYMENT",
+      "type": "doc",
+      "path": "docs/DEPLOYMENT.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_skill_graph_md",
+      "label": "skill-graph",
+      "type": "doc",
+      "path": "docs/skill-graph.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_ux_overhaul_plan_md",
+      "label": "ux-overhaul-plan",
+      "type": "doc",
+      "path": "docs/ux-overhaul-plan.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_handoff_md",
+      "label": "HANDOFF",
+      "type": "doc",
+      "path": "docs/HANDOFF.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_agent_change_log_md",
+      "label": "agent-change-log",
+      "type": "doc",
+      "path": "docs/agent-change-log.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_agent_shared_context_md",
+      "label": "agent-shared-context",
+      "type": "doc",
+      "path": "docs/agent-shared-context.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_skill_examples_index_md",
+      "label": "SKILL-EXAMPLES-INDEX",
+      "type": "doc",
+      "path": "docs/SKILL-EXAMPLES-INDEX.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_memory_decision_log_md",
+      "label": "decision-log",
+      "type": "doc",
+      "path": "docs/memory/decision-log.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_memory_deferred_md",
+      "label": "deferred",
+      "type": "doc",
+      "path": "docs/memory/deferred.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_memory_memory_routing_md",
+      "label": "MEMORY-ROUTING",
+      "type": "doc",
+      "path": "docs/memory/MEMORY-ROUTING.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_memory_project_index_md",
+      "label": "project-index",
+      "type": "doc",
+      "path": "docs/memory/project-index.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_memory_current_state_md",
+      "label": "current-state",
+      "type": "doc",
+      "path": "docs/memory/current-state.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_memory_agent_handoffs_md",
+      "label": "agent-handoffs",
+      "type": "doc",
+      "path": "docs/memory/agent-handoffs.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_memory_open_questions_md",
+      "label": "open-questions",
+      "type": "doc",
+      "path": "docs/memory/open-questions.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_memory_session_log_md",
+      "label": "session-log",
+      "type": "doc",
+      "path": "docs/memory/session-log.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_memory_learnings_md",
+      "label": "learnings",
+      "type": "doc",
+      "path": "docs/memory/learnings.md",
+      "community": "memory"
+    },
+    {
+      "id": "doc_docs_speclets_llm_scored_relevance_and_maturity_md",
+      "label": "llm-scored-relevance-and-maturity",
+      "type": "doc",
+      "path": "docs/speclets/llm-scored-relevance-and-maturity.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_speclets_visual_relevance_maturity_indicators_md",
+      "label": "visual-relevance-maturity-indicators",
+      "type": "doc",
+      "path": "docs/speclets/visual-relevance-maturity-indicators.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_speclets_luminous_seam_divider_md",
+      "label": "luminous-seam-divider",
+      "type": "doc",
+      "path": "docs/speclets/luminous-seam-divider.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_skill_outputs_skill_outputs_md",
+      "label": "SKILL-OUTPUTS",
+      "type": "doc",
+      "path": "docs/skill-outputs/SKILL-OUTPUTS.md",
+      "community": "docs"
+    },
+    {
+      "id": "memory_docs_memory_decision_log_md",
+      "label": "decision-log",
+      "type": "memory",
+      "path": "docs/memory/decision-log.md",
+      "community": "memory"
+    },
+    {
+      "id": "memory_docs_memory_deferred_md",
+      "label": "deferred",
+      "type": "memory",
+      "path": "docs/memory/deferred.md",
+      "community": "memory"
+    },
+    {
+      "id": "memory_docs_memory_memory_routing_md",
+      "label": "MEMORY-ROUTING",
+      "type": "memory",
+      "path": "docs/memory/MEMORY-ROUTING.md",
+      "community": "memory"
+    },
+    {
+      "id": "memory_docs_memory_project_index_md",
+      "label": "project-index",
+      "type": "memory",
+      "path": "docs/memory/project-index.md",
+      "community": "memory"
+    },
+    {
+      "id": "memory_docs_memory_current_state_md",
+      "label": "current-state",
+      "type": "memory",
+      "path": "docs/memory/current-state.md",
+      "community": "memory"
+    },
+    {
+      "id": "memory_docs_memory_agent_handoffs_md",
+      "label": "agent-handoffs",
+      "type": "memory",
+      "path": "docs/memory/agent-handoffs.md",
+      "community": "memory"
+    },
+    {
+      "id": "handoff_2026_07_04_agent_skills_sync_from_agent_loom",
+      "label": "2026-07-04 — Agent skills sync from agent-loom",
+      "type": "handoff",
+      "path": "docs/memory/agent-handoffs.md",
+      "community": "memory"
+    },
+    {
+      "id": "memory_docs_memory_open_questions_md",
+      "label": "open-questions",
+      "type": "memory",
+      "path": "docs/memory/open-questions.md",
+      "community": "memory"
+    },
+    {
+      "id": "memory_docs_memory_session_log_md",
+      "label": "session-log",
+      "type": "memory",
+      "path": "docs/memory/session-log.md",
+      "community": "memory"
+    },
+    {
+      "id": "memory_docs_memory_learnings_md",
+      "label": "learnings",
+      "type": "memory",
+      "path": "docs/memory/learnings.md",
+      "community": "memory"
+    },
+    {
+      "id": "directory_agents",
+      "label": ".agents",
+      "type": "directory",
+      "path": ".agents",
+      "community": "structure"
+    },
+    {
+      "id": "directory_docs",
+      "label": "docs",
+      "type": "directory",
+      "path": "docs",
+      "community": "structure"
+    },
+    {
+      "id": "directory_packages",
+      "label": "packages",
+      "type": "directory",
+      "path": "packages",
+      "community": "structure"
+    },
+    {
+      "id": "directory_src",
+      "label": "src",
+      "type": "directory",
+      "path": "src",
+      "community": "structure"
+    },
+    {
+      "id": "directory_supabase",
+      "label": "supabase",
+      "type": "directory",
+      "path": "supabase",
+      "community": "structure"
+    },
+    {
+      "id": "directory_tests",
+      "label": "tests",
+      "type": "directory",
+      "path": "tests",
+      "community": "structure"
+    }
+  ],
+  "edges": [
+    {
+      "source": "skill_experiment_backlog",
+      "target": "skill_experiment_spec",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/experiment-backlog/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_project_orchestrator",
+      "target": "skill_skill_routing",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_project_orchestrator",
+      "target": "skill_process_decomposer",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_project_orchestrator",
+      "target": "skill_project_setup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_publish_skill",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/publish-skill/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_publish_skill",
+      "target": "skill_improve_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/publish-skill/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_customer_discovery",
+      "target": "skill_venture_exploration",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/customer-discovery/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_reality_check",
+      "target": "skill_assumption_mapping",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_reality_check",
+      "target": "skill_adversarial_hat",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_business_modeling",
+      "target": "skill_venture_exploration",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/business-modeling/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_split_skill",
+      "target": "skill_improve_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/split-skill/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_split_skill",
+      "target": "skill_compress_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/split-skill/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_learn_from_chat",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/memory/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_startup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_recall",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_capture",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_handoff",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_decision",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_promote",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_compact",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_audit",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_memory_forget",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_experiment_readout",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_prune_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_research_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_skill_deconflict",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_split_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_cross_link_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experiment_runbook",
+      "target": "skill_problem_to_plan",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experiment_spec",
+      "target": "skill_experiment_runbook",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/experiment-spec/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_apply_paper_to_project",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/learn-from/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_compress_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/learn-from/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_split_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/learn-from/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_learn_from_article",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_learn_from_repo",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_agent_builder",
+      "target": "skill_setup_evaluation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_compress_skill",
+      "target": "skill_split_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/compress-skill/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_generate_changelog",
+      "target": "skill_memory_capture",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/generate-changelog/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_product_soul",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_brainstorming",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_reality_check",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_business_modeling",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_idea_evaluation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_customer_discovery",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_process_decomposer",
+      "target": "skill_problem_to_plan",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/process-decomposer/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_library_skill",
+      "target": "skill_generate_changelog",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_library_skill",
+      "target": "skill_codebase_understanding",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/library-skill/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_library_skill",
+      "target": "skill_prd_writing",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/library-skill/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_eval_judge",
+      "target": "skill_eval_rubric_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/eval-judge/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_apply_paper_to_project",
+      "target": "skill_learn_from_paper",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/apply-paper-to-project/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_implementation_plan",
+      "target": "skill_feature_spec",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/implementation-plan/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_implementation_plan",
+      "target": "skill_memory_capture",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/implementation-plan/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_spec_driven_development",
+      "target": "skill_problem_to_plan",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/spec-driven-development/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_spec_driven_development",
+      "target": "skill_incremental_implementation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/spec-driven-development/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_project_setup",
+      "target": "skill_project_constitution",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_project_setup",
+      "target": "skill_memory_startup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_project_setup",
+      "target": "skill_retroactive_project_setup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/project-setup/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_idea_generation",
+      "target": "skill_venture_exploration",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/idea-generation/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_problem_to_plan",
+      "target": "skill_spec_driven_development",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_problem_to_plan",
+      "target": "skill_prd_writing",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/problem-to-plan/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_problem_to_plan",
+      "target": "skill_feature_spec",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_retroactive_project_setup",
+      "target": "skill_memory_capture",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_brainstorming",
+      "target": "skill_feature_spec",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/brainstorming/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_brainstorming",
+      "target": "skill_venture_exploration",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/brainstorming/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_architectural_decision_log",
+      "target": "skill_memory_decision",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/architectural-decision-log/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_memory_promote",
+      "target": "skill_memory_compact",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/memory-promote/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_research_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_skill_deconflict",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_cross_link_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_library_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_publish_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_memory_capture",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_skill_finder",
+      "target": "skill_universal_skill_creator",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_frontend_design",
+      "target": "skill_design_direction",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_frontend_design",
+      "target": "skill_design_system",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_frontend_design",
+      "target": "skill_design_review",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_idea_evaluation",
+      "target": "skill_fermi",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_idea_evaluation",
+      "target": "skill_assumption_mapping",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_idea_evaluation",
+      "target": "skill_venture_exploration",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/idea-evaluation/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_eval_output",
+      "target": "skill_eval_rubric_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_eval_output",
+      "target": "skill_eval_judge",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_feature_spec",
+      "target": "skill_project_constitution",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/feature-spec/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_feature_spec",
+      "target": "skill_spec_driven_development",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/feature-spec/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_feature_spec",
+      "target": "skill_memory_capture",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/feature-spec/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_experiment_readout",
+      "target": "skill_prd_writing",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experiment_readout",
+      "target": "skill_architectural_decision_log",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory_capture",
+      "target": "skill_learn_from_chat",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/memory-capture/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_memory_capture",
+      "target": "skill_memory_compact",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/memory-capture/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_prd_writing",
+      "target": "skill_feature_spec",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/prd-writing/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_prd_writing",
+      "target": "skill_memory_capture",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/prd-writing/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_memory_compact",
+      "target": "skill_memory_forget",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/memory-compact/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_learn_from_paper",
+      "target": "skill_apply_paper_to_project",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_client_ts",
+      "target": "module_packages_cerulean_mcp_src_config_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/client.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_client_ts",
+      "target": "module_packages_cerulean_mcp_src_errors_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/client.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_helpers_ts",
+      "target": "module_packages_cerulean_mcp_src_client_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/helpers.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_helpers_ts",
+      "target": "module_packages_cerulean_mcp_src_errors_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/helpers.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_helpers_ts",
+      "target": "module_packages_cerulean_mcp_src_responses_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/helpers.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_index_ts",
+      "target": "module_packages_cerulean_mcp_src_client_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_index_ts",
+      "target": "module_packages_cerulean_mcp_src_config_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_index_ts",
+      "target": "module_packages_cerulean_mcp_src_helpers_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_index_ts",
+      "target": "module_packages_cerulean_mcp_src_tools_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_tools_ts",
+      "target": "module_packages_cerulean_mcp_src_client_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/tools.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_packages_cerulean_mcp_src_tools_ts",
+      "target": "module_packages_cerulean_mcp_src_helpers_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/cerulean-mcp/src/tools.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_chat_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/chat-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_chat_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/chat-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_chat_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/chat-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_chat_agent_ts",
+      "target": "module_src_lib_ai_dev_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/chat-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_expansion_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-expansion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_expansion_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-expansion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_expansion_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-expansion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_expansion_agent_ts",
+      "target": "module_src_lib_ai_call_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-expansion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_integration_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-integration-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_integration_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-integration-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_integration_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-integration-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_integration_agent_ts",
+      "target": "module_src_lib_ai_dev_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-integration-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_document_integration_agent_ts",
+      "target": "module_src_lib_ai_call_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/document-integration-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_exemplar_learning_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/exemplar-learning-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_exemplar_learning_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/exemplar-learning-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_exemplar_learning_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/exemplar-learning-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_exemplar_learning_agent_ts",
+      "target": "module_src_lib_ai_call_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/exemplar-learning-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_insight_extraction_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/insight-extraction-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_insight_extraction_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/insight-extraction-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_insight_extraction_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/insight-extraction-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_insight_extraction_agent_ts",
+      "target": "module_src_lib_ai_dev_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/insight-extraction-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_insight_extraction_agent_ts",
+      "target": "module_src_lib_ai_call_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/insight-extraction-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/knowledge-graph-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/knowledge-graph-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/knowledge-graph-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
+      "target": "module_src_lib_ai_dev_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/knowledge-graph-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
+      "target": "module_src_lib_ai_call_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/knowledge-graph-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_memory_management_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/memory-management-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_memory_management_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/memory-management-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_memory_management_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/memory-management-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_ranking_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/ranking-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_ranking_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/ranking-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_ranking_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/ranking-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_suggestion_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/suggestion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_suggestion_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/suggestion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_suggestion_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/suggestion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_suggestion_agent_ts",
+      "target": "module_src_lib_ai_dev_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/suggestion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_suggestion_agent_ts",
+      "target": "module_src_lib_ai_call_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/suggestion-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_tonal_adjustment_agent_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/tonal-adjustment-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_tonal_adjustment_agent_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/tonal-adjustment-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_tonal_adjustment_agent_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/tonal-adjustment-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_agents_tonal_adjustment_agent_ts",
+      "target": "module_src_lib_ai_call_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/tonal-adjustment-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_background_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/background.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_background_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/background.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_background_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/background.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_context_from_db_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/context-from-db.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_context_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/context.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_dev_router_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/dev-router.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_dev_router_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/dev-router.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_orchestrator_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_dev_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_chat_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_document_integration_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_document_expansion_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_insight_extraction_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_suggestion_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_ranking_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_tonal_adjustment_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_memory_management_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_index_ts",
+      "target": "module_src_lib_ai_agents_exemplar_learning_agent_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_orchestrator_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/orchestrator.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_orchestrator_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/orchestrator.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_orchestrator_ts",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/orchestrator.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_orchestrator_ts",
+      "target": "module_src_lib_ai_context_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/orchestrator.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_orchestrator_ts",
+      "target": "module_src_lib_ai_context_from_db_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/orchestrator.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_orchestrator_ts",
+      "target": "module_src_lib_ai_dev_router_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/orchestrator.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_orchestrator_ts",
+      "target": "module_src_lib_ai_background_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/orchestrator.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_registry_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/registry.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_modules_chat_chatpanel_tsx",
+      "target": "module_src_modules_chat_chatmessage_tsx",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/chat/ChatPanel.tsx",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_modules_chat_chatpanel_tsx",
+      "target": "module_src_modules_chat_chatinput_tsx",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/chat/ChatPanel.tsx",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_modules_chat_chatpanel_tsx",
+      "target": "module_src_modules_chat_highlightmenu_tsx",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/chat/ChatPanel.tsx",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_modules_chat_chatpanel_tsx",
+      "target": "module_src_modules_chat_thinkingsuggestions_tsx",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/chat/ChatPanel.tsx",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_modules_document_documentpanel_tsx",
+      "target": "module_src_modules_document_documentblockview_tsx",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/document/DocumentPanel.tsx",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_modules_document_documentpanel_tsx",
+      "target": "module_src_modules_document_patchreview_tsx",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/document/DocumentPanel.tsx",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_modules_insights_insighttray_tsx",
+      "target": "module_src_modules_insights_insightcard_tsx",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/insights/InsightTray.tsx",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_cerulean_project",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_cerulean_deployment",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_cerulean_mcp",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_memory_startup",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_universal_skill_creator",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_split_skill",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_shipping_and_launch",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_debug_and_fix",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_code_review_crsp",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_brainstorming",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_incremental_implementation",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_prd_writing",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_implementation_plan",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_test_driven_development",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_app_security_hardening",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_ci_cd_and_automation",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_memory_handoff",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_skill_finder",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_agents_md",
+      "target": "skill_project_orchestrator",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_handoff_md",
+      "target": "module_tests_smoke_test_mjs",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/HANDOFF.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_handoff_md",
+      "target": "module_src_lib_config_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/HANDOFF.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_handoff_md",
+      "target": "module_src_lib_auth_api_keys_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/HANDOFF.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_context_from_db_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_api_workspace_client_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_hooks_useworkspacesync_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_modules_settings_settingspanel_tsx",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_packages_cerulean_mcp_src_client_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_tests_smoke_test_mjs",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_db_workspace_service_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_middleware_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_app_login_page_tsx",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_provider_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_app_api_ai_chat_route_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_chat_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_insight_extraction_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_knowledge_graph_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_orchestrator_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_index_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_modules_document_documentblockview_tsx",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_suggestion_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_ranking_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_tonal_adjustment_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_document_integration_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_document_expansion_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_memory_management_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_agents_exemplar_learning_agent_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_context_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_registry_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_dev_router_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_lib_ai_background_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_store_aisettingsstore_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_agent_change_log_md",
+      "target": "module_src_store_memorystore_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/agent-change-log.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_memory_current_state_md",
+      "target": "skill_cerulean_project",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/memory/current-state.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_memory_current_state_md",
+      "target": "skill_cerulean_deployment",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/memory/current-state.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_memory_current_state_md",
+      "target": "skill_cerulean_mcp",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/memory/current-state.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_memory_agent_handoffs_md",
+      "target": "skill_cerulean_project",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_memory_agent_handoffs_md",
+      "target": "skill_cerulean_deployment",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_memory_agent_handoffs_md",
+      "target": "skill_cerulean_mcp",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_memory_agent_handoffs_md",
+      "target": "skill_memory_startup",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_memory_agent_handoffs_md",
+      "target": "skill_shipping_and_launch",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_speclets_llm_scored_relevance_and_maturity_md",
+      "target": "module_src_types_index_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/speclets/llm-scored-relevance-and-maturity.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_speclets_llm_scored_relevance_and_maturity_md",
+      "target": "module_src_lib_ai_background_ts",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/speclets/llm-scored-relevance-and-maturity.md",
+      "provenance": "doc-path"
+    },
+    {
+      "source": "doc_docs_skill_outputs_skill_outputs_md",
+      "target": "skill_cerulean_project",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/skill-outputs/SKILL-OUTPUTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_skill_outputs_skill_outputs_md",
+      "target": "skill_cerulean_deployment",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/skill-outputs/SKILL-OUTPUTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "doc_docs_skill_outputs_skill_outputs_md",
+      "target": "skill_cerulean_mcp",
+      "relation": "mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/skill-outputs/SKILL-OUTPUTS.md",
+      "provenance": "doc-mention"
+    },
+    {
+      "source": "handoff_2026_07_04_agent_skills_sync_from_agent_loom",
+      "target": "memory_docs_memory_agent_handoffs_md",
+      "relation": "recorded_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "agent-handoffs.md"
+    },
+    {
+      "source": "handoff_2026_07_04_agent_skills_sync_from_agent_loom",
+      "target": "skill_cerulean_project",
+      "relation": "handoff_mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "handoff-body"
+    },
+    {
+      "source": "handoff_2026_07_04_agent_skills_sync_from_agent_loom",
+      "target": "skill_cerulean_deployment",
+      "relation": "handoff_mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "handoff-body"
+    },
+    {
+      "source": "handoff_2026_07_04_agent_skills_sync_from_agent_loom",
+      "target": "skill_cerulean_mcp",
+      "relation": "handoff_mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "handoff-body"
+    },
+    {
+      "source": "handoff_2026_07_04_agent_skills_sync_from_agent_loom",
+      "target": "skill_memory_startup",
+      "relation": "handoff_mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "handoff-body"
+    },
+    {
+      "source": "handoff_2026_07_04_agent_skills_sync_from_agent_loom",
+      "target": "skill_shipping_and_launch",
+      "relation": "handoff_mentions",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/memory/agent-handoffs.md",
+      "provenance": "handoff-body"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_split_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_compress_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_generate_changelog",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_universal_skill_creator",
+      "target": "skill_secure_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_deprecate_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_compress_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_improve_skills",
+      "target": "skill_library_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_split_skill",
+      "target": "skill_library_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deprecate_skill",
+      "target": "skill_library_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_skill_finder",
+      "target": "skill_library_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_research_skill",
+      "target": "skill_secure_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_learn_from_paper",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_learn_from_chat",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_paper",
+      "target": "skill_secure_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_paper",
+      "target": "skill_universal_skill_creator",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_paper",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_repo",
+      "target": "skill_secure_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_repo",
+      "target": "skill_universal_skill_creator",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_repo",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_article",
+      "target": "skill_secure_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_article",
+      "target": "skill_universal_skill_creator",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_article",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_chat",
+      "target": "skill_validate_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_chat",
+      "target": "skill_improve_skills",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_secure_skill",
+      "target": "skill_secure_skill_content_sanitization",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_secure_skill",
+      "target": "skill_secure_skill_repo_ingestion",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_secure_skill",
+      "target": "skill_secure_skill_runtime",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_inversion",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_pre_mortem",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_assumption_mapping",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_socratic",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_adversarial_hat",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_first_principles",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_second_order",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_fermi",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_deep_thinking",
+      "target": "skill_ooda",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_brainstorming",
+      "target": "skill_inversion",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_prd_writing",
+      "target": "skill_inversion",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_product_soul",
+      "target": "skill_inversion",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_spec_driven_development",
+      "target": "skill_project_constitution",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_spec_driven_development",
+      "target": "skill_feature_spec",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_spec_driven_development",
+      "target": "skill_implementation_plan",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_spec_driven_development",
+      "target": "skill_spec_crosscheck",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_spec_driven_development",
+      "target": "skill_test_driven_development",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_spec_driven_development",
+      "target": "skill_api_and_interface_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_test_driven_development",
+      "target": "skill_source_driven_development",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_implementation_plan",
+      "target": "skill_incremental_implementation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_incremental_implementation",
+      "target": "skill_git_workflow_and_versioning",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_incremental_implementation",
+      "target": "skill_test_driven_development",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_technical_debt_audit",
+      "target": "skill_code_simplification",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_feature_spec",
+      "target": "skill_api_and_interface_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_ci_cd_and_automation",
+      "target": "skill_performance_optimization",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_shipping_and_launch",
+      "target": "skill_ci_cd_and_automation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_shipping_and_launch",
+      "target": "skill_app_security_hardening",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_api_deprecation_and_migration",
+      "target": "skill_api_and_interface_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_frontend_design",
+      "target": "skill_browser_testing_with_devtools",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_browser_testing_with_devtools",
+      "target": "skill_performance_optimization",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_project_orchestrator",
+      "target": "skill_agent_builder",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_process_decomposer",
+      "target": "skill_skill_finder",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_process_decomposer",
+      "target": "skill_tool_finder",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_process_decomposer",
+      "target": "skill_research_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_project_setup",
+      "target": "skill_universal_skill_creator",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_retroactive_project_setup",
+      "target": "skill_codebase_understanding",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_retroactive_project_setup",
+      "target": "skill_product_soul",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_retroactive_project_setup",
+      "target": "skill_architectural_decision_log",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_retroactive_project_setup",
+      "target": "skill_project_setup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_apply_paper_to_project",
+      "target": "skill_architectural_decision_log",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_reality_check",
+      "target": "skill_codebase_understanding",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_reality_check",
+      "target": "skill_implementation_plan",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_agent_builder",
+      "target": "skill_agent_system_architecture",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_agent_builder",
+      "target": "skill_create_agent_prompt",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_agent_builder",
+      "target": "skill_project_orchestrator",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_setup_evaluation",
+      "target": "skill_agent_launcher",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_memory",
+      "target": "skill_secure_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_eval_output",
+      "target": "skill_eval_pipeline",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_experiment_backlog",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_experiment_spec",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_experiment_runbook",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_assumption_mapping",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_brainstorming",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_inversion",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_fermi",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_eval_output",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_prd_writing",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_architectural_decision_log",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experimentation",
+      "target": "skill_reality_check",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experiment_backlog",
+      "target": "skill_assumption_mapping",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experiment_backlog",
+      "target": "skill_fermi",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experiment_spec",
+      "target": "skill_inversion",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_experiment_spec",
+      "target": "skill_fermi",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_design_direction",
+      "target": "skill_design_system",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_design_system",
+      "target": "skill_frontend_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_idea_generation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_prd_writing",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_venture_exploration",
+      "target": "skill_experimentation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_idea_generation",
+      "target": "skill_first_principles",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_idea_generation",
+      "target": "skill_socratic",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_business_modeling",
+      "target": "skill_fermi",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_idea_evaluation",
+      "target": "skill_pre_mortem",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_idea_evaluation",
+      "target": "skill_adversarial_hat",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_customer_discovery",
+      "target": "skill_secure_skill",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_learn_from_repo",
+      "target": "skill_secure_skill_repo_ingestion",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_codebase_understanding",
+      "target": "skill_knowledge_graph",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_secure_skill",
+      "relation": "requires_gate",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_learn_from_paper",
+      "target": "skill_secure_skill",
+      "relation": "requires_gate",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_learn_from_repo",
+      "target": "skill_secure_skill",
+      "relation": "requires_gate",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_learn_from_article",
+      "target": "skill_secure_skill",
+      "relation": "requires_gate",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_secure_skill",
+      "target": "skill_secure_skill_content_sanitization",
+      "relation": "orchestrates",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_secure_skill",
+      "target": "skill_secure_skill_repo_ingestion",
+      "relation": "orchestrates",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_secure_skill",
+      "target": "skill_secure_skill_runtime",
+      "relation": "orchestrates",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_learn_from",
+      "target": "skill_validate_skills",
+      "relation": "post_apply",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_learn_from_paper",
+      "target": "skill_validate_skills",
+      "relation": "post_apply",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_learn_from_repo",
+      "target": "skill_validate_skills",
+      "relation": "post_apply",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_learn_from_article",
+      "target": "skill_validate_skills",
+      "relation": "post_apply",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "security-chain"
+    },
+    {
+      "source": "skill_memory_handoff",
+      "target": "skill_knowledge_graph",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": null,
+      "provenance": "memory-checkpoint"
+    }
+  ]
+}

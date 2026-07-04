@@ -1,9 +1,12 @@
 # Skill Index
 
 Complete reference for all skills in this repo.
+**L3 examples lookup:** `docs/SKILL-EXAMPLES-INDEX.md` — full worked examples when SKILL.md inline examples are teasers.
 **Cerulean domain skills** take priority for Cerulean-specific work (see `.agents/ROUTING.md`).
+Agents: read this when deciding which skill to invoke or checking what a skill produces.
+Humans: read this for a full picture of what's available and what each skill outputs.
 
-Last updated: 2026-07-04 (synced from agent-loom + Cerulean extensions)
+Last updated: 2026-07-04 (synced from agent-loom; Cerulean domain extensions below)
 
 ---
 
@@ -14,7 +17,7 @@ Installed in `.agents/skills/`. **Use these first** for Cerulean work.
 ### `cerulean-project`
 **Triggers:** Cerulean features, chat/insights/document/graph modules, blocks, patches, persistence, 11-agent AI
 **What it does:** Module boundaries, repo stability rules, dual-mode persistence, core entities, UI philosophy.
-**References:** `AGENTS.md`, `docs/HANDOFF.md`
+**References:** `AGENTS.md`, `docs/HANDOFF.md`, `references/agents-extended.md`
 
 ### `cerulean-deployment`
 **Triggers:** deploy Cerulean, Railway, Supabase, migrations, production env, go live

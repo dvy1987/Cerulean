@@ -27,6 +27,15 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-04 - Sync skill updates from agent-loom
+- Author: Cursor agent
+- Commit: not committed yet
+- Summary: No new skill folders in agent-loom (Cerulean already had all 102). Rsync'd updated skill files from loom — notably knowledge-graph v2.2 (full-repo TS/Python scan). Added docs/skill-graph.md and docs/SKILL-EXAMPLES-INDEX.md. Preserved cerulean-* domain skills.
+- Files:
+  - `.agents/skills/` (bulk update)
+  - `docs/skill-graph.md`, `docs/SKILL-EXAMPLES-INDEX.md`, `docs/SKILL-INDEX.md`
+- Notes: agent-loom folder untouched.
+
 ### 2026-07-04 - Lean AGENTS.md merge from agent-loom
 - Author: Cursor agent
 - Commit: c1f683d
