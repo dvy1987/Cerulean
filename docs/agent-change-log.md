@@ -27,6 +27,23 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-04 - Thinking Loop v2 master implementation plan
+- Author: agent
+- Commit: not committed yet
+- Summary: Locked PM decisions (Product Spec default, template change v1, proposal latency OK). Full gap register + 6-phase execution plan in `docs/specs/implementation-master-plan.md`; updated `thinking-loop-v2.md`.
+- Files:
+  - `docs/specs/implementation-master-plan.md`
+  - `docs/specs/thinking-loop-v2.md`
+- Notes: Start Phase 0 (AI spine) before capture/templates.
+
+### 2026-07-04 - Thinking Loop v2 product spec
+- Author: agent
+- Commit: not committed yet
+- Summary: Wrote combined spec + phased implementation plan for proactive insight capture, template-first documents, and runtime agent consolidation (Advanced mode).
+- Files:
+  - `docs/specs/thinking-loop-v2.md`
+- Notes: Prerequisite: AI spine (orchestrator-only web path). Program target ~5 weeks in four phases.
+
 ### 2026-07-04 - Rebuild knowledge graph (full repo)
 - Author: agent
 - Commit: 16588ca
