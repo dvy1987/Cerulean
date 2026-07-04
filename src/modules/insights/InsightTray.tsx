@@ -3,6 +3,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { useInsightStore } from "@/store/insightStore";
 import { useDocumentStore } from "@/store/documentStore";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 import {
   generatePromotionPatch,
   insightToPrompt,
@@ -67,39 +69,54 @@ export default function InsightTray() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [trayMode, setTrayMode]);
 
-  const handleAddInsight = () => {
+  const handleAddInsight = async () => {
     const text = newInsightText.trim();
     if (!text) return;
-    addInsight({
-      title: text.slice(0, 60) + (text.length > 60 ? "..." : ""),
-      content: text,
-    });
+    if (isPersistenceEnabled()) {
+      await workspaceApi.addInsight({
+        title: text.slice(0, 60) + (text.length > 60 ? "..." : ""),
+        content: text,
+      });
+    } else {
+      addInsight({
+        title: text.slice(0, 60) + (text.length > 60 ? "..." : ""),
+        content: text,
+      });
+    }
     setNewInsightText("");
     setIsAdding(false);
   };
 
-  const handlePromote = (insight: Insight) => {
-    const operations = generatePromotionPatch(
-      insight.content,
-      blocks,
-      insight.insight_id,
-      insight.source_message_ids
-    );
-    const patch = {
-      patch_id: uuidv4(),
-      document_id: doc.document_id,
-      operations,
-      status: "pending" as const,
-      source_insight_id: insight.insight_id,
-      source_text: insight.content,
-      created_at: new Date().toISOString(),
-    };
-    setPendingPatch(patch);
-    setInsightStatus(insight.insight_id, "promoted");
+  const handlePromote = async (insight: Insight) => {
+    if (isPersistenceEnabled()) {
+      await workspaceApi.setPendingPatchFromPromote(insight.insight_id);
+    } else {
+      const operations = generatePromotionPatch(
+        insight.content,
+        blocks,
+        insight.insight_id,
+        insight.source_message_ids
+      );
+      const patch = {
+        patch_id: uuidv4(),
+        document_id: doc.document_id,
+        operations,
+        status: "pending" as const,
+        source_insight_id: insight.insight_id,
+        source_text: insight.content,
+        created_at: new Date().toISOString(),
+      };
+      setPendingPatch(patch);
+      setInsightStatus(insight.insight_id, "promoted");
+    }
   };
 
-  const handleExplore = (insight: Insight) => {
-    setInsightStatus(insight.insight_id, "discussing");
+  const handleExplore = async (insight: Insight) => {
+    if (isPersistenceEnabled()) {
+      await workspaceApi.updateInsight(insight.insight_id, { status: "discussing" });
+    } else {
+      setInsightStatus(insight.insight_id, "discussing");
+    }
     const prompt = insightToPrompt(insight.title, insight.content);
     window.dispatchEvent(
       new CustomEvent("insight-to-prompt", { detail: prompt })
@@ -176,7 +193,13 @@ export default function InsightTray() {
             key={insight.insight_id}
             insight={insight}
             onPromote={handlePromote}
-            onArchive={archiveInsight}
+            onArchive={async (id) => {
+              if (isPersistenceEnabled()) {
+                await workspaceApi.updateInsight(id, { status: "archived" });
+              } else {
+                archiveInsight(id);
+              }
+            }}
             onExplore={handleExplore}
             hasContradiction={contradictionIds.has(insight.insight_id)}
           />

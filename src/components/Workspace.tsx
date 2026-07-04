@@ -8,6 +8,7 @@ import InsightTray from "@/modules/insights/InsightTray";
 import GraphView from "@/modules/graph/GraphView";
 import SettingsPanel from "@/modules/settings/SettingsPanel";
 import ExemplarUpload from "@/modules/settings/ExemplarUpload";
+import { useWorkspaceSync } from "@/hooks/useWorkspaceSync";
 
 type RightTab = "document" | "graph";
 
@@ -16,6 +17,7 @@ const SNAP_RESTORE = 0.5;
 const MIN_DRAG = 0.02;
 
 export default function Workspace() {
+  const { ready, error, persistenceEnabled } = useWorkspaceSync();
   const [rightTab, setRightTab] = useState<RightTab>("document");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [exemplarsOpen, setExemplarsOpen] = useState(false);
@@ -106,6 +108,21 @@ export default function Workspace() {
     }
   }, [splitFraction]);
 
+  const handleSignOut = async () => {
+    if (persistenceEnabled) {
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login";
+    }
+  };
+
+  if (!ready) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-background">
+        <p className="text-sm text-muted">Loading workspace...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen flex flex-col bg-background">
       <header className="h-12 flex items-center justify-between px-5 bg-white shadow-soft shrink-0 z-10">
@@ -139,8 +156,22 @@ export default function Workspace() {
           >
             Settings
           </button>
+          {persistenceEnabled && (
+            <button
+              onClick={handleSignOut}
+              className="text-xs text-muted hover:text-foreground hover:bg-gray-50 px-2.5 py-1.5 rounded-md"
+            >
+              Sign out
+            </button>
+          )}
         </div>
       </header>
+
+      {error && (
+        <div className="bg-warning-50 text-warning-700 text-xs px-5 py-2 border-b border-warning-100">
+          {error}
+        </div>
+      )}
 
       <div
         ref={containerRef}

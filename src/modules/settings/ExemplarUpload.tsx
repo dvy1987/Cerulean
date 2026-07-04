@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 import { useMemoryStore } from "@/store/memoryStore";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 
 interface ExemplarUploadProps {
   open: boolean;
@@ -51,17 +53,25 @@ export default function ExemplarUpload({ open, onClose }: ExemplarUploadProps) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title.trim() || !markdown.trim()) {
       showToast("Title and content are required.");
       return;
     }
 
-    addExemplar({
-      title: title.trim(),
-      markdown: markdown.trim(),
-      userNotes: notes.trim(),
-    });
+    if (isPersistenceEnabled()) {
+      await workspaceApi.addExemplar({
+        title: title.trim(),
+        markdown: markdown.trim(),
+        userNotes: notes.trim(),
+      });
+    } else {
+      addExemplar({
+        title: title.trim(),
+        markdown: markdown.trim(),
+        userNotes: notes.trim(),
+      });
+    }
 
     setTitle("");
     setMarkdown("");
@@ -160,7 +170,13 @@ export default function ExemplarUpload({ open, onClose }: ExemplarUploadProps) {
                         )}
                       </div>
                       <button
-                        onClick={() => removeExemplar(ex.exemplar_id)}
+                        onClick={async () => {
+                          if (isPersistenceEnabled()) {
+                            await workspaceApi.removeExemplar(ex.exemplar_id);
+                          } else {
+                            removeExemplar(ex.exemplar_id);
+                          }
+                        }}
                         className="text-xs text-muted hover:text-danger-500 hover:bg-danger-50 shrink-0 w-6 h-6 rounded-md flex items-center justify-center"
                         title="Remove exemplar"
                       >

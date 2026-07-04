@@ -27,6 +27,33 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-03 - Review fixes: username auth, persistence gaps, MCP sync, tests
+- Author: Cursor agent
+- Commit: not committed yet
+- Summary: Addressed adversarial review findings — username/password auth with `profiles.username` migration, server AI context from DB, locked `/api/ai/chat`, chat save-once, graph/settings/exemplar persistence, rate limits on API keys, MCP `cerulean_sync_graph`, simplified docker-compose, smoke tests. `npm run build` passes.
+- Files:
+  - `supabase/migrations/002_username_and_fks.sql`
+  - `src/app/api/auth/*`, `src/lib/auth/*`, `src/lib/ai/context-from-db.ts`
+  - `src/lib/api/workspace-client.ts`, `src/hooks/useWorkspaceSync.ts`
+  - `src/modules/settings/SettingsPanel.tsx`, `ExemplarUpload.tsx`, `GraphView.tsx`
+  - `packages/cerulean-mcp/src/client.ts`, `tools.ts`
+  - `docker-compose.yml`, `tests/smoke.test.mjs`, `docs/DEPLOYMENT.md`
+- Notes: Middleware allows all `/api/*` without redirect (routes enforce auth). Orchestrator still bypassed for main chat streaming (IDE-first).
+
+### 2026-07-03 - Supabase persistence, auth, REST API, MCP server
+- Author: Cursor agent
+- Commit: not committed yet
+- Summary: Full stack for Railway + self-hosted Supabase: Postgres schema with RLS, user auth, API keys for MCP, REST API v1 mirroring all UI operations, web UI persistence layer, Cerulean MCP server package with 30 tools for Cursor/Antigravity.
+- Files:
+  - `supabase/migrations/001_initial_schema.sql`
+  - `src/lib/supabase/`, `src/lib/auth/`, `src/lib/db/workspace-service.ts`
+  - `src/app/api/v1/**`, `src/middleware.ts`, `src/app/login/page.tsx`
+  - `src/lib/api/workspace-client.ts`, `src/hooks/useWorkspaceSync.ts`
+  - `packages/cerulean-mcp/`
+  - `docs/DEPLOYMENT.md`, `docs/MCP-AGENT-GUIDE.md`, `docker-compose.yml`, `.env.example`
+  - Updated UI modules for persistence sync
+- Notes: Without Supabase env vars, app still runs in-memory locally. MCP requires deployed instance + API key.
+
 ### 2026-03-22 - AI provider abstraction layer (Gemini, OpenAI, Anthropic)
 - Author: Amp agent
 - Commit: not committed yet

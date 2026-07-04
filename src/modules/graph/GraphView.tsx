@@ -4,6 +4,8 @@ import { useEffect, useRef, useMemo, useCallback } from "react";
 import { useGraphStore } from "@/store/graphStore";
 import { useInsightStore } from "@/store/insightStore";
 import { useDocumentStore } from "@/store/documentStore";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 
 interface NodePosition {
   node_id: string;
@@ -33,8 +35,19 @@ export default function GraphView() {
   const { nodes, edges, addNode, addEdge } = useGraphStore();
   const insights = useInsightStore((s) => s.insights);
   const blocks = useDocumentStore((s) => s.blocks);
+  const syncTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    if (isPersistenceEnabled()) {
+      if (syncTimer.current) clearTimeout(syncTimer.current);
+      syncTimer.current = setTimeout(() => {
+        workspaceApi.syncGraph().catch(() => {});
+      }, 400);
+      return () => {
+        if (syncTimer.current) clearTimeout(syncTimer.current);
+      };
+    }
+
     for (const insight of insights) {
       if (insight.status !== "archived") {
         addNode({

@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAiSettingsStore, CustomAiProvider } from "@/store/aiSettingsStore";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -89,6 +91,53 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
   const setCustomApiKey = useAiSettingsStore((s) => s.setCustomApiKey);
 
   const [showKey, setShowKey] = useState(false);
+
+  const [apiKeys, setApiKeys] = useState<
+    Array<{ id: string; name: string; key_prefix: string; last_used_at: string | null; created_at: string }>
+  >([]);
+  const [newRawKey, setNewRawKey] = useState<string | null>(null);
+  const [keyLoading, setKeyLoading] = useState(false);
+
+  useEffect(() => {
+    if (!open || !isPersistenceEnabled()) return;
+    fetch("/api/v1/api-keys")
+      .then((r) => r.json())
+      .then((d) => setApiKeys(d.keys ?? []))
+      .catch(() => {});
+  }, [open]);
+
+  async function createApiKey() {
+    setKeyLoading(true);
+    setNewRawKey(null);
+    try {
+      const res = await fetch("/api/v1/api-keys", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: "MCP / CLI" }),
+      });
+      const data = await res.json();
+      if (data.key?.rawKey) {
+        setNewRawKey(data.key.rawKey);
+        setApiKeys((k) => [
+          {
+            id: data.key.id,
+            name: data.key.name,
+            key_prefix: data.key.prefix,
+            last_used_at: null,
+            created_at: new Date().toISOString(),
+          },
+          ...k,
+        ]);
+      }
+    } finally {
+      setKeyLoading(false);
+    }
+  }
+
+  async function revokeApiKey(id: string) {
+    await fetch(`/api/v1/api-keys?id=${id}`, { method: "DELETE" });
+    setApiKeys((k) => k.filter((key) => key.id !== id));
+  }
 
   function handleProviderChange(value: string) {
     const provider = value as CustomAiProvider;
@@ -204,6 +253,77 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
 
           <div className="border-t border-gray-100" />
 
+          {isPersistenceEnabled() && (
+            <div>
+              <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
+                MCP / CLI Access
+              </h3>
+              <p className="text-xs text-muted mb-3 leading-relaxed">
+                Generate an API key to connect Cerulean from Cursor, Antigravity, or other MCP clients.
+                Keys only access your account data.
+              </p>
+
+              {newRawKey && (
+                <div className="mb-3 p-3 bg-cerulean-50 border border-cerulean-200 rounded-lg">
+                  <p className="text-[10px] font-semibold text-cerulean-800 mb-1">
+                    Copy this key now — it won&apos;t be shown again
+                  </p>
+                  <code className="text-[10px] break-all text-cerulean-700">{newRawKey}</code>
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={createApiKey}
+                disabled={keyLoading}
+                className="text-xs font-medium px-3 py-2 bg-cerulean-500 text-white rounded-lg hover:bg-cerulean-600 disabled:opacity-50 mb-3"
+              >
+                {keyLoading ? "Creating..." : "Generate API key"}
+              </button>
+
+              {apiKeys.length > 0 && (
+                <ul className="space-y-2">
+                  {apiKeys.map((k) => (
+                    <li
+                      key={k.id}
+                      className="flex items-center justify-between text-xs border border-gray-100 rounded-lg px-3 py-2"
+                    >
+                      <div>
+                        <p className="font-medium">{k.name}</p>
+                        <p className="text-muted font-mono">{k.key_prefix}...</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => revokeApiKey(k.id)}
+                        className="text-danger-600 hover:text-danger-700"
+                      >
+                        Revoke
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <div className="mt-4 p-3 bg-gray-50 rounded-lg text-[10px] text-muted leading-relaxed">
+                <p className="font-semibold text-foreground mb-1">Cursor / MCP config</p>
+                <pre className="whitespace-pre-wrap font-mono text-[9px]">{`{
+  "mcpServers": {
+    "cerulean": {
+      "command": "node",
+      "args": ["/path/to/Cerulean/packages/cerulean-mcp/dist/index.js"],
+      "env": {
+        "CERULEAN_URL": "https://your-app.railway.app",
+        "CERULEAN_API_KEY": "cer_..."
+      }
+    }
+  }
+}`}</pre>
+              </div>
+            </div>
+          )}
+
+          {isPersistenceEnabled() && <div className="border-t border-gray-100" />}
+
           <div>
             <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
               Background Agents
@@ -217,7 +337,16 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                     <p className="text-xs text-muted mt-0.5 leading-relaxed">{description}</p>
                   </div>
                   <button
-                    onClick={() => toggleBackgroundAgent(key)}
+                    onClick={async () => {
+                      const next = !backgroundAgents[key];
+                      if (isPersistenceEnabled()) {
+                        await workspaceApi
+                          .updateSettings({ [key]: next })
+                          .catch(() => toggleBackgroundAgent(key));
+                      } else {
+                        toggleBackgroundAgent(key);
+                      }
+                    }}
                     className={`relative shrink-0 mt-0.5 w-9 h-5 rounded-full ${
                       backgroundAgents[key] ? "bg-cerulean-500" : "bg-gray-300"
                     }`}

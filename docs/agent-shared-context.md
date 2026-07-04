@@ -1,6 +1,6 @@
 # Cerulean Shared Context
 
-Last updated: 2026-03-21
+Last updated: 2026-07-03
 Status: Active working context for humans and AI agents
 
 ## Purpose
@@ -38,7 +38,7 @@ Update this file when:
 - Frontend: Next.js 14 (React 18, TypeScript)
 - Styling: Tailwind CSS
 - State Management: Zustand
-- Database: None for MVP
+- Database: Supabase Postgres (when env configured) + in-memory fallback locally
 - AI/ML: Multi-agent architecture via Google ADK (11 agents). Dev AI mode for now; all AI goes through `/src/lib/ai`
 - Hosting: TBD
 - Key dependencies: next 14.2.35, react 18, zustand 5, uuid 13
@@ -57,34 +57,31 @@ Update this file when:
 
 ### What is implemented
 - Project scaffolding: Next.js 14 + TypeScript + Tailwind
-- Three-panel workspace layout (`src/components/Workspace.tsx`) with Settings + Exemplar buttons
-- Chat module: `ChatPanel`, `ChatInput`, `ChatMessage`, `HighlightMenu`, `ThinkingSuggestions`
-- Insights module: `InsightTray`, `InsightCard`
-- Document module: `DocumentPanel`, `DocumentBlockView` (with AI expansion menu), `DocumentImport`, `PatchReview`
-- Graph module: `GraphView`
-- Settings module: `SettingsPanel` with background agent toggles
-- Exemplar module: `ExemplarUpload` with file upload, title, notes, and exemplar list
-- Zustand stores: `chatStore`, `documentStore`, `insightStore`, `graphStore`, `aiSettingsStore`, `memoryStore`
-- Shared types: `/src/types/index.ts`
-- **Multi-agent AI architecture (fully implemented):**
-  - Framework: `types.ts`, `actions.ts`, `context.ts`, `registry.ts`, `orchestrator.ts`, `dev-router.ts`, `background.ts`
-  - 10 agents in `src/lib/ai/agents/`: chat, document-integration, document-expansion, insight-extraction, suggestion, knowledge-graph, ranking, tonal-adjustment, memory-management, exemplar-learning
-  - Orchestrator routes all actions, schedules background agents
-  - Backward-compatible facade in `src/lib/ai/index.ts`
+- Three-panel workspace layout with Settings + Exemplar buttons
+- Chat, insights, document, graph modules (UI complete)
+- Multi-agent AI architecture (dev mode + optional real providers)
+- **Username + password auth** — sign up with username/email/password; sign in with username/password. Passwords in Supabase Auth only; `profiles` stores username.
+- **Supabase persistence layer** — schema, RLS, auth, REST API v1
+- **API keys** for MCP/CLI — per-user, hashed at rest
+- **MCP server** — `packages/cerulean-mcp` with 35+ tools (full UI parity incl. `cerulean_sync_graph`)
+- Web UI syncs to Supabase when env vars are configured; falls back to in-memory without them
+- Graph, settings toggles, exemplar delete persist when Supabase enabled
 
 ### What is NOT yet implemented
-- No database — all state is in-memory (Zustand)
-- No authentication
-- No deployment pipeline
-- No external AI provider integration (running in dev AI mode with simulated responses)
-- No real-time persistence or saving
-- No memory management UI (roadmap item — evaluate later)
-- LLM-based orchestrator routing not yet active (using rule-based dev-router)
+- Railway + self-hosted Supabase deployment (documented in `docs/DEPLOYMENT.md`, not automated)
+- LLM-based orchestrator routing (still rule-based dev-router)
+- Memory management UI
+- Automated insight extraction on every chat turn (MCP/IDE must call tools)
+- Comprehensive test suite (only smoke tests for hashing/username validation)
+
+### Deployment
+- Target: Railway (app) + self-hosted Supabase on Railway (not Supabase Cloud)
+- MCP connects via `CERULEAN_URL` + `CERULEAN_API_KEY`
+- See `docs/DEPLOYMENT.md` and `packages/cerulean-mcp/README.md`
 
 ### What is implemented differently than docs suggest
 - PRD and master-prompt reference TipTap editor and dnd-kit, but neither is in `package.json` — document editing is custom
-- Master-prompt mentions Supabase database and OpenAI API, but neither is integrated yet (expected for MVP)
-- PRD describes a graph/relationship system with `graph_nodes` and `graph_edges` tables, but the graph module is a single component (`GraphView.tsx`) with in-memory store only
+- Graph persists to Supabase when env configured (was in-memory only in older docs)
 
 ## Important Findings
 
@@ -94,8 +91,8 @@ Update this file when:
 - AI abstraction layer is in place for easy provider swap later
 
 ### Gaps & Risks
-- All state is ephemeral — closing the browser loses everything
-- No tests exist yet
+- Without Supabase env vars, all state is ephemeral (local dev mode)
+- Test coverage is minimal
 
 ## Multi-Agent Architecture — Tradeoff Analysis
 This section records the reasoning behind the 10-agent structure. It is context for future agents, not an execution plan.

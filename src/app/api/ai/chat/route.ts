@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { callProvider, detectProviderConfig, ChatMessage, ProviderConfig, AiProvider } from "@/lib/ai/provider";
+import { authenticateRequest, unauthorizedResponse } from "@/lib/auth/request-auth";
+import { rateLimitResponse } from "@/lib/auth/rate-limit";
 
 export async function POST(request: NextRequest) {
+  const auth = await authenticateRequest(request);
+  if (!auth) return unauthorizedResponse();
+
+  const limited = rateLimitResponse(request, auth.userId);
+  if (limited) return limited;
+
   try {
     const body = await request.json();
     const {

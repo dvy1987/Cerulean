@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import { useInsightStore } from "@/store/insightStore";
 import { extractInsightsFromText } from "@/lib/ai";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 
 export default function DocumentImport() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -33,21 +35,30 @@ export default function DocumentImport() {
 
     try {
       const text = await file.text();
-      const extracted = extractInsightsFromText(text);
+      if (isPersistenceEnabled()) {
+        const insights = await workspaceApi.extractInsights(text);
+        if (insights.length === 0) {
+          showToast("No insights could be extracted from this file.");
+          return;
+        }
+        showToast(`${insights.length} insight${insights.length > 1 ? "s" : ""} extracted from ${file.name}`);
+      } else {
+        const extracted = extractInsightsFromText(text);
 
-      if (extracted.length === 0) {
-        showToast("No insights could be extracted from this file.");
-        return;
+        if (extracted.length === 0) {
+          showToast("No insights could be extracted from this file.");
+          return;
+        }
+
+        for (const item of extracted) {
+          addInsight({
+            title: item.title,
+            content: item.content,
+          });
+        }
+
+        showToast(`${extracted.length} insight${extracted.length > 1 ? "s" : ""} extracted from ${file.name}`);
       }
-
-      for (const item of extracted) {
-        addInsight({
-          title: item.title,
-          content: item.content,
-        });
-      }
-
-      showToast(`${extracted.length} insight${extracted.length > 1 ? "s" : ""} extracted from ${file.name}`);
     } catch {
       showToast("Failed to read file.");
     }

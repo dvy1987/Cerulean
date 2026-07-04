@@ -1,9 +1,29 @@
 "use client";
 
 import { useDocumentStore } from "@/store/documentStore";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 
 export default function PatchReview() {
   const { pendingPatch, acceptPatch, rejectPatch } = useDocumentStore();
+
+  if (!pendingPatch) return null;
+
+  const handleAccept = async () => {
+    if (isPersistenceEnabled()) {
+      await workspaceApi.acceptPatch();
+    } else {
+      acceptPatch();
+    }
+  };
+
+  const handleReject = async () => {
+    if (isPersistenceEnabled()) {
+      await workspaceApi.rejectPatch();
+    } else {
+      rejectPatch();
+    }
+  };
 
   if (!pendingPatch) return null;
 
@@ -35,13 +55,13 @@ export default function PatchReview() {
         </div>
         <div className="flex gap-2 shrink-0">
           <button
-            onClick={acceptPatch}
+            onClick={handleAccept}
             className="flex items-center gap-1.5 text-xs font-medium px-4 py-2 bg-success-500 text-white rounded-lg hover:bg-success-600 shadow-soft"
           >
             Accept
           </button>
           <button
-            onClick={rejectPatch}
+            onClick={handleReject}
             className="flex items-center gap-1.5 text-xs font-medium px-4 py-2 bg-white text-danger-600 border border-danger-200 rounded-lg hover:bg-danger-50"
           >
             Reject

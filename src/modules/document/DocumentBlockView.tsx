@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { DocumentBlock, BlockType } from "@/types";
 import { runAiAction } from "@/lib/ai";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 import { useDocumentStore } from "@/store/documentStore";
 import { DocumentExpandResult } from "@/lib/ai/actions";
 import { v4 as uuidv4 } from "uuid";
@@ -53,15 +55,23 @@ export default function DocumentBlockView({
         input: { blockId: block.block_id, operation },
       });
       if (result.success && result.data.operations.length > 0) {
-        setPendingPatch({
+        const patchPayload = {
           patch_id: uuidv4(),
           document_id: documentId,
           operations: result.data.operations,
-          status: "pending",
+          status: "pending" as const,
           source_insight_id: null,
           source_text: `AI: ${operation.replace(/_/g, " ")}`,
           created_at: new Date().toISOString(),
-        });
+        };
+        if (isPersistenceEnabled()) {
+          await workspaceApi.createPatch({
+            operations: result.data.operations,
+            sourceText: patchPayload.source_text,
+          });
+        } else {
+          setPendingPatch(patchPayload);
+        }
       }
     } finally {
       setIsAiLoading(false);

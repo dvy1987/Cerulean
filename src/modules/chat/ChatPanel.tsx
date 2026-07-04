@@ -5,6 +5,8 @@ import { useChatStore } from "@/store/chatStore";
 import { useInsightStore } from "@/store/insightStore";
 import { useDocumentStore } from "@/store/documentStore";
 import { streamChatResponse, generatePromotionPatch } from "@/lib/ai";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 import { v4 as uuidv4 } from "uuid";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
@@ -51,47 +53,83 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
 
   const handleSend = async (content: string) => {
     setChatPrompt(undefined);
-    addMessage("user", content);
     setStreaming(true);
 
-    const assistantMsg = addMessage("assistant", "");
+    let assistantMsg: { message_id: string };
+
+    if (isPersistenceEnabled()) {
+      await workspaceApi.addMessage("user", content);
+      assistantMsg = await workspaceApi.addMessage("assistant", "");
+    } else {
+      addMessage("user", content);
+      assistantMsg = addMessage("assistant", "");
+    }
 
     let accumulated = "";
-    await streamChatResponse(
-      content,
-      (chunk) => {
-        accumulated += chunk;
-        updateMessage(assistantMsg.message_id, accumulated);
-      },
-      () => {
-        setStreaming(false);
+    try {
+      await streamChatResponse(
+        content,
+        (chunk) => {
+          accumulated += chunk;
+          updateMessage(assistantMsg.message_id, accumulated);
+        },
+        () => {}
+      );
+
+      if (isPersistenceEnabled()) {
+        await workspaceApi.finalizeMessage(assistantMsg.message_id, accumulated);
       }
-    );
+    } catch {
+      showToast("Something went wrong with the response");
+    } finally {
+      setStreaming(false);
+    }
   };
 
-  const handleSaveInsight = (text: string) => {
-    addInsight({
-      title: text.slice(0, 60) + (text.length > 60 ? "..." : ""),
-      content: text,
-      conversationId: conversation.conversation_id,
-      sourceMessageIds: [],
-    });
-    showToast("Insight saved");
+  const handleSaveInsight = async (text: string) => {
+    try {
+      if (isPersistenceEnabled()) {
+        await workspaceApi.addInsight({
+          title: text.slice(0, 60) + (text.length > 60 ? "..." : ""),
+          content: text,
+          conversationId: conversation.conversation_id,
+          sourceMessageIds: [],
+        });
+      } else {
+        addInsight({
+          title: text.slice(0, 60) + (text.length > 60 ? "..." : ""),
+          content: text,
+          conversationId: conversation.conversation_id,
+          sourceMessageIds: [],
+        });
+      }
+      showToast("Insight saved");
+    } catch {
+      showToast("Failed to save insight");
+    }
   };
 
-  const handlePromoteToDocument = (text: string) => {
-    const operations = generatePromotionPatch(text, blocks, null, []);
-    const patch = {
-      patch_id: uuidv4(),
-      document_id: useDocumentStore.getState().document.document_id,
-      operations,
-      status: "pending" as const,
-      source_insight_id: null,
-      source_text: text,
-      created_at: new Date().toISOString(),
-    };
-    setPendingPatch(patch);
-    showToast("Patch created -- review in document");
+  const handlePromoteToDocument = async (text: string) => {
+    try {
+      if (isPersistenceEnabled()) {
+        await workspaceApi.createPatch({ text });
+      } else {
+        const operations = generatePromotionPatch(text, blocks, null, []);
+        const patch = {
+          patch_id: uuidv4(),
+          document_id: useDocumentStore.getState().document.document_id,
+          operations,
+          status: "pending" as const,
+          source_insight_id: null,
+          source_text: text,
+          created_at: new Date().toISOString(),
+        };
+        setPendingPatch(patch);
+      }
+      showToast("Patch created — review in document");
+    } catch {
+      showToast("Failed to create patch");
+    }
   };
 
   return (
@@ -142,12 +180,20 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
 
       <ThinkingSuggestions
         onSelectSuggestion={(text) => setChatPrompt(text)}
-        onSaveAsInsight={(text) => {
-          addInsight({
-            title: text.slice(0, 60),
-            content: text,
-            conversationId: conversation.conversation_id,
-          });
+        onSaveAsInsight={async (text) => {
+          if (isPersistenceEnabled()) {
+            await workspaceApi.addInsight({
+              title: text.slice(0, 60),
+              content: text,
+              conversationId: conversation.conversation_id,
+            });
+          } else {
+            addInsight({
+              title: text.slice(0, 60),
+              content: text,
+              conversationId: conversation.conversation_id,
+            });
+          }
           showToast("Insight saved");
         }}
       />

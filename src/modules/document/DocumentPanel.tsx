@@ -5,6 +5,8 @@ import { useDocumentStore } from "@/store/documentStore";
 import { BlockType } from "@/types";
 import DocumentBlockView from "./DocumentBlockView";
 import PatchReview from "./PatchReview";
+import { isPersistenceEnabled } from "@/lib/config";
+import { workspaceApi } from "@/lib/api/workspace-client";
 
 const BLOCK_TYPE_OPTIONS: { value: BlockType; label: string }[] = [
   { value: "paragraph", label: "Paragraph" },
@@ -42,12 +44,19 @@ export default function DocumentPanel() {
     return new Set(pendingPatch.operations.map((op) => op.block_id));
   }, [pendingPatch]);
 
-  const handleTitleSave = () => {
-    setDocumentTitle(titleValue);
+  const handleTitleSave = async () => {
+    if (isPersistenceEnabled()) {
+      await workspaceApi.setDocumentTitle(titleValue);
+    } else {
+      setDocumentTitle(titleValue);
+    }
     setIsEditingTitle(false);
   };
 
-  const handleAddBlock = (afterBlockId?: string, blockType: BlockType = "paragraph") => {
+  const handleAddBlock = async (
+    afterBlockId?: string,
+    blockType: BlockType = "paragraph"
+  ) => {
     let position = blocks.length;
     if (afterBlockId) {
       const afterBlock = blocks.find((b) => b.block_id === afterBlockId);
@@ -55,12 +64,32 @@ export default function DocumentPanel() {
         position = afterBlock.position + 0.5;
       }
     }
-    addBlock({
-      content: "",
-      block_type: blockType,
-      position,
-    });
+    if (isPersistenceEnabled()) {
+      await workspaceApi.addBlock({ content: "", block_type: blockType, position });
+    } else {
+      addBlock({
+        content: "",
+        block_type: blockType,
+        position,
+      });
+    }
     setShowAddMenu(false);
+  };
+
+  const handleUpdateBlock = async (blockId: string, content: string) => {
+    if (isPersistenceEnabled()) {
+      await workspaceApi.updateBlock(blockId, content);
+    } else {
+      updateBlockContent(blockId, content);
+    }
+  };
+
+  const handleRemoveBlock = async (blockId: string) => {
+    if (isPersistenceEnabled()) {
+      await workspaceApi.removeBlock(blockId);
+    } else {
+      removeBlock(blockId);
+    }
   };
 
   const handleExport = (format: "markdown" | "text" | "prd") => {
@@ -178,8 +207,8 @@ export default function DocumentPanel() {
             key={block.block_id}
             block={block}
             isHighlighted={patchBlockIds.has(block.block_id)}
-            onUpdate={updateBlockContent}
-            onRemove={removeBlock}
+            onUpdate={handleUpdateBlock}
+            onRemove={handleRemoveBlock}
             onAddBelow={handleAddBlock}
           />
         ))}

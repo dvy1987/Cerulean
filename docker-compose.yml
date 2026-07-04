@@ -1,0 +1,17 @@
+# Local development database (Postgres only)
+# For full Supabase Auth locally, use: npx supabase start
+# See docs/DEPLOYMENT.md for Railway production setup.
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "54322:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cerulean
+    volumes:
+      - cerulean-pg:/var/lib/postgresql/data
+
+volumes:
+  cerulean-pg:
