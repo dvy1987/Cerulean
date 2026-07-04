@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-04 - Thinking Loop v2 master implementation plan
 - Author: agent
-- Commit: not committed yet
+- Commit: e0a2c02
 - Summary: Locked PM decisions (Product Spec default, template change v1, proposal latency OK). Full gap register + 6-phase execution plan in `docs/specs/implementation-master-plan.md`; updated `thinking-loop-v2.md`.
 - Files:
   - `docs/specs/implementation-master-plan.md`
@@ -38,7 +38,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-04 - Thinking Loop v2 product spec
 - Author: agent
-- Commit: not committed yet
+- Commit: e0a2c02
 - Summary: Wrote combined spec + phased implementation plan for proactive insight capture, template-first documents, and runtime agent consolidation (Advanced mode).
 - Files:
   - `docs/specs/thinking-loop-v2.md`
