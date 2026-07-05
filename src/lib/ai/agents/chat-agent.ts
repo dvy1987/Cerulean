@@ -2,18 +2,23 @@ import { AgentDefinition, AgentContext, AgentResult } from "../types";
 import { ChatRespondAction, ChatRespondResult, InsightToPromptAction, InsightToPromptResult } from "../actions";
 import { agentRegistry } from "../registry";
 import { streamChatResponse, insightToPrompt } from "../dev-ai";
-import { useAiSettingsStore } from "@/store/aiSettingsStore";
+import {
+  resolveProviderConfig,
+  ChatMessage,
+  ProviderConfig,
+  streamProvider,
+} from "../provider";
 
 type ChatInput = ChatRespondAction["input"] | InsightToPromptAction["input"];
-type ChatOutput = ChatRespondResult | InsightToPromptResult;
 
 function isInsightToPromptInput(
   input: ChatInput
-): input is InsightToPromptAction["input"] {
+): input is InsightToPromptAction["input"]
+{
   return "insightTitle" in input;
 }
 
-const SYSTEM_PROMPT = `You are a conversational thinking partner inside Cerulean, a structured thinking workspace.
+export const CHAT_SYSTEM_PROMPT = `You are a conversational thinking partner inside Cerulean, a structured thinking workspace.
 
 Your role is to help the user explore ideas deeply. You ask probing questions, surface hidden assumptions, and encourage the user to examine their thinking from multiple angles.
 
@@ -25,78 +30,44 @@ Guidelines:
 - If the user seems stuck, suggest a concrete angle or framework to move forward.
 - Keep responses concise. Depth over length.`;
 
-/**
- * Try calling the real AI provider via the API route.
- * Returns the response text, or null if running in dev mode.
- */
-async function callRealProvider(
-  userMessage: string,
-  context: AgentContext
-): Promise<string | null> {
-  try {
-    // Build conversation history for context
-    const messages: Array<{ role: "system" | "user" | "assistant"; content: string }> = [
-      { role: "system", content: SYSTEM_PROMPT },
-    ];
+function buildMessages(userMessage: string, context: AgentContext): ChatMessage[] {
+  const messages: ChatMessage[] = [{ role: "system", content: CHAT_SYSTEM_PROMPT }];
+  const recent = context.stores.messages
+    .filter((m) => m.content.length > 0)
+    .slice(-20);
 
-    // Include recent conversation history (last 20 messages)
-    const recentMessages = context.stores.messages.slice(-20);
-    for (const msg of recentMessages) {
-      messages.push({
-        role: msg.role === "user" ? "user" : "assistant",
-        content: msg.content,
-      });
-    }
-
-    // Add the current user message
-    messages.push({ role: "user", content: userMessage });
-
-    const { customProvider, customModel, customApiKey } = useAiSettingsStore.getState();
-
-    const payload: Record<string, unknown> = { messages };
-    if (customProvider && customModel && customApiKey) {
-      payload.clientProvider = customProvider;
-      payload.clientModel = customModel;
-      payload.clientApiKey = customApiKey;
-    }
-
-    const response = await fetch("/api/ai/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+  for (const msg of recent) {
+    messages.push({
+      role: msg.role === "user" ? "user" : "assistant",
+      content: msg.content,
     });
-
-    if (!response.ok) {
-      console.warn("AI provider returned error, falling back to dev mode");
-      return null;
-    }
-
-    const data = await response.json();
-
-    // If server says provider is "dev", return null to use dev-ai
-    if (data.provider === "dev") {
-      return null;
-    }
-
-    return data.content as string;
-  } catch {
-    console.warn("Failed to reach AI API, falling back to dev mode");
-    return null;
   }
+
+  const last = recent[recent.length - 1];
+  if (!last || last.role !== "user" || last.content !== userMessage) {
+    messages.push({ role: "user", content: userMessage });
+  }
+
+  return messages;
 }
 
-const chatAgent: AgentDefinition<ChatInput, ChatOutput> = {
+function resolveChatProvider(context: AgentContext): ProviderConfig {
+  if (context.providerConfig) return context.providerConfig;
+  return resolveProviderConfig();
+}
+
+const chatAgent: AgentDefinition<ChatInput, ChatRespondResult | InsightToPromptResult> = {
   id: "chat",
   name: "Chat Agent",
   description:
     "Core conversational AI. Handles chat responses and insight-to-prompt conversion.",
-  systemPrompt: SYSTEM_PROMPT,
+  systemPrompt: CHAT_SYSTEM_PROMPT,
 
   async run(
     input: ChatInput,
     context: AgentContext,
     options?: { onChunk?: (chunk: string) => void }
-  ): Promise<AgentResult<ChatOutput>> {
+  ): Promise<AgentResult<ChatRespondResult | InsightToPromptResult>> {
     if (isInsightToPromptInput(input)) {
       const prompt = insightToPrompt(input.insightTitle, input.insightContent);
       return {
@@ -107,28 +78,41 @@ const chatAgent: AgentDefinition<ChatInput, ChatOutput> = {
     }
 
     const { userMessage } = input as ChatRespondAction["input"];
+    const config = resolveChatProvider(context);
 
-    // Try real AI provider first
-    const realResponse = await callRealProvider(userMessage, context);
+    if (config.provider !== "dev") {
+      try {
+        const messages = buildMessages(userMessage, context);
+        let full = "";
 
-    if (realResponse) {
-      // Stream the real response character by character for consistent UX
-      let fullResponse = "";
-      for (let i = 0; i < realResponse.length; i++) {
-        fullResponse += realResponse[i];
-        options?.onChunk?.(realResponse[i]);
-        // Small delay for natural streaming feel
-        await new Promise((resolve) => setTimeout(resolve, 5));
+        if (options?.onChunk) {
+          const result = await streamProvider(
+            config,
+            { messages },
+            {
+              onChunk: (chunk) => {
+                full += chunk;
+                options.onChunk?.(chunk);
+              },
+            }
+          );
+          full = result.content || full;
+        } else {
+          const { callProvider } = await import("../provider");
+          const result = await callProvider(config, { messages });
+          full = result.content;
+        }
+
+        return {
+          agentId: "chat",
+          success: true,
+          data: { response: full } as ChatRespondResult,
+        };
+      } catch (err) {
+        console.warn("Chat provider failed, falling back to dev mode:", err);
       }
-
-      return {
-        agentId: "chat",
-        success: true,
-        data: { response: fullResponse } as ChatRespondResult,
-      };
     }
 
-    // Fall back to dev-ai
     let fullResponse = "";
     await streamChatResponse(
       userMessage,

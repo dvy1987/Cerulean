@@ -2,9 +2,11 @@
 
 import { useState, useMemo } from "react";
 import { useDocumentStore } from "@/store/documentStore";
-import { BlockType } from "@/types";
+import { BlockType, DocumentType } from "@/types";
 import DocumentBlockView from "./DocumentBlockView";
 import PatchReview from "./PatchReview";
+import ChangeTemplateModal from "@/components/ChangeTemplateModal";
+import { DOCUMENT_TEMPLATES } from "@/lib/document-templates/registry";
 import { isPersistenceEnabled } from "@/lib/config";
 import { workspaceApi } from "@/lib/api/workspace-client";
 
@@ -33,6 +35,8 @@ export default function DocumentPanel() {
   const [titleValue, setTitleValue] = useState(doc.title);
   const [showExport, setShowExport] = useState(false);
   const [showAddMenu, setShowAddMenu] = useState(false);
+  const [showTemplateMenu, setShowTemplateMenu] = useState(false);
+  const [changeTarget, setChangeTarget] = useState<DocumentType | null>(null);
 
   const sortedBlocks = useMemo(
     () => [...blocks].sort((a, b) => a.position - b.position),
@@ -143,11 +147,37 @@ export default function DocumentPanel() {
               >
                 {doc.title}
               </h2>
-              <p className="text-[11px] text-muted mt-0.5">Structured document</p>
+              <p className="text-[11px] text-muted mt-0.5">
+                {DOCUMENT_TEMPLATES[doc.document_type]?.label ?? "Document"}
+              </p>
             </div>
           )}
         </div>
-        <div className="relative">
+        <div className="relative flex items-center gap-1">
+          <button
+            onClick={() => setShowTemplateMenu(!showTemplateMenu)}
+            className="text-xs text-muted hover:text-foreground hover:bg-gray-50 px-2.5 py-1.5 rounded-md"
+            title="Document options"
+          >
+            ⋯
+          </button>
+          {showTemplateMenu && (
+            <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lifted z-10 py-1 min-w-[180px]">
+              <p className="px-3.5 py-1 text-[10px] text-muted uppercase tracking-wider">Change template</p>
+              {(["product_spec", "strategy_memo", "product_analysis", "blank"] as DocumentType[]).map((type) => (
+                <button
+                  key={type}
+                  onClick={() => {
+                    setShowTemplateMenu(false);
+                    setChangeTarget(type);
+                  }}
+                  className="block w-full text-left px-3.5 py-2 text-xs hover:bg-gray-50"
+                >
+                  {DOCUMENT_TEMPLATES[type].label}
+                </button>
+              ))}
+            </div>
+          )}
           <button
             onClick={() => setShowExport(!showExport)}
             className="text-xs text-muted hover:text-foreground hover:bg-gray-50 px-2.5 py-1.5 rounded-md"
@@ -237,6 +267,11 @@ export default function DocumentPanel() {
           </div>
         )}
       </div>
+      <ChangeTemplateModal
+        open={changeTarget !== null}
+        targetType={changeTarget}
+        onClose={() => setChangeTarget(null)}
+      />
     </div>
   );
 }

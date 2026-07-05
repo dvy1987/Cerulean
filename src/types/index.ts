@@ -33,9 +33,17 @@ export interface Insight {
   updated_at: string;
 }
 
+export type DocumentType =
+  | "blank"
+  | "product_spec"
+  | "strategy_memo"
+  | "product_analysis";
+
 export interface Document {
   document_id: string;
   title: string;
+  document_type: DocumentType;
+  template_version: number;
   created_at: string;
   updated_at: string;
 }
@@ -76,7 +84,17 @@ export interface Patch {
   status: PatchStatus;
   source_insight_id: string | null;
   source_text: string | null;
+  placement_label?: string | null;
+  placement_block_id?: string | null;
   created_at: string;
+}
+
+export interface ProposedInsight {
+  proposal_id: string;
+  title: string;
+  content: string;
+  assistant_message_id: string;
+  confidence?: number;
 }
 
 export interface Conversation {

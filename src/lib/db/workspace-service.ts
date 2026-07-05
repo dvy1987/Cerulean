@@ -14,7 +14,16 @@ import {
   PatchOperation,
 } from "@/types";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { generatePromotionPatch } from "@/lib/ai/dev-ai";
+import { runAiAction } from "@/lib/ai/orchestrator";
+import { DocumentPromoteResult } from "@/lib/ai/actions";
+import {
+  changeDocumentTemplate,
+  DEFAULT_DOCUMENT_TYPE,
+  getDefaultTitle,
+  seedBlocks,
+  exportByTemplate,
+} from "@/lib/document-templates";
+import type { DocumentType } from "@/types";
 export interface WorkspaceSnapshot {
   conversation: Conversation;
   document: Document;
@@ -31,6 +40,9 @@ export interface WorkspaceSnapshot {
       suggestion: boolean;
       tonalAdjustment: boolean;
     };
+    suggestInsights: boolean;
+    advancedMode: boolean;
+    hasChosenTemplate: boolean;
     customProvider: string;
     customModel: string;
   };
@@ -93,6 +105,8 @@ function mapPatch(row: Record<string, unknown>): Patch {
     status: row.status as Patch["status"],
     source_insight_id: (row.source_insight_id as string) ?? null,
     source_text: (row.source_text as string) ?? null,
+    placement_label: (row.placement_label as string) ?? null,
+    placement_block_id: (row.placement_block_id as string) ?? null,
     created_at: row.created_at as string,
   };
 }
@@ -203,6 +217,8 @@ export class WorkspaceService {
     const document: Document = {
       document_id: docRes.data.id,
       title: docRes.data.title,
+      document_type: (docRes.data.document_type as DocumentType) ?? DEFAULT_DOCUMENT_TYPE,
+      template_version: (docRes.data.template_version as number) ?? 1,
       created_at: docRes.data.created_at,
       updated_at: docRes.data.updated_at,
     };
@@ -212,6 +228,9 @@ export class WorkspaceService {
       background_ranking: true,
       background_suggestion: true,
       background_tonal_adjustment: true,
+      suggest_insights: true,
+      advanced_mode: false,
+      has_chosen_template: false,
       custom_provider: "",
       custom_model: "",
     };
@@ -232,6 +251,9 @@ export class WorkspaceService {
           suggestion: settings.background_suggestion,
           tonalAdjustment: settings.background_tonal_adjustment,
         },
+        suggestInsights: settings.suggest_insights ?? true,
+        advancedMode: settings.advanced_mode ?? false,
+        hasChosenTemplate: settings.has_chosen_template ?? false,
         customProvider: settings.custom_provider ?? "",
         customModel: settings.custom_model ?? "",
       },
@@ -348,9 +370,131 @@ export class WorkspaceService {
     return {
       document_id: data.id,
       title: data.title,
+      document_type: (data.document_type as DocumentType) ?? DEFAULT_DOCUMENT_TYPE,
+      template_version: (data.template_version as number) ?? 1,
       created_at: data.created_at,
       updated_at: data.updated_at,
     };
+  }
+
+  async updateDocument(params: {
+    title?: string;
+    documentType?: DocumentType;
+  }): Promise<{ document: Document; blocks: DocumentBlock[] }> {
+    const workspace = await this.getWorkspace();
+
+    if (params.documentType && params.documentType !== workspace.document.document_type) {
+      return this.changeDocumentTemplate(params.documentType);
+    }
+
+    if (params.title) {
+      const document = await this.setDocumentTitle(params.title);
+      return { document, blocks: workspace.blocks };
+    }
+
+    return { document: workspace.document, blocks: workspace.blocks };
+  }
+
+  async changeDocumentTemplate(
+    targetType: DocumentType
+  ): Promise<{ document: Document; blocks: DocumentBlock[] }> {
+    const workspace = await this.getWorkspace();
+    const { documentId } = await this.getWorkspaceIds();
+    const { blocks, title, documentType } = changeDocumentTemplate(
+      documentId,
+      workspace.blocks,
+      targetType
+    );
+
+    await this.replaceBlocks(blocks);
+
+    const { data, error } = await this.db()
+      .from("documents")
+      .update({
+        title,
+        document_type: documentType,
+        template_version: workspace.document.template_version + 1,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", documentId)
+      .eq("user_id", this.userId)
+      .select("*")
+      .single();
+
+    if (error || !data) throw new Error(error?.message ?? "Failed to update document");
+
+    await this.updateSettings({ has_chosen_template: true });
+
+    return {
+      document: {
+        document_id: data.id,
+        title: data.title,
+        document_type: data.document_type as DocumentType,
+        template_version: data.template_version as number,
+        created_at: data.created_at,
+        updated_at: data.updated_at,
+      },
+      blocks,
+    };
+  }
+
+  async seedTemplateIfNeeded(): Promise<DocumentBlock[] | null> {
+    const workspace = await this.getWorkspace();
+    if (workspace.blocks.length > 0) return null;
+
+    const docType = workspace.document.document_type ?? DEFAULT_DOCUMENT_TYPE;
+    if (docType === "blank") return null;
+
+    const seeded = seedBlocks(workspace.document.document_id, docType);
+    for (const block of seeded) {
+      await this.db().from("document_blocks").insert({
+        id: block.block_id,
+        user_id: this.userId,
+        document_id: workspace.document.document_id,
+        content: block.content,
+        block_type: block.block_type,
+        position: block.position,
+        linked_insights: block.linked_insights,
+        source_messages: block.source_messages,
+      });
+    }
+
+    if (workspace.document.title === "Untitled Document") {
+      await this.setDocumentTitle(getDefaultTitle(docType));
+    }
+
+    return seeded;
+  }
+
+  async replaceBlocks(blocks: DocumentBlock[]): Promise<void> {
+    const { documentId } = await this.getWorkspaceIds();
+    await this.db()
+      .from("document_blocks")
+      .delete()
+      .eq("document_id", documentId)
+      .eq("user_id", this.userId);
+
+    const now = new Date().toISOString();
+    for (const block of blocks) {
+      await this.db().from("document_blocks").insert({
+        id: block.block_id,
+        user_id: this.userId,
+        document_id: documentId,
+        content: block.content,
+        block_type: block.block_type,
+        position: block.position,
+        linked_insights: block.linked_insights ?? [],
+        source_messages: block.source_messages ?? [],
+        created_at: block.created_at ?? now,
+        updated_at: block.updated_at ?? now,
+      });
+    }
+  }
+
+  async previewTemplateChange(targetType: DocumentType) {
+    const workspace = await this.getWorkspace();
+    const { previewTemplateChange } = await import("@/lib/document-templates/change-template");
+    return previewTemplateChange(workspace.blocks, targetType);
   }
 
   async addBlock(params: {
@@ -415,6 +559,8 @@ export class WorkspaceService {
     operations: PatchOperation[];
     sourceInsightId?: string | null;
     sourceText?: string | null;
+    placementLabel?: string | null;
+    placementBlockId?: string | null;
   }): Promise<Patch> {
     const { documentId } = await this.getWorkspaceIds();
 
@@ -433,6 +579,8 @@ export class WorkspaceService {
         operations: params.operations,
         source_insight_id: params.sourceInsightId ?? null,
         source_text: params.sourceText ?? null,
+        placement_label: params.placementLabel ?? null,
+        placement_block_id: params.placementBlockId ?? null,
         status: "pending",
         is_active: true,
       })
@@ -449,16 +597,29 @@ export class WorkspaceService {
     sourceMessageIds?: string[]
   ): Promise<Patch> {
     const workspace = await this.getWorkspace();
-    const operations = generatePromotionPatch(
-      text,
-      workspace.blocks,
-      insightId ?? null,
-      sourceMessageIds ?? []
+    const result = await runAiAction<DocumentPromoteResult>(
+      {
+        type: "document.promote",
+        input: {
+          text,
+          insightId: insightId ?? null,
+          sourceMessageIds: sourceMessageIds ?? [],
+          documentType: workspace.document.document_type,
+        },
+      },
+      { userId: this.userId }
     );
+
+    if (!result.success) {
+      throw new Error(result.error ?? "Promotion failed");
+    }
+
     return this.createPatch({
-      operations,
+      operations: result.data.operations,
       sourceInsightId: insightId ?? null,
       sourceText: text,
+      placementLabel: result.data.placement_label,
+      placementBlockId: result.data.placement_block_id,
     });
   }
 
@@ -649,6 +810,9 @@ export class WorkspaceService {
     background_ranking: boolean;
     background_suggestion: boolean;
     background_tonal_adjustment: boolean;
+    suggest_insights: boolean;
+    advanced_mode: boolean;
+    has_chosen_template: boolean;
     custom_provider: string;
     custom_model: string;
   }>) {
@@ -768,48 +932,7 @@ export function exportDocumentPRD(
   doc: Document,
   blocks: DocumentBlock[]
 ): string {
-  const sorted = [...blocks].sort((a, b) => a.position - b.position);
-  const sections = [
-    "Problem",
-    "User Pain",
-    "Proposed Solution",
-    "Tradeoffs",
-    "Metrics",
-    "Open Questions",
-  ];
-
-  let prd = `# ${doc.title}\n\n---\n\n`;
-
-  if (sorted.length > 0) {
-    for (const block of sorted) {
-      switch (block.block_type) {
-        case "heading":
-          prd += `## ${block.content}\n\n`;
-          break;
-        case "section":
-          prd += `### ${block.content}\n\n`;
-          break;
-        case "paragraph":
-          prd += `${block.content}\n\n`;
-          break;
-        case "bullet":
-          prd += `- ${block.content}\n`;
-          break;
-      }
-    }
-    prd += `\n---\n\n`;
-  }
-
-  for (const section of sections) {
-    const exists = sorted.some((b) =>
-      b.content.toLowerCase().includes(section.toLowerCase())
-    );
-    if (!exists) {
-      prd += `## ${section}\n\n_To be defined._\n\n`;
-    }
-  }
-
-  return prd.trim();
+  return exportByTemplate(doc, blocks);
 }
 
 export async function createApiKeyForUser(

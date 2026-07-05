@@ -292,3 +292,39 @@ export function computeRelevanceScores(
 
   return scores;
 }
+
+/**
+ * Propose 0–2 insights from a chat exchange (dev heuristic).
+ */
+export function proposeInsightsFromChat(
+  userMessage: string,
+  assistantMessage: string
+): Array<{ title: string; content: string; confidence?: number }> {
+  const proposals: Array<{ title: string; content: string; confidence?: number }> = [];
+
+  const sentences = assistantMessage
+    .split(/[.!?\n]+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 30);
+
+  for (const sentence of sentences.slice(0, 2)) {
+    if (proposals.length >= 2) break;
+    const clean = sentence.replace(/\*\*/g, "").trim();
+    if (clean.length < 25) continue;
+    proposals.push({
+      title: clean.slice(0, 60) + (clean.length > 60 ? "..." : ""),
+      content: clean,
+      confidence: 0.6,
+    });
+  }
+
+  if (proposals.length === 0 && userMessage.length > 20) {
+    proposals.push({
+      title: userMessage.slice(0, 60) + (userMessage.length > 60 ? "..." : ""),
+      content: `User raised: ${userMessage.slice(0, 200)}`,
+      confidence: 0.5,
+    });
+  }
+
+  return proposals.slice(0, 2);
+}

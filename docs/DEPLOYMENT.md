@@ -21,6 +21,7 @@ Apply migrations in order:
 
 1. `supabase/migrations/001_initial_schema.sql`
 2. `supabase/migrations/002_username_and_fks.sql`
+3. `supabase/migrations/003_document_templates.sql` — document types, patch placement, settings toggles
 
 The `profiles` table stores **username** (unique, case-insensitive). Passwords live in Supabase Auth only — never in app tables.
 

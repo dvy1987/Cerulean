@@ -57,6 +57,12 @@ export function routeAction(action: AiAction, context: AgentContext): RoutingDec
         ],
       };
 
+    case "insight.propose":
+      return {
+        primaryAgent: "insight_extraction",
+        backgroundAgents: [],
+      };
+
     case "suggestion.generate":
       return {
         primaryAgent: "suggestion",

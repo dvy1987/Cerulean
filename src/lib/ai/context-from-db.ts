@@ -58,6 +58,9 @@ export async function buildAgentContextFromDb(userId: string): Promise<AgentCont
 
   const settings: AiSettingsSnapshot = {
     backgroundAgents: { ...ws.settings.backgroundAgents },
+    suggestInsights: ws.settings.suggestInsights,
+    advancedMode: ws.settings.advancedMode,
+    hasChosenTemplate: ws.settings.hasChosenTemplate,
   };
 
   return {

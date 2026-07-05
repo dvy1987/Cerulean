@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { withAuth, jsonOk } from "@/lib/api/route-helpers";
+import type { DocumentType } from "@/types";
 
 export async function GET(request: NextRequest) {
   return withAuth(request, async (service) => {
@@ -11,11 +12,22 @@ export async function GET(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   return withAuth(request, async (service) => {
     const body = await request.json();
-    const { title } = body as { title: string };
-    if (!title) {
-      return Response.json({ error: "title is required" }, { status: 400 });
+    const { title, documentType } = body as {
+      title?: string;
+      documentType?: DocumentType;
+    };
+
+    if (documentType) {
+      const result = await service.changeDocumentTemplate(documentType);
+      return jsonOk(result);
     }
-    const document = await service.setDocumentTitle(title);
-    return jsonOk({ document });
+
+    if (title) {
+      const document = await service.setDocumentTitle(title);
+      const workspace = await service.getWorkspace();
+      return jsonOk({ document, blocks: workspace.blocks });
+    }
+
+    return Response.json({ error: "title or documentType is required" }, { status: 400 });
   });
 }

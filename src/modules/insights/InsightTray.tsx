@@ -5,13 +5,12 @@ import { useInsightStore } from "@/store/insightStore";
 import { useDocumentStore } from "@/store/documentStore";
 import { isPersistenceEnabled } from "@/lib/config";
 import { workspaceApi } from "@/lib/api/workspace-client";
-import {
-  generatePromotionPatch,
-  insightToPrompt,
-  detectContradictions,
-} from "@/lib/ai";
 import { Insight } from "@/types";
+import { runAiAction } from "@/lib/ai/orchestrator";
+import { buildAgentContextFromStores } from "@/lib/ai/context-from-stores";
+import { DocumentPromoteResult, InsightToPromptResult } from "@/lib/ai/actions";
 import { v4 as uuidv4 } from "uuid";
+import { useContradictionStore } from "@/store/contradictionStore";
 import InsightCard from "./InsightCard";
 
 export default function InsightTray() {
@@ -24,21 +23,14 @@ export default function InsightTray() {
     setInsightStatus,
     archiveInsight,
   } = useInsightStore();
-  const { blocks, setPendingPatch, document: doc } = useDocumentStore();
+  const { setPendingPatch, document: doc } = useDocumentStore();
   const [isAdding, setIsAdding] = useState(false);
   const [newInsightText, setNewInsightText] = useState("");
 
   const activeInsights = insights.filter((i) => i.status !== "archived");
   const count = activeInsights.length;
 
-  const contradictions = useMemo(() => {
-    return detectContradictions(
-      activeInsights.map((i) => ({
-        insight_id: i.insight_id,
-        content: i.content,
-      }))
-    );
-  }, [activeInsights]);
+  const contradictions = useContradictionStore((s) => s.contradictions);
 
   const contradictionIds = useMemo(() => {
     const ids = new Set<string>();
@@ -91,22 +83,30 @@ export default function InsightTray() {
     if (isPersistenceEnabled()) {
       await workspaceApi.setPendingPatchFromPromote(insight.insight_id);
     } else {
-      const operations = generatePromotionPatch(
-        insight.content,
-        blocks,
-        insight.insight_id,
-        insight.source_message_ids
-      );
-      const patch = {
+      const context = buildAgentContextFromStores();
+      const result = await runAiAction<DocumentPromoteResult>({
+        type: "document.promote",
+        input: {
+          text: insight.content,
+          insightId: insight.insight_id,
+          sourceMessageIds: insight.source_message_ids,
+          documentType: doc.document_type,
+        },
+      }, { context });
+
+      if (!result.success) return;
+
+      setPendingPatch({
         patch_id: uuidv4(),
         document_id: doc.document_id,
-        operations,
-        status: "pending" as const,
+        operations: result.data.operations,
+        status: "pending",
         source_insight_id: insight.insight_id,
         source_text: insight.content,
+        placement_label: result.data.placement_label,
+        placement_block_id: result.data.placement_block_id,
         created_at: new Date().toISOString(),
-      };
-      setPendingPatch(patch);
+      });
       setInsightStatus(insight.insight_id, "promoted");
     }
   };
@@ -117,10 +117,25 @@ export default function InsightTray() {
     } else {
       setInsightStatus(insight.insight_id, "discussing");
     }
-    const prompt = insightToPrompt(insight.title, insight.content);
-    window.dispatchEvent(
-      new CustomEvent("insight-to-prompt", { detail: prompt })
-    );
+
+    let prompt: string;
+    if (isPersistenceEnabled()) {
+      const data = await workspaceApi.runAiAction({
+        type: "insight.to_prompt",
+        input: { insightTitle: insight.title, insightContent: insight.content },
+      }) as { result?: { success?: boolean; data?: InsightToPromptResult } };
+      prompt = data.result?.success && data.result.data?.prompt
+        ? data.result.data.prompt
+        : `Let's explore: ${insight.title}`;
+    } else {
+      const result = await runAiAction<InsightToPromptResult>({
+        type: "insight.to_prompt",
+        input: { insightTitle: insight.title, insightContent: insight.content },
+      }, { context: buildAgentContextFromStores() });
+      prompt = result.success ? result.data.prompt : `Let's explore: ${insight.title}`;
+    }
+
+    window.dispatchEvent(new CustomEvent("insight-to-prompt", { detail: prompt }));
   };
 
   const isFullscreen = trayMode === "fullscreen";

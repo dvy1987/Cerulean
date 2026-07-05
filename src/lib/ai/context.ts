@@ -75,6 +75,9 @@ export function buildAgentContext(): AgentContext {
 
   const settings: AiSettingsSnapshot = {
     backgroundAgents: { ...settingsState.backgroundAgents },
+    suggestInsights: settingsState.suggestInsights,
+    advancedMode: settingsState.advancedMode,
+    hasChosenTemplate: settingsState.hasChosenTemplate,
   };
 
   return {

@@ -1,9 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
-import { useInsightStore } from "@/store/insightStore";
-import { useDocumentStore } from "@/store/documentStore";
-import { generateThinkingSuggestions, detectContradictions } from "@/lib/ai";
+import { useSuggestionStore } from "@/store/suggestionStore";
 
 interface ThinkingSuggestionsProps {
   onSelectSuggestion: (text: string) => void;
@@ -14,28 +11,7 @@ export default function ThinkingSuggestions({
   onSelectSuggestion,
   onSaveAsInsight,
 }: ThinkingSuggestionsProps) {
-  const insights = useInsightStore((s) => s.insights);
-  const blocks = useDocumentStore((s) => s.blocks);
-
-  const suggestions = useMemo(() => {
-    const unresolved = insights
-      .filter((i) => i.status === "captured" || i.status === "discussing")
-      .map((i) => ({ insight_id: i.insight_id, title: i.title }));
-
-    const activeInsights = insights.filter((i) => i.status !== "archived");
-    const contradictions = detectContradictions(
-      activeInsights.map((i) => ({
-        insight_id: i.insight_id,
-        content: i.content,
-      }))
-    );
-
-    return generateThinkingSuggestions(
-      unresolved,
-      blocks.length,
-      contradictions.length > 0
-    );
-  }, [insights, blocks.length]);
+  const suggestions = useSuggestionStore((s) => s.suggestions);
 
   if (suggestions.length === 0) return null;
 
@@ -52,8 +28,8 @@ export default function ThinkingSuggestions({
         Continue Thinking
       </p>
       <div className="flex flex-wrap gap-2">
-        {suggestions.map((s, i) => (
-          <div key={i} className="flex items-center gap-1">
+        {suggestions.map((s) => (
+          <div key={s.suggestion_id} className="flex items-center gap-1">
             <button
               onClick={() => onSelectSuggestion(s.text)}
               className={`text-[11px] px-3 py-1.5 rounded-lg border font-medium hover:shadow-soft ${

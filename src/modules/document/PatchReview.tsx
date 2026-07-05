@@ -43,12 +43,20 @@ export default function PatchReview() {
     .join(", ");
 
   return (
-    <div className="mx-4 mt-3 p-4 bg-gradient-to-r from-cerulean-50 to-cerulean-100/50 border border-cerulean-200 rounded-xl shadow-soft animate-slideUp">
+    <div
+      className="mx-4 mt-3 p-4 bg-gradient-to-r from-cerulean-50 to-cerulean-100/50 border border-cerulean-200 rounded-xl shadow-soft animate-slideUp"
+      data-onboarding="patch-review"
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <p className="text-xs font-semibold text-cerulean-800 mb-1">
             AI Patch Pending
           </p>
+          {pendingPatch.placement_label && (
+            <p className="text-[11px] text-cerulean-700 mb-1">
+              Adding under: <span className="font-medium">{pendingPatch.placement_label}</span>
+            </p>
+          )}
           <p className="text-[11px] text-cerulean-600 line-clamp-2 font-mono leading-relaxed">
             {opSummary}
           </p>

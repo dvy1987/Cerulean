@@ -1,6 +1,6 @@
 # Cerulean Shared Context
 
-Last updated: 2026-07-05
+Last updated: 2026-07-05 (handoff after Thinking Loop v2 + P0–P3 fixes)
 Status: Active working context for humans and AI agents
 
 ## Purpose
@@ -54,10 +54,17 @@ Update this file when:
 - 2026-07-03: User chose Railway + **self-hosted Supabase** (not Supabase Cloud) for persistence and auth
 - 2026-07-03: **Username + password** auth — username in `profiles`, passwords in Supabase Auth only
 - 2026-07-03: MCP server for Cursor/Antigravity — IDE AI does thinking; Cerulean stores structure. API keys per user (`cer_...`)
-- 2026-07-04: Three commits on `main` (`0547638`, `a6313e7`, `15c06c7`) — **not pushed to origin**
+- 2026-07-04: Thinking Loop v2 approved — proactive capture, template-first docs (`product_spec` default), runtime consolidation, Advanced mode
+- 2026-07-04: Template change ships in v1; insight proposal latency 1–3s OK; never auto-save insights
+- 2026-07-05: Agent-loom sync @ `2a796a7`; `main` pushed and clean
 
 ## Handoff
-- **Start here:** `docs/HANDOFF.md` — architecture, file map, deploy checklist
+- **Start here:** `docs/HANDOFF.md` — full session handoff, QA checklist, uncommitted files list
+- **Execution plan:** `docs/specs/implementation-master-plan.md` — Phases 0–4 done in code; 5–6 remain
+- **Product spec:** `docs/specs/thinking-loop-v2.md`
+- **Next steps (user choice):** commit changeset · manual QA · Phase 5 deploy · Phase 6 golden tests
+- **Uncommitted:** ~60 files — Thinking Loop v2 + adversarial review fixes; `npm run build` + `npm test` (8) pass
+- **Verify:** persisted chat no duplicates; streaming `done` before proposals; contradictions with 2+ insights; template seed + promote placement
 - **Agent skills:** `.agents/skills/` — 109 skills (106 library + 3 Cerulean domain); last library sync `2026-07-05` @ upstream `2a796a7` via `agent-loom-sync`; new: `svg-creation`, `gsap-animation`, `motion-animation`; `knowledge-graph` fork preserved (`.next` exclusion); `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
 - **Skill index:** `docs/SKILL-INDEX.md` | **Routing:** `.agents/ROUTING.md`
 - **Memory:** `docs/memory/` bridged with `docs/agent-shared-context.md`
@@ -66,22 +73,25 @@ Update this file when:
 
 ### What is implemented
 - Project scaffolding: Next.js 14 + TypeScript + Tailwind
-- Three-panel workspace layout with Settings + Exemplar buttons
+- Three-panel workspace layout with Settings + Exemplar buttons (Exemplar/Graph/Import in Advanced mode)
 - Chat, insights, document, graph modules (UI complete)
-- Multi-agent AI architecture (dev mode + optional real providers)
-- **Username + password auth** — sign up with username/email/password; sign in with username/password. Passwords in Supabase Auth only; `profiles` stores username.
+- **Thinking Loop v2 (Phases 0–4):** orchestrator-only web path, SSE chat stream, post-chat pipeline, proactive proposals, `product_spec` default template, template change, section-aware promotion, onboarding guide, Advanced mode
+- **Adversarial review fixes:** single message lifecycle, real provider streaming, server `callAI`, contradiction tray, proposal dedupe, shared heading match
+- Multi-agent AI architecture (dev fallback inside agents; optional real providers via env + `/api/v1/ai/complete`)
+- **Username + password auth** — sign up with username/email/password; sign in with username/password
 - **Supabase persistence layer** — schema, RLS, auth, REST API v1
 - **API keys** for MCP/CLI — per-user, hashed at rest
-- **MCP server** — `packages/cerulean-mcp` with 35+ tools (full UI parity incl. `cerulean_sync_graph`)
-- Web UI syncs to Supabase when env vars are configured; falls back to in-memory without them
-- Graph, settings toggles, exemplar delete persist when Supabase enabled
+- **MCP server** — `packages/cerulean-mcp` with 35+ tools
+- Web UI syncs to Supabase when env vars configured; in-memory fallback without them
+- Tests: 8 passing (`heading-match.test.mts` + smoke/heuristic `.mjs`)
 
 ### What is NOT yet implemented
-- Railway + self-hosted Supabase deployment (documented in `docs/DEPLOYMENT.md`, not automated)
-- LLM-based orchestrator routing (still rule-based dev-router)
+- **Git commit** for Thinking Loop v2 work (large uncommitted changeset on `main`)
+- Railway + self-hosted Supabase deployment (Phase 5)
+- Golden / eval tests (Phase 6)
+- LLM-based orchestrator routing (still rule-based dev-router; deferred)
 - Memory management UI
-- Automated insight extraction on every chat turn (MCP/IDE must call tools)
-- Comprehensive test suite (only smoke tests for hashing/username validation)
+- Live production URL
 
 ### Deployment
 - Target: Railway (app) + self-hosted Supabase on Railway (not Supabase Cloud)
@@ -100,8 +110,11 @@ Update this file when:
 - AI abstraction layer is in place for easy provider swap later
 
 ### Gaps & Risks
+- **Uncommitted changeset** — ~60 files; next session should commit or explicitly defer
+- Deploy + migration 003 required for persisted template/settings columns
 - Without Supabase env vars, all state is ephemeral (local dev mode)
-- Test coverage is minimal
+- Test coverage is minimal (no golden evals for AI quality)
+- Gemini chat streaming uses buffered fallback (OpenAI/OpenRouter/Anthropic stream natively)
 
 ## Multi-Agent Architecture — Tradeoff Analysis
 This section records the reasoning behind the 10-agent structure. It is context for future agents, not an execution plan.
@@ -172,3 +185,5 @@ It is not advice, not a recommended plan, and not a task list for autonomous exe
 - 2026-03-21: Agent memory: per-document + generalized, stored as markdown, managed by Memory Management Agent
 - 2026-07-03: Railway + self-hosted Supabase; username/password auth; MCP with API keys
 - 2026-07-04: Handoff docs prepared (`docs/HANDOFF.md`, README updated)
+- 2026-07-04: Thinking Loop v2 spec + master implementation plan committed (`e0a2c02`)
+- 2026-07-05: Thinking Loop v2 Phases 0–4 + adversarial P0–P3 fixes implemented in code (uncommitted); HANDOFF refreshed

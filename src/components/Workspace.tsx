@@ -8,7 +8,12 @@ import InsightTray from "@/modules/insights/InsightTray";
 import GraphView from "@/modules/graph/GraphView";
 import SettingsPanel from "@/modules/settings/SettingsPanel";
 import ExemplarUpload from "@/modules/settings/ExemplarUpload";
+import DocumentTypePicker from "@/components/DocumentTypePicker";
+import OnboardingGuide from "@/components/OnboardingGuide";
 import { useWorkspaceSync } from "@/hooks/useWorkspaceSync";
+import { useAiSettingsStore } from "@/store/aiSettingsStore";
+import { useDocumentStore } from "@/store/documentStore";
+import { isPersistenceEnabled } from "@/lib/config";
 
 type RightTab = "document" | "graph";
 
@@ -18,6 +23,10 @@ const MIN_DRAG = 0.02;
 
 export default function Workspace() {
   const { ready, error, persistenceEnabled } = useWorkspaceSync();
+  const advancedMode = useAiSettingsStore((s) => s.advancedMode);
+  const hasChosenTemplate = useAiSettingsStore((s) => s.hasChosenTemplate);
+  const blocks = useDocumentStore((s) => s.blocks);
+  const [showTypePicker, setShowTypePicker] = useState(false);
   const [rightTab, setRightTab] = useState<RightTab>("document");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [exemplarsOpen, setExemplarsOpen] = useState(false);
@@ -72,6 +81,13 @@ export default function Workspace() {
     },
     [isDragging]
   );
+
+  useEffect(() => {
+    if (!ready) return;
+    if (!hasChosenTemplate && blocks.length === 0 && !isPersistenceEnabled()) {
+      setShowTypePicker(true);
+    }
+  }, [ready, hasChosenTemplate, blocks.length]);
 
   useEffect(() => {
     if (isDragging) {
@@ -141,13 +157,15 @@ export default function Workspace() {
           </span>
         </div>
         <div className="flex items-center gap-0.5">
-          <DocumentImport />
-          <button
-            onClick={() => setExemplarsOpen(true)}
-            className="text-xs text-muted hover:text-foreground hover:bg-gray-50 px-2.5 py-1.5 rounded-md"
-          >
-            Exemplars
-          </button>
+          {advancedMode && <DocumentImport />}
+          {advancedMode && (
+            <button
+              onClick={() => setExemplarsOpen(true)}
+              className="text-xs text-muted hover:text-foreground hover:bg-gray-50 px-2.5 py-1.5 rounded-md"
+            >
+              Exemplars
+            </button>
+          )}
           <div className="w-px h-4 bg-gray-200 mx-1" />
           <button
             onClick={() => setSettingsOpen(true)}
@@ -266,19 +284,21 @@ export default function Workspace() {
                   <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-cerulean-500 rounded-full" />
                 )}
               </button>
-              <button
-                onClick={() => setRightTab("graph")}
-                className={`px-3 py-2.5 text-xs font-medium relative ${
-                  rightTab === "graph"
-                    ? "text-cerulean-600"
-                    : "text-muted hover:text-foreground"
-                }`}
-              >
-                Graph
-                {rightTab === "graph" && (
-                  <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-cerulean-500 rounded-full" />
-                )}
-              </button>
+              {advancedMode && (
+                <button
+                  onClick={() => setRightTab("graph")}
+                  className={`px-3 py-2.5 text-xs font-medium relative ${
+                    rightTab === "graph"
+                      ? "text-cerulean-600"
+                      : "text-muted hover:text-foreground"
+                  }`}
+                >
+                  Graph
+                  {rightTab === "graph" && (
+                    <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-cerulean-500 rounded-full" />
+                  )}
+                </button>
+              )}
             </div>
 
             <div className="flex-1 min-h-0">
@@ -290,8 +310,13 @@ export default function Workspace() {
 
       <InsightTray />
 
+      <DocumentTypePicker open={showTypePicker} onClose={() => setShowTypePicker(false)} />
+      <OnboardingGuide />
+
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-      <ExemplarUpload open={exemplarsOpen} onClose={() => setExemplarsOpen(false)} />
+      {advancedMode && (
+        <ExemplarUpload open={exemplarsOpen} onClose={() => setExemplarsOpen(false)} />
+      )}
     </div>
   );
 }

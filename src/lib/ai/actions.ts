@@ -9,6 +9,7 @@ export type AiAction =
   | DocumentExpandAction
   | TonalAdjustAction
   | InsightExtractAction
+  | InsightProposeAction
   | SuggestionGenerateAction
   | ContradictionDetectAction
   | RankingScoreAction
@@ -28,6 +29,8 @@ export interface DocumentPromoteAction {
     text: string;
     insightId: string | null;
     sourceMessageIds: string[];
+    documentType?: string;
+    targetSection?: string;
   };
 }
 
@@ -54,6 +57,15 @@ export interface InsightExtractAction {
   input: {
     text: string;
     source: "document_import" | "exemplar_upload";
+  };
+}
+
+export interface InsightProposeAction {
+  type: "insight.propose";
+  input: {
+    userMessage: string;
+    assistantMessage: string;
+    assistantMessageId: string;
   };
 }
 
@@ -110,6 +122,8 @@ export interface ChatRespondResult {
 
 export interface DocumentPromoteResult {
   operations: PatchOperation[];
+  placement_label: string;
+  placement_block_id: string;
 }
 
 export interface DocumentExpandResult {
@@ -122,6 +136,14 @@ export interface TonalAdjustResult {
 
 export interface InsightExtractResult {
   insights: Array<{ title: string; content: string }>;
+}
+
+export interface InsightProposeResult {
+  proposals: Array<{
+    title: string;
+    content: string;
+    confidence?: number;
+  }>;
 }
 
 export interface SuggestionResult {

@@ -3,8 +3,7 @@ import { AgentResult, AgentContext } from "./types";
 import { agentRegistry } from "./registry";
 import { buildAgentContext } from "./context";
 import { buildAgentContextFromDb } from "./context-from-db";
-import { routeAction } from "./dev-router";
-import { scheduleBackgroundAgents } from "./background";
+import { routeThroughRuntime } from "./runtime-router";
 
 export interface OrchestratorOptions {
   onChunk?: (chunk: string) => void;
@@ -12,6 +11,8 @@ export interface OrchestratorOptions {
   userId?: string;
   /** Pre-built context (optional override). */
   context?: AgentContext;
+  /** Override provider for this action (server stream / user keys). */
+  providerConfig?: import("./provider").ProviderConfig;
 }
 
 /**
@@ -27,7 +28,11 @@ export async function runAiAction<T = unknown>(
       ? await buildAgentContextFromDb(options.userId)
       : buildAgentContext());
 
-  const routing = routeAction(action, context);
+  if (options?.providerConfig) {
+    context.providerConfig = options.providerConfig;
+  }
+
+  const routing = routeThroughRuntime(action, context);
 
   const primaryAgent = agentRegistry.get(routing.primaryAgent);
   if (!primaryAgent) {
@@ -43,7 +48,9 @@ export async function runAiAction<T = unknown>(
     onChunk: options?.onChunk,
   });
 
-  if (routing.backgroundAgents.length > 0) {
+  // Background agents for chat are handled by post-chat-pipeline after stream ends.
+  if (routing.backgroundAgents.length > 0 && action.type !== "chat.respond") {
+    const { scheduleBackgroundAgents } = await import("./background");
     scheduleBackgroundAgents(routing.backgroundAgents, action, context, options?.userId);
   }
 

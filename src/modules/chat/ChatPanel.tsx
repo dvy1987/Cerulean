@@ -4,14 +4,17 @@ import { useRef, useEffect, useState } from "react";
 import { useChatStore } from "@/store/chatStore";
 import { useInsightStore } from "@/store/insightStore";
 import { useDocumentStore } from "@/store/documentStore";
-import { streamChatResponse, generatePromotionPatch } from "@/lib/ai";
 import { isPersistenceEnabled } from "@/lib/config";
 import { workspaceApi } from "@/lib/api/workspace-client";
+import { runAiAction } from "@/lib/ai/orchestrator";
+import { buildAgentContextFromStores } from "@/lib/ai/context-from-stores";
+import { DocumentPromoteResult } from "@/lib/ai/actions";
 import { v4 as uuidv4 } from "uuid";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import HighlightMenu from "./HighlightMenu";
 import ThinkingSuggestions from "./ThinkingSuggestions";
+import ProposedInsightBar from "./ProposedInsightBar";
 
 interface ChatPanelProps {
   onHeaderDoubleClick?: () => void;
@@ -27,7 +30,7 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
     conversation,
   } = useChatStore();
   const addInsight = useInsightStore((s) => s.addInsight);
-  const { blocks, setPendingPatch } = useDocumentStore();
+  const { setPendingPatch, document: doc } = useDocumentStore();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageListRef = useRef<HTMLDivElement>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -55,29 +58,21 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
     setChatPrompt(undefined);
     setStreaming(true);
 
-    let assistantMsg: { message_id: string };
-
-    if (isPersistenceEnabled()) {
-      await workspaceApi.addMessage("user", content);
-      assistantMsg = await workspaceApi.addMessage("assistant", "");
-    } else {
-      addMessage("user", content);
-      assistantMsg = addMessage("assistant", "");
-    }
-
-    let accumulated = "";
     try {
-      await streamChatResponse(
-        content,
-        (chunk) => {
-          accumulated += chunk;
-          updateMessage(assistantMsg.message_id, accumulated);
-        },
-        () => {}
-      );
-
       if (isPersistenceEnabled()) {
-        await workspaceApi.finalizeMessage(assistantMsg.message_id, accumulated);
+        await workspaceApi.streamChat(content);
+      } else {
+        addMessage("user", content);
+        const assistantMsg = addMessage("assistant", "");
+        let accumulated = "";
+        await workspaceApi.streamChatLocal(
+          content,
+          (chunk) => {
+            accumulated += chunk;
+            updateMessage(assistantMsg.message_id, accumulated);
+          },
+          assistantMsg.message_id
+        );
       }
     } catch {
       showToast("Something went wrong with the response");
@@ -112,16 +107,30 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
   const handlePromoteToDocument = async (text: string) => {
     try {
       if (isPersistenceEnabled()) {
-        await workspaceApi.createPatch({ text });
+        await workspaceApi.promoteText(text);
       } else {
-        const operations = generatePromotionPatch(text, blocks, null, []);
+        const context = buildAgentContextFromStores();
+        const result = await runAiAction<DocumentPromoteResult>({
+          type: "document.promote",
+          input: {
+            text,
+            insightId: null,
+            sourceMessageIds: [],
+            documentType: doc.document_type,
+          },
+        }, { context });
+
+        if (!result.success) throw new Error(result.error);
+
         const patch = {
           patch_id: uuidv4(),
-          document_id: useDocumentStore.getState().document.document_id,
-          operations,
+          document_id: doc.document_id,
+          operations: result.data.operations,
           status: "pending" as const,
           source_insight_id: null,
           source_text: text,
+          placement_label: result.data.placement_label,
+          placement_block_id: result.data.placement_block_id,
           created_at: new Date().toISOString(),
         };
         setPendingPatch(patch);
@@ -157,7 +166,7 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
             </div>
             <p className="text-sm font-medium text-foreground mb-1">Start a conversation</p>
             <p className="text-xs text-muted text-center max-w-[240px] leading-relaxed">
-              Explore ideas with AI, then highlight text to save insights or promote to your document.
+              Ask about your product problem. Cerulean proposes insights and helps you build a structured spec.
             </p>
           </div>
         )}
@@ -177,6 +186,8 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
           {toast}
         </div>
       )}
+
+      <ProposedInsightBar />
 
       <ThinkingSuggestions
         onSelectSuggestion={(text) => setChatPrompt(text)}
@@ -198,11 +209,13 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
         }}
       />
 
-      <ChatInput
-        onSend={handleSend}
-        disabled={isStreaming}
-        initialValue={chatPrompt}
-      />
+      <div data-onboarding="chat-input">
+        <ChatInput
+          onSend={handleSend}
+          disabled={isStreaming}
+          initialValue={chatPrompt}
+        />
+      </div>
     </div>
   );
 }

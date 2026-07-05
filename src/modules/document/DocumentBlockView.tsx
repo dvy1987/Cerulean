@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { DocumentBlock, BlockType } from "@/types";
-import { runAiAction } from "@/lib/ai";
+import { runAiAction } from "@/lib/ai/orchestrator";
 import { isPersistenceEnabled } from "@/lib/config";
 import { workspaceApi } from "@/lib/api/workspace-client";
 import { useDocumentStore } from "@/store/documentStore";
@@ -50,27 +50,34 @@ export default function DocumentBlockView({
     setShowAiMenu(false);
     setIsAiLoading(true);
     try {
-      const result = await runAiAction<DocumentExpandResult>({
-        type: "document.expand",
-        input: { blockId: block.block_id, operation },
-      });
-      if (result.success && result.data.operations.length > 0) {
-        const patchPayload = {
-          patch_id: uuidv4(),
-          document_id: documentId,
-          operations: result.data.operations,
-          status: "pending" as const,
-          source_insight_id: null,
-          source_text: `AI: ${operation.replace(/_/g, " ")}`,
-          created_at: new Date().toISOString(),
-        };
-        if (isPersistenceEnabled()) {
+      if (isPersistenceEnabled()) {
+        const result = await workspaceApi.runAiAction({
+          type: "document.expand",
+          input: { blockId: block.block_id, operation },
+        });
+        const expandResult = result as { result?: { success?: boolean; data?: DocumentExpandResult } };
+        const operations = expandResult.result?.data?.operations;
+        if (expandResult.result?.success && operations?.length) {
           await workspaceApi.createPatch({
-            operations: result.data.operations,
-            sourceText: patchPayload.source_text,
+            operations,
+            sourceText: `AI: ${operation.replace(/_/g, " ")}`,
           });
-        } else {
-          setPendingPatch(patchPayload);
+        }
+      } else {
+        const result = await runAiAction<DocumentExpandResult>({
+          type: "document.expand",
+          input: { blockId: block.block_id, operation },
+        });
+        if (result.success && result.data.operations.length > 0) {
+          setPendingPatch({
+            patch_id: uuidv4(),
+            document_id: documentId,
+            operations: result.data.operations,
+            status: "pending",
+            source_insight_id: null,
+            source_text: `AI: ${operation.replace(/_/g, " ")}`,
+            created_at: new Date().toISOString(),
+          });
         }
       }
     } finally {

@@ -1,8 +1,90 @@
 # Cerulean Handoff
 
-**Last updated:** 2026-07-04  
-**Branch:** `main` (3 commits ahead of `origin/main`, not pushed)  
+**Last updated:** 2026-07-05 (post Thinking Loop v2 + adversarial review fixes)  
+**Branch:** `main` — **large uncommitted changeset** (see below)  
 **Read first:** `AGENTS.md` → this file → `docs/agent-shared-context.md`
+
+---
+
+## Start next session here
+
+**Status:** Thinking Loop v2 is **implemented in code** (Phases 0–4). Adversarial review P0–P3 fixes are **applied**. Nothing from this work is committed yet.
+
+**User should say one of:**
+- **"commit the changes"** — stage + commit the full changeset (see uncommitted files below)
+- **"verify locally"** — run manual QA checklist below
+- **"start Phase 5"** — Railway + Supabase deployment
+- **"start Phase 6"** — golden tests + doc refresh
+
+### Phase status (master plan)
+
+| Phase | What | Status |
+|-------|------|--------|
+| **0** | AI spine — web chat through orchestrator | **Done** |
+| **1** | Runtime router + Advanced mode | **Done** |
+| **2** | Proactive insight capture | **Done** |
+| **3** | Template-first docs (`product_spec` default) | **Done** |
+| **4** | Unify promote/expand through orchestrator | **Done** |
+| **5** | Deploy Railway + Supabase | **Not started** |
+| **6** | Golden tests + doc refresh | **Partial** (8 tests pass; no golden evals) |
+
+### Adversarial review fixes (2026-07-05)
+
+| Priority | Issue | Status |
+|----------|-------|--------|
+| P0 | Duplicate persisted chat messages | Fixed — stream route owns message lifecycle |
+| P0 | Server-side AI broken for agents | Fixed — `server-call-ai.ts` + `/api/v1/ai/complete` |
+| P1 | Fake streaming | Fixed — `streamProvider()` in `provider.ts` |
+| P1 | Two chat brains | Fixed — stream route uses chat agent only |
+| P1 | Post-chat blocks stream | Fixed — `done` before `postChat` event |
+| P2 | Contradictions hardcoded `[]` | Fixed — `contradictionStore` + post-chat detection |
+| P2 | No proposal dedupe | Fixed — dedupe vs existing insights |
+| P2 | Tests reimplement logic | Partial — real `heading-match.ts` tests; placement still heuristic in `.mjs` |
+| P2 | Zustand in post-chat pipeline | Fixed — client applies results in `workspace-client` |
+| P2 | Weak heading match in placement | Fixed — shared `heading-match.ts` with Levenshtein |
+| P3 | Public `dev-ai` exports | Fixed — `index.ts` exports orchestrator only |
+| P3 | Legacy `/api/ai/chat` | Deprecated — returns 410, use `/api/v1/ai/complete` |
+
+**Locked PM decisions (do not re-litigate):**
+- Default document type: **`product_spec`**
+- Template change: **ship in v1** (confirm modal)
+- Insight proposal latency: **1–3s OK**; never auto-save insights
+- Advanced mode: Graph + Exemplar + Import hidden until toggled
+
+---
+
+## Uncommitted work (important)
+
+`git status` shows ~40 modified files + ~20 new files. **Not on `origin/main`.**
+
+Key new surfaces:
+- `POST /api/v1/ai/chat/stream` — SSE chat (init → chunks → done → postChat)
+- `POST /api/v1/ai/complete` — server completion for agents
+- `src/lib/ai/post-chat-pipeline.ts`, `server-call-ai.ts`, `context-from-stores.ts`
+- `src/lib/document-templates/`, `src/lib/document/placement.ts`, `heading-match.ts`
+- `ProposedInsightBar`, `DocumentTypePicker`, `OnboardingGuide`, `ChangeTemplateModal`
+- `supabase/migrations/003_document_templates.sql`
+- `tests/heading-match.test.mts`, `tests/thinking-loop-v2.test.mjs`
+
+**Before deploy:** user must commit (when ready) and apply migration `003` on Postgres.
+
+---
+
+## Manual QA checklist (next session)
+
+Run with Supabase env configured (`isPersistenceEnabled()` true):
+
+1. **Persisted chat** — send message → exactly 1 user + 1 assistant row (no duplicates)
+2. **Streaming** — assistant text streams; "Thinking..." clears on `done` before proposals appear
+3. **Proposals** — 0–3 chips in `ProposedInsightBar` after reply; save/dismiss works
+4. **Template** — new workspace seeds `product_spec` sections; template change modal works
+5. **Promote** — highlight chat text → patch with section label (e.g. "Open Questions")
+6. **Contradictions** — 2+ conflicting insights → tray flags after next chat turn
+7. **Advanced mode** — Graph/Exemplar/Import hidden until Settings toggle
+
+Run without Supabase (in-memory): same flows via `streamChatLocal` + orchestrator.
+
+Optional demo: `NEXT_PUBLIC_CERULEAN_DEMO_MODE=true` for seeded workspace.
 
 ---
 
@@ -16,252 +98,147 @@ A thinking workspace with three panels:
 | Right | Document | Structured composition |
 | Bottom | Insight Tray | Insight capture |
 
-Users explore ideas in chat, capture insights, and promote them into a structured document (blocks, not a single text blob). An optional knowledge graph links insights and document content.
-
-**Product owner:** PM with minimal coding experience. Explain tradeoffs plainly; own technical decisions unless they affect product direction.
+Users explore in chat, review proposed insights, and promote into structured document blocks.
 
 ---
 
-## Latest State (July 2026)
-
-### Commits (local only — push when ready)
-
-| Hash | Summary |
-|------|---------|
-| `0547638` | Supabase persistence, username auth, REST API v1, MCP server |
-| `a6313e7` | Remove accidentally committed MCP `node_modules` / `dist` |
-| `15c06c7` | Fix changelog commit hashes |
-
-### What works
-
-- Full three-panel UI with panel resize, expand, settings, exemplar upload
-- **Dual mode:** with Supabase env → login + Postgres persistence; without → in-memory Zustand (no login)
-- **Auth:** username + password sign-in; signup needs username + email + password
-- **REST API** at `/api/v1/*` — full workspace CRUD, patches, graph, export, AI actions
-- **MCP server** at `packages/cerulean-mcp` — 35+ tools, UI parity
-- Multi-agent AI architecture (dev mode + optional Gemini/OpenAI/Anthropic for web chat)
-- Graph, settings toggles, exemplar delete persist when Supabase enabled
-- `npm run build` and `npm test` pass
-
-### What does NOT work / not done
-
-| Item | Notes |
-|------|-------|
-| Railway deployment | Documented in `DEPLOYMENT.md`, not automated |
-| Self-hosted Supabase on Railway | User must apply migrations manually |
-| LLM orchestrator routing | Still rule-based `dev-router.ts`, not LLM routing |
-| Memory management UI | Tables exist; UI deferred |
-| Auto insight extraction on chat | IDE/MCP must call tools explicitly |
-| Main chat → orchestrator | Chat streams direct to provider (intentional for IDE-first) |
-| Test coverage | Only smoke tests (`tests/smoke.test.mjs`) |
-| Memories API | DB tables exist; no `/api/v1/memories` routes yet |
-
----
-
-## Architecture
+## Architecture (current)
 
 ```mermaid
 flowchart TB
-  subgraph clients [Clients]
-    Web[Next.js Web UI]
-    MCP[cerulean-mcp in Cursor]
+  subgraph ui [Web UI]
+    CP[ChatPanel]
+    PIB[ProposedInsightBar]
+    DT[InsightTray]
+    DP[DocumentPanel]
   end
 
-  subgraph app [Cerulean on Railway]
-    MW[middleware.ts]
-    Auth["/api/auth/*"]
+  subgraph api [API]
+    Stream["POST /api/v1/ai/chat/stream"]
+    Complete["POST /api/v1/ai/complete"]
+    Run["POST /api/v1/ai/run"]
     V1["/api/v1/*"]
-    Chat["/api/ai/chat"]
-    WS[workspace-service.ts]
   end
 
-  subgraph data [Self-hosted Supabase]
-    PG[(Postgres + RLS)]
-    SA[Supabase Auth]
+  subgraph ai [AI core]
+    Orch[orchestrator.ts]
+    Post[post-chat-pipeline.ts]
+    Agents[Agent registry]
+    Dev[dev-ai fallbacks inside agents only]
+    Prov[provider.ts stream + complete]
   end
 
-  Web -->|session cookie| MW
-  MCP -->|Bearer cer_...| V1
-  MW --> Auth
-  MW --> V1
-  Web --> V1
-  Auth --> SA
-  V1 --> WS
-  Chat --> WS
-  WS --> PG
-  SA --> PG
+  CP -->|persisted| Stream
+  CP -->|local| Orch
+  Stream --> Orch
+  Stream --> Post
+  Agents --> Dev
+  Agents --> Prov
+  Complete --> Prov
+  V1 --> DB[(Supabase)]
 ```
+
+**Rule enforced:** No `dev-ai` imports in `src/modules/**`. Agents may fall back to `dev-ai` internally.
+
+### Chat stream event sequence (persisted)
+
+1. Server creates user + assistant messages in DB
+2. `init` — client adds both to chat store with server IDs
+3. `chunk` — streaming tokens; client updates assistant content locally
+4. `done` — stream complete; `isStreaming` clears
+5. `postChat` — proposals, suggestions, contradictions, ranking scores
 
 ### Dual-mode gate
 
-`isPersistenceEnabled()` in `src/lib/config.ts` checks for `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-
-- **Off:** Zustand stores only; no middleware redirect; MCP won't work (needs deployed API)
-- **On:** Login required; `useWorkspaceSync` hydrates stores from API; all writes go through `workspaceApi`
-
-### Auth model
-
-| Surface | Method | Where validated |
-|---------|--------|-----------------|
-| Web UI | Supabase session (cookie) | `middleware.ts` + `authenticateRequest` |
-| MCP / CLI | API key `cer_...` | `src/lib/auth/api-keys.ts` → `authenticateRequest` |
-
-Passwords live in **Supabase Auth only**. `profiles` table stores `username` (unique, case-insensitive) and `email`.
-
-### Data flow (persisted mode)
-
-1. UI action → `workspaceApi.*` → `/api/v1/*` route
-2. Route → `requireAuthWithRateLimit` / `withAuth` → `WorkspaceService(userId)`
-3. Service uses **service-role** Supabase client, always filtered by `userId`
-4. Response → Zustand store update
-
-Server-side AI (`/api/v1/ai/run`) loads context via `buildAgentContextFromDb(userId)` — not from Zustand.
+`isPersistenceEnabled()` in `src/lib/config.ts` — requires `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 
 ---
 
-## Key Files
+## Key files
 
 ```
 Cerulean/
 ├── docs/
-│   ├── HANDOFF.md              ← you are here
-│   ├── DEPLOYMENT.md           ← Railway + Supabase setup
-│   ├── WHAT-IS-MCP.md          ← plain-language MCP explainer
-│   ├── MCP-AGENT-GUIDE.md      ← tool usage for agents
-│   ├── PRD.md                  ← product vision (may lag code)
-│   └── agent-shared-context.md ← living repo state
+│   ├── HANDOFF.md                          ← you are here
+│   ├── specs/implementation-master-plan.md
+│   ├── specs/thinking-loop-v2.md
+│   ├── DEPLOYMENT.md                       ← includes migration 003
+│   ├── agent-shared-context.md
+│   └── agent-change-log.md
 ├── supabase/migrations/
 │   ├── 001_initial_schema.sql
-│   └── 002_username_and_fks.sql
-├── packages/cerulean-mcp/      ← MCP server (npm install + build after clone)
+│   ├── 002_username_and_fks.sql
+│   └── 003_document_templates.sql          ← required for templates
 ├── src/
-│   ├── app/api/auth/           ← signup, login, logout
-│   ├── app/api/v1/             ← REST API
-│   ├── app/api/ai/chat/        ← streaming chat (auth required)
-│   ├── app/login/              ← login/signup UI
-│   ├── middleware.ts           ← session redirect when Supabase configured
-│   ├── hooks/useWorkspaceSync.ts
-│   ├── lib/
-│   │   ├── api/workspace-client.ts  ← UI ↔ API bridge
-│   │   ├── auth/                    ← api-keys, rate-limit, request-auth
-│   │   ├── db/workspace-service.ts  ← all DB operations
-│   │   ├── ai/                      ← orchestrator, agents, context-from-db
-│   │   └── supabase/                ← client, server, admin
-│   ├── modules/chat|insights|document|graph|settings/
-│   └── store/                  ← Zustand (source of truth in local mode)
-└── tests/smoke.test.mjs
+│   ├── app/api/v1/ai/chat/stream/route.ts  ← persisted chat SSE
+│   ├── app/api/v1/ai/complete/route.ts     ← agent completions
+│   ├── lib/ai/
+│   │   ├── orchestrator.ts
+│   │   ├── post-chat-pipeline.ts
+│   │   ├── server-call-ai.ts
+│   │   ├── context-from-stores.ts
+│   │   ├── context-from-db.ts
+│   │   ├── provider.ts                     ← streamProvider + callProvider
+│   │   └── agents/
+│   ├── lib/api/workspace-client.ts         ← streamChat, applyPostChatResults
+│   ├── lib/document/placement.ts
+│   ├── lib/document/heading-match.ts
+│   ├── lib/document-templates/
+│   ├── modules/chat/ProposedInsightBar.tsx
+│   └── store/contradictionStore.ts
+└── tests/
+    ├── heading-match.test.mts              ← real module imports
+    └── thinking-loop-v2.test.mjs
 ```
 
 ---
 
 ## Commands
 
-### Web app (local, no database)
-
 ```bash
 npm install
-npm run dev          # http://localhost:3000 — in-memory mode
-npm run build
-npm test
+npm run dev          # http://localhost:3000
+npm run build        # must pass
+npm test             # 8 tests (strip-types + .mjs)
 ```
 
-### Web app (with Supabase)
-
-Copy `.env.example` → `.env.local`, fill Supabase vars, then `npm run dev`. Sign up at `/login`.
-
-### MCP server
-
-```bash
-cd packages/cerulean-mcp
-npm install
-npm run build
-# Configure ~/.cursor/mcp.json — see DEPLOYMENT.md
-```
+With Supabase: copy `.env.example` → `.env.local`, apply migrations 001–003, sign up at `/login`.
 
 ---
 
-## Deploy Checklist (Railway)
+## What is NOT done
 
-User has **not** deployed yet. When ready:
-
-1. [ ] Deploy self-hosted Supabase on Railway ([official Docker guide](https://supabase.com/docs/guides/self-hosting/docker))
-2. [ ] Run migration `001_initial_schema.sql` then `002_username_and_fks.sql` on Postgres
-3. [ ] Deploy Cerulean app; set env vars from `.env.example`
-4. [ ] `git push` the 3 local commits
-5. [ ] Sign up at `/login` (username + email + password)
-6. [ ] Settings → Generate API key → configure MCP
-7. [ ] Test: `cerulean_verify_connection` in Cursor
-
----
-
-## API Quick Reference
-
-All `/api/v1/*` routes require auth (session or `Authorization: Bearer cer_...`). Rate limit: 120 req/min per user+IP.
-
-| Area | Routes |
-|------|--------|
-| Workspace | `GET /api/v1/workspace` |
-| Messages | `GET/POST /api/v1/messages`, `PATCH /api/v1/messages/[id]` |
-| Insights | `GET/POST /api/v1/insights`, promote/extract/to-prompt |
-| Document | `GET/PATCH /api/v1/document`, blocks CRUD |
-| Patches | `GET /api/v1/patches`, accept/reject |
-| Graph | `GET /api/v1/graph`, `POST /api/v1/graph/sync` |
-| Export | `GET /api/v1/export?format=markdown\|text\|prd` |
-| Settings | `GET/PATCH /api/v1/settings` |
-| API keys | `GET/POST/DELETE /api/v1/api-keys` (session only for create/delete) |
-| AI | `POST /api/v1/ai/run` |
-
-Auth routes (public): `POST /api/auth/signup`, `login`, `logout`
+| Item | Notes |
+|------|-------|
+| **Git commit** | Full Thinking Loop v2 + review fixes uncommitted |
+| **Railway deployment** | Phase 5 — `DEPLOYMENT.md` |
+| **Golden / eval tests** | Phase 6 — only smoke + heading-match today |
+| **LLM orchestrator routing** | Still `dev-router.ts` (deferred) |
+| **Memory management UI** | Tables exist; UI deferred |
+| **Memories API** | No `/api/v1/memories` routes |
+| **Gemini streaming** | Falls back to buffered completion |
+| **User API keys on server stream** | Server uses env keys; client keys via `/api/v1/ai/complete` only |
 
 ---
 
-## Known Quirks
+## For the next agent
 
-1. **Middleware** allows all `/api/*` without redirect — each route enforces auth itself.
-2. **ChatPanel** saves messages once after streaming ends (not per token) when persistence is on.
-3. **MCP `dist/`** is gitignored — must `npm run build` in `packages/cerulean-mcp` after clone.
-4. **PRD / master-prompt** mention TipTap and dnd-kit — not installed; custom block editor instead.
-5. **Orchestrator** is documented as LLM-routed but code uses `dev-router.ts` (rule-based).
-6. **Graph** syncs on workspace load, patch accept, and debounced edits in `GraphView`.
-
----
-
-## Suggested Next Work (not approved — ask user first)
-
-Priority order if continuing development:
-
-1. **Push commits** and deploy to Railway + Supabase
-2. **Memory API** — wire `memories` table to routes + optional UI
-3. **LLM orchestrator routing** — replace `dev-router.ts` with LLM call
-4. **Integration tests** — auth flow, API key hashing, workspace CRUD
-5. **Error monitoring** — before production traffic (Sentry or similar)
-6. **Mobile layout** — ask user if phones matter
+1. Read `AGENTS.md`, this file, `docs/agent-shared-context.md`.
+2. **Do not commit** unless user asks.
+3. **Do not refactor** module structure unless asked.
+4. If user says "verify" — run QA checklist above and report findings.
+5. If user says "commit" — one commit for Thinking Loop v2 + review fixes is reasonable; include migration 003 note in message.
+6. After substantial work: update `agent-change-log.md` and `agent-shared-context.md`.
 
 ---
 
-## Doc Index
+## Doc index
 
 | Doc | Purpose |
 |-----|---------|
-| `AGENTS.md` | Rules for AI agents working in this repo |
-| `.agents/ROUTING.md` | Skill priority and conflict resolution |
-| `docs/SKILL-INDEX.md` | Full skill catalog (105 skills) |
-| `docs/HANDOFF.md` | This file — session handoff |
-| `docs/agent-shared-context.md` | Living state + decisions |
-| `docs/agent-change-log.md` | Change history with commit hashes |
-| `docs/DEPLOYMENT.md` | Railway + Supabase + MCP setup |
-| `docs/WHAT-IS-MCP.md` | MCP explained for non-engineers |
-| `docs/MCP-AGENT-GUIDE.md` | How IDE agents should use Cerulean tools |
-| `docs/PRD.md` | Product requirements |
-| `docs/master-prompt.md` | System architecture (may lag code) |
-| `packages/cerulean-mcp/README.md` | MCP package quick start |
-
----
-
-## For the Next Agent
-
-1. Read `AGENTS.md` and this file before coding.
-2. Do **not** refactor module structure unless explicitly asked.
-3. Do **not** implement from open questions or suggested next work without user approval.
-4. After substantial changes: update `agent-change-log.md` and `agent-shared-context.md`.
-5. Only commit when the user asks.
+| `docs/HANDOFF.md` | Session handoff (this file) |
+| `docs/specs/implementation-master-plan.md` | Phase plan + gap register |
+| `docs/specs/thinking-loop-v2.md` | Product spec |
+| `docs/agent-shared-context.md` | Living decisions + code reality |
+| `docs/agent-change-log.md` | Change history |
+| `docs/DEPLOYMENT.md` | Railway + Supabase + MCP |

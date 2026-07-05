@@ -82,6 +82,10 @@ const PROVIDER_MODELS: Record<Exclude<CustomAiProvider, "">, { label: string; mo
 export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
   const backgroundAgents = useAiSettingsStore((s) => s.backgroundAgents);
   const toggleBackgroundAgent = useAiSettingsStore((s) => s.toggleBackgroundAgent);
+  const suggestInsights = useAiSettingsStore((s) => s.suggestInsights);
+  const advancedMode = useAiSettingsStore((s) => s.advancedMode);
+  const setSuggestInsights = useAiSettingsStore((s) => s.setSuggestInsights);
+  const setAdvancedMode = useAiSettingsStore((s) => s.setAdvancedMode);
 
   const customProvider = useAiSettingsStore((s) => s.customProvider);
   const customModel = useAiSettingsStore((s) => s.customModel);
@@ -179,6 +183,75 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
         <div className="p-5 overflow-y-auto h-[calc(100%-3rem)] space-y-6">
           <div>
             <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
+              Workspace
+            </h3>
+            <div className="space-y-3">
+              <label className="flex items-center justify-between gap-3 cursor-pointer">
+                <span className="text-xs text-foreground">Suggest insights after replies</span>
+                <input
+                  type="checkbox"
+                  checked={suggestInsights}
+                  onChange={async (e) => {
+                    setSuggestInsights(e.target.checked);
+                    if (isPersistenceEnabled()) {
+                      await workspaceApi.updateSettings({ suggestInsights: e.target.checked });
+                    }
+                  }}
+                  className="rounded border-gray-300 text-cerulean-600"
+                />
+              </label>
+              <label className="flex items-center justify-between gap-3 cursor-pointer">
+                <span className="text-xs text-foreground">Advanced mode (Graph, Exemplars)</span>
+                <input
+                  type="checkbox"
+                  checked={advancedMode}
+                  onChange={async (e) => {
+                    setAdvancedMode(e.target.checked);
+                    if (isPersistenceEnabled()) {
+                      await workspaceApi.updateSettings({ advancedMode: e.target.checked });
+                    }
+                  }}
+                  className="rounded border-gray-300 text-cerulean-600"
+                />
+              </label>
+            </div>
+          </div>
+
+          {advancedMode && (
+          <div>
+            <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
+              Background agents
+            </h3>
+            <div className="space-y-3">
+              {agentToggles.map((toggle) => (
+                <label
+                  key={toggle.key}
+                  className="flex items-start justify-between gap-3 cursor-pointer group"
+                >
+                  <div>
+                    <p className="text-xs font-medium text-foreground">{toggle.label}</p>
+                    <p className="text-[10px] text-muted mt-0.5 leading-relaxed">{toggle.description}</p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={backgroundAgents[toggle.key]}
+                    onChange={async () => {
+                      toggleBackgroundAgent(toggle.key);
+                      if (isPersistenceEnabled()) {
+                        const next = !backgroundAgents[toggle.key];
+                        await workspaceApi.updateSettings({ [toggle.key]: next });
+                      }
+                    }}
+                    className="mt-0.5 rounded border-gray-300 text-cerulean-600"
+                  />
+                </label>
+              ))}
+            </div>
+          </div>
+          )}
+
+          <div>
+            <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
               AI Provider
             </h3>
 
@@ -253,7 +326,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
 
           <div className="border-t border-gray-100" />
 
-          {isPersistenceEnabled() && (
+          {advancedMode && isPersistenceEnabled() && (
             <div>
               <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
                 MCP / CLI Access
@@ -322,48 +395,6 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
             </div>
           )}
 
-          {isPersistenceEnabled() && <div className="border-t border-gray-100" />}
-
-          <div>
-            <h3 className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">
-              Background Agents
-            </h3>
-
-            <div className="space-y-4">
-              {agentToggles.map(({ key, label, description }) => (
-                <div key={key} className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium text-foreground">{label}</p>
-                    <p className="text-xs text-muted mt-0.5 leading-relaxed">{description}</p>
-                  </div>
-                  <button
-                    onClick={async () => {
-                      const next = !backgroundAgents[key];
-                      if (isPersistenceEnabled()) {
-                        await workspaceApi
-                          .updateSettings({ [key]: next })
-                          .catch(() => toggleBackgroundAgent(key));
-                      } else {
-                        toggleBackgroundAgent(key);
-                      }
-                    }}
-                    className={`relative shrink-0 mt-0.5 w-9 h-5 rounded-full ${
-                      backgroundAgents[key] ? "bg-cerulean-500" : "bg-gray-300"
-                    }`}
-                    aria-label={`Toggle ${label}`}
-                  >
-                    <div
-                      className={`absolute top-[3px] w-[14px] h-[14px] rounded-full bg-white shadow-sm ${
-                        backgroundAgents[key]
-                          ? "translate-x-[19px]"
-                          : "translate-x-[3px]"
-                      }`}
-                    />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </>

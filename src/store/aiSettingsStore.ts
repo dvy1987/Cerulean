@@ -11,8 +11,14 @@ export type CustomAiProvider = "anthropic" | "openai" | "gemini" | "openrouter" 
 
 interface AiSettingsState {
   backgroundAgents: BackgroundAgentToggles;
+  suggestInsights: boolean;
+  advancedMode: boolean;
+  hasChosenTemplate: boolean;
   toggleBackgroundAgent: (key: keyof BackgroundAgentToggles) => void;
   setBackgroundAgent: (key: keyof BackgroundAgentToggles, value: boolean) => void;
+  setSuggestInsights: (value: boolean) => void;
+  setAdvancedMode: (value: boolean) => void;
+  setHasChosenTemplate: (value: boolean) => void;
 
   customProvider: CustomAiProvider;
   customModel: string;
@@ -29,6 +35,13 @@ export const useAiSettingsStore = create<AiSettingsState>((set) => ({
     suggestion: true,
     tonalAdjustment: true,
   },
+  suggestInsights: true,
+  advancedMode: false,
+  hasChosenTemplate: false,
+
+  setSuggestInsights: (value) => set({ suggestInsights: value }),
+  setAdvancedMode: (value) => set({ advancedMode: value }),
+  setHasChosenTemplate: (value) => set({ hasChosenTemplate: value }),
 
   toggleBackgroundAgent: (key) =>
     set((state) => ({

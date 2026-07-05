@@ -1,20 +1,22 @@
 import { AgentDefinition, AgentContext, AgentResult } from "../types";
 import { DocumentPromoteAction, DocumentPromoteResult } from "../actions";
 import { agentRegistry } from "../registry";
-import { generatePromotionPatch } from "../dev-ai";
-import { DocumentBlock } from "@/types";
-import { callAI } from "../call-ai";
+import { DocumentBlock, DocumentType } from "@/types";
+import { callAIForJSON } from "../call-ai";
+import { buildPromotionPatch } from "@/lib/document/placement";
+import { DEFAULT_DOCUMENT_TYPE } from "@/lib/document-templates/registry";
 
 type PromoteInput = DocumentPromoteAction["input"];
 
 const SYSTEM_PROMPT = `You are a document integration specialist inside Cerulean, a structured thinking workspace.
 
-When text or an insight is promoted to the document, your job is to adapt its tone and phrasing to match the existing document's voice. You receive the existing document content and the text to integrate.
+When text or an insight is promoted to the document, your job is to:
+1. Determine the best target section for placement
+2. Adapt tone and phrasing to match the existing document's voice
 
-Guidelines:
-- Preserve the user's original meaning completely. Only adjust tone and phrasing for consistency.
-- If the document is empty, lightly polish the text for clarity.
-- Return ONLY the adapted text — nothing else.`;
+Return JSON: { "target_section": "Section Name", "adapted_text": "..." }
+- target_section must match an existing heading in the document when possible
+- adapted_text preserves meaning; only adjust tone for consistency`;
 
 const documentIntegrationAgent: AgentDefinition<PromoteInput, DocumentPromoteResult> = {
   id: "document_integration",
@@ -24,6 +26,7 @@ const documentIntegrationAgent: AgentDefinition<PromoteInput, DocumentPromoteRes
   systemPrompt: SYSTEM_PROMPT,
 
   async run(input: PromoteInput, context: AgentContext): Promise<AgentResult<DocumentPromoteResult>> {
+    const documentType = (input.documentType ?? DEFAULT_DOCUMENT_TYPE) as DocumentType;
     const existingBlocks: DocumentBlock[] = context.stores.blocks.map((b, i) => ({
       block_id: b.block_id,
       document_id: context.documentId,
@@ -37,34 +40,40 @@ const documentIntegrationAgent: AgentDefinition<PromoteInput, DocumentPromoteRes
     }));
 
     let textToIntegrate = input.text;
+    let targetSection = input.targetSection;
 
     if (existingBlocks.length > 0) {
       const documentSnapshot = existingBlocks
         .sort((a, b) => a.position - b.position)
-        .map((b) => b.content)
-        .join("\n\n");
+        .map((b) => `[${b.block_type}] ${b.content}`)
+        .join("\n");
 
-      const adapted = await callAI({
+      const aiResult = await callAIForJSON<{
+        target_section?: string;
+        adapted_text?: string;
+      }>({
         systemPrompt: SYSTEM_PROMPT,
-        userMessage: `Existing document:\n${documentSnapshot}\n\nText to integrate:\n${input.text}`,
+        userMessage: `Document type: ${documentType}\n\nExisting document:\n${documentSnapshot}\n\nText to integrate:\n${input.text}`,
+        fallback: {},
       });
 
-      if (adapted) {
-        textToIntegrate = adapted;
-      }
+      if (aiResult.adapted_text) textToIntegrate = aiResult.adapted_text;
+      if (aiResult.target_section) targetSection = aiResult.target_section;
     }
 
-    const operations = generatePromotionPatch(
-      textToIntegrate,
-      existingBlocks,
-      input.insightId,
-      input.sourceMessageIds
-    );
+    const { operations, placement_label, placement_block_id } = buildPromotionPatch({
+      text: textToIntegrate,
+      blocks: existingBlocks,
+      documentType,
+      insightId: input.insightId,
+      sourceMessageIds: input.sourceMessageIds,
+      targetSection,
+    });
 
     return {
       agentId: "document_integration",
       success: true,
-      data: { operations },
+      data: { operations, placement_label, placement_block_id },
     };
   },
 };

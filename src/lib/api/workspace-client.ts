@@ -1,11 +1,19 @@
 import type { WorkspaceSnapshot } from "@/lib/db/workspace-service";
+import type { DocumentType, ThinkingSuggestion, ProposedInsight, Contradiction, Message } from "@/types";
 import { useChatStore } from "@/store/chatStore";
 import { useDocumentStore } from "@/store/documentStore";
 import { useInsightStore } from "@/store/insightStore";
 import { useGraphStore } from "@/store/graphStore";
 import { useMemoryStore } from "@/store/memoryStore";
 import { useAiSettingsStore } from "@/store/aiSettingsStore";
+import { useProposedInsightStore } from "@/store/proposedInsightStore";
+import { useSuggestionStore } from "@/store/suggestionStore";
+import { useContradictionStore } from "@/store/contradictionStore";
 import { isPersistenceEnabled } from "@/lib/config";
+import { runAiAction } from "@/lib/ai/orchestrator";
+import { buildAgentContextFromStores } from "@/lib/ai/context-from-stores";
+import { runPostChatPipeline, PostChatPipelineResult } from "@/lib/ai/post-chat-pipeline";
+import { ChatRespondResult } from "@/lib/ai/actions";
 
 export function hydrateStoresFromWorkspace(workspace: WorkspaceSnapshot) {
   useChatStore.setState({
@@ -42,6 +50,9 @@ export function hydrateStoresFromWorkspace(workspace: WorkspaceSnapshot) {
 
   useAiSettingsStore.setState({
     backgroundAgents: workspace.settings.backgroundAgents,
+    suggestInsights: workspace.settings.suggestInsights ?? true,
+    advancedMode: workspace.settings.advancedMode ?? false,
+    hasChosenTemplate: workspace.settings.hasChosenTemplate ?? false,
     customProvider: (workspace.settings.customProvider || "") as "",
     customModel: workspace.settings.customModel,
   });
@@ -60,11 +71,220 @@ async function apiFetch(path: string, init?: RequestInit) {
   return data;
 }
 
+function applyPostChatResults(
+  postChat: PostChatPipelineResult,
+  assistantMessageId: string
+) {
+  if (postChat.proposals.length > 0) {
+    useProposedInsightStore
+      .getState()
+      .setProposals(postChat.proposals, assistantMessageId);
+  }
+  if (postChat.suggestions.length > 0) {
+    useSuggestionStore.getState().setSuggestions(postChat.suggestions);
+  }
+  if (postChat.contradictions.length > 0) {
+    useContradictionStore.getState().setContradictions(postChat.contradictions);
+  }
+  const scores = postChat.insightScores;
+  if (Object.keys(scores).length > 0) {
+    const { setInsightScores } = useInsightStore.getState();
+    for (const [insightId, s] of Object.entries(scores)) {
+      setInsightScores(insightId, s.relevance, s.maturity);
+    }
+  }
+}
+
 export const workspaceApi = {
   async load() {
     const data = await apiFetch("/api/v1/workspace");
     hydrateStoresFromWorkspace(data as WorkspaceSnapshot);
+    const workspace = data as WorkspaceSnapshot;
+    if (workspace.blocks.length === 0 && workspace.document.document_type !== "blank") {
+      try {
+        const seed = await apiFetch("/api/v1/document/seed-template", { method: "POST" });
+        if (seed.blocks?.length) {
+          useDocumentStore.setState({
+            blocks: seed.blocks,
+            document: seed.document ?? workspace.document,
+          });
+        }
+      } catch {
+        // seed optional when columns not migrated yet
+      }
+    }
     return data as WorkspaceSnapshot;
+  },
+
+  async streamChat(
+    userMessage: string
+  ): Promise<{
+    assistantMessageId: string;
+    proposals: ProposedInsight[];
+    suggestions: ThinkingSuggestion[];
+    contradictions: Contradiction[];
+  }> {
+    const res = await fetch("/api/v1/ai/chat/stream", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userMessage }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error((err as { error?: string }).error ?? "Chat stream failed");
+    }
+
+    const reader = res.body?.getReader();
+    if (!reader) throw new Error("No response stream");
+
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let assistantMessageId = "";
+    let accumulated = "";
+    let proposals: ProposedInsight[] = [];
+    let suggestions: ThinkingSuggestion[] = [];
+    let contradictions: Contradiction[] = [];
+    let postChatResult: PostChatPipelineResult | null = null;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n\n");
+      buffer = lines.pop() ?? "";
+
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        const payload = JSON.parse(line.slice(6)) as Record<string, unknown>;
+
+        if (payload.type === "init") {
+          const userMsg = payload.userMessage as Message;
+          const assistantMsg = payload.assistantMessage as Message;
+          assistantMessageId = assistantMsg.message_id;
+          useChatStore.setState((s) => ({
+            messages: [...s.messages, userMsg, assistantMsg],
+          }));
+        }
+
+        if (payload.type === "chunk" && typeof payload.text === "string") {
+          accumulated += payload.text;
+          if (assistantMessageId) {
+            useChatStore.getState().updateMessage(assistantMessageId, accumulated);
+          }
+        }
+
+        if (payload.type === "done" && typeof payload.assistantMessageId === "string") {
+          assistantMessageId = payload.assistantMessageId;
+        }
+
+        if (payload.type === "postChat") {
+          proposals = (payload.proposals as ProposedInsight[]) ?? [];
+          suggestions = (payload.suggestions as ThinkingSuggestion[]) ?? [];
+          contradictions = (payload.contradictions as Contradiction[]) ?? [];
+          postChatResult = {
+            proposals,
+            suggestions,
+            contradictions,
+            insightScores:
+              (payload.insightScores as PostChatPipelineResult["insightScores"]) ?? {},
+          };
+        }
+
+        if (payload.type === "error") {
+          throw new Error(String(payload.message ?? "Stream error"));
+        }
+      }
+    }
+
+    if (postChatResult) {
+      applyPostChatResults(postChatResult, assistantMessageId);
+    }
+
+    return { assistantMessageId, proposals, suggestions, contradictions };
+  },
+
+  async streamChatLocal(
+    userMessage: string,
+    onChunk: (text: string) => void,
+    assistantMessageId: string
+  ) {
+    const context = buildAgentContextFromStores();
+    const settings = useAiSettingsStore.getState();
+
+    let accumulated = "";
+    const result = await runAiAction<ChatRespondResult>(
+      { type: "chat.respond", input: { userMessage } },
+      {
+        context,
+        onChunk: (chunk) => {
+          accumulated += chunk;
+          onChunk(chunk);
+        },
+      }
+    );
+
+    if (!result.success) throw new Error(result.error ?? "Chat failed");
+
+    const postChat = await runPostChatPipeline({
+      context: buildAgentContextFromStores(),
+      assistantMessageId,
+      userMessage,
+      assistantMessage: accumulated || result.data.response,
+      settings: {
+        backgroundAgents: settings.backgroundAgents,
+        suggestInsights: settings.suggestInsights,
+      },
+    });
+
+    applyPostChatResults(postChat, assistantMessageId);
+    return postChat;
+  },
+
+  async promoteText(text: string, sourceMessageIds: string[] = []) {
+    const { patch } = await apiFetch("/api/v1/patches", {
+      method: "POST",
+      body: JSON.stringify({ text, sourceMessageIds }),
+    });
+    useDocumentStore.getState().setPendingPatch(patch);
+    return patch;
+  },
+
+  async previewTemplateChange(documentType: DocumentType) {
+    return apiFetch("/api/v1/document/preview-template-change", {
+      method: "POST",
+      body: JSON.stringify({ documentType }),
+    });
+  },
+
+  async changeDocumentTemplate(documentType: DocumentType) {
+    const data = await apiFetch("/api/v1/document", {
+      method: "PATCH",
+      body: JSON.stringify({ documentType }),
+    });
+    useDocumentStore.setState({
+      document: data.document,
+      blocks: data.blocks,
+    });
+    useAiSettingsStore.getState().setHasChosenTemplate(true);
+    return data;
+  },
+
+  async applyDocumentType(documentType: DocumentType) {
+    if (isPersistenceEnabled()) {
+      const data = await apiFetch("/api/v1/document", {
+        method: "PATCH",
+        body: JSON.stringify({ documentType }),
+      });
+      useDocumentStore.setState({
+        document: data.document,
+        blocks: data.blocks,
+      });
+      useAiSettingsStore.getState().setHasChosenTemplate(true);
+      return data;
+    }
+    useDocumentStore.getState().applyTemplate(documentType);
+    useAiSettingsStore.getState().setHasChosenTemplate(true);
   },
 
   async addMessage(role: "user" | "assistant", content: string) {
@@ -268,16 +488,36 @@ export const workspaceApi = {
     ranking: boolean;
     suggestion: boolean;
     tonalAdjustment: boolean;
+    suggestInsights: boolean;
+    advancedMode: boolean;
   }>) {
-    const current = useAiSettingsStore.getState().backgroundAgents;
-    const merged = { ...current, ...toggle };
+    const current = useAiSettingsStore.getState();
+    const mergedBg = { ...current.backgroundAgents };
+    if (toggle.knowledgeGraph !== undefined) mergedBg.knowledgeGraph = toggle.knowledgeGraph;
+    if (toggle.ranking !== undefined) mergedBg.ranking = toggle.ranking;
+    if (toggle.suggestion !== undefined) mergedBg.suggestion = toggle.suggestion;
+    if (toggle.tonalAdjustment !== undefined) mergedBg.tonalAdjustment = toggle.tonalAdjustment;
+
+    const payload: Record<string, unknown> = {};
+    if (Object.keys(mergedBg).length) {
+      payload.backgroundAgents = mergedBg;
+    }
+    if (toggle.suggestInsights !== undefined) payload.suggestInsights = toggle.suggestInsights;
+    if (toggle.advancedMode !== undefined) payload.advancedMode = toggle.advancedMode;
+
     const { settings } = await apiFetch("/api/v1/settings", {
       method: "PATCH",
-      body: JSON.stringify({ backgroundAgents: merged }),
+      body: JSON.stringify(payload),
     });
+    const s = settings as {
+      backgroundAgents?: typeof mergedBg;
+      suggestInsights?: boolean;
+      advancedMode?: boolean;
+    };
     useAiSettingsStore.setState({
-      backgroundAgents:
-        (settings as { backgroundAgents: typeof merged }).backgroundAgents ?? merged,
+      backgroundAgents: s.backgroundAgents ?? mergedBg,
+      suggestInsights: s.suggestInsights ?? current.suggestInsights,
+      advancedMode: s.advancedMode ?? current.advancedMode,
     });
     return settings;
   },

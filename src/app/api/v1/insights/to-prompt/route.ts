@@ -1,23 +1,15 @@
 import { NextRequest } from "next/server";
 import { withAuth, jsonOk } from "@/lib/api/route-helpers";
-import { insightToPrompt } from "@/lib/ai/dev-ai";
+import { runAiAction } from "@/lib/ai/orchestrator";
+import { InsightToPromptResult } from "@/lib/ai/actions";
 
 export async function POST(request: NextRequest) {
-  return withAuth(request, async () => {
+  return withAuth(request, async (_service, auth) => {
     const body = await request.json();
-    const { insightTitle, insightContent, insightId } = body as {
+    const { insightTitle, insightContent } = body as {
       insightTitle?: string;
       insightContent?: string;
-      insightId?: string;
     };
-
-    if (insightId) {
-      return jsonOk({
-        prompt: null,
-        insightId,
-        message: "Use workspace insights list to resolve content by id in MCP",
-      });
-    }
 
     if (!insightTitle || !insightContent) {
       return Response.json(
@@ -26,7 +18,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const prompt = insightToPrompt(insightTitle, insightContent);
-    return jsonOk({ prompt });
+    const result = await runAiAction<InsightToPromptResult>(
+      {
+        type: "insight.to_prompt",
+        input: { insightTitle, insightContent },
+      },
+      { userId: auth.userId }
+    );
+
+    if (!result.success) {
+      return Response.json({ error: result.error ?? "Failed" }, { status: 500 });
+    }
+
+    return jsonOk({ prompt: result.data.prompt });
   });
 }

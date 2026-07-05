@@ -33,13 +33,20 @@ export interface AiSettingsSnapshot {
     suggestion: boolean;
     tonalAdjustment: boolean;
   };
+  suggestInsights?: boolean;
+  advancedMode?: boolean;
+  hasChosenTemplate?: boolean;
 }
+
+import type { ProviderConfig } from "./provider";
 
 export interface AgentContext {
   conversationId: string;
   documentId: string;
   stores: WorkspaceSnapshot;
   settings: AiSettingsSnapshot;
+  /** Optional per-request provider (e.g. user API key from settings). */
+  providerConfig?: ProviderConfig;
 }
 
 export interface AgentResult<T = unknown> {

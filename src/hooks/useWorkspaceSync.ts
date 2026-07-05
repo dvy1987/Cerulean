@@ -3,13 +3,17 @@
 import { useEffect, useState } from "react";
 import { isPersistenceEnabled } from "@/lib/config";
 import { workspaceApi } from "@/lib/api/workspace-client";
+import { seedDemoWorkspaceIfEnabled } from "@/lib/demo/seed-demo-workspace";
 
 export function useWorkspaceSync() {
   const [ready, setReady] = useState(!isPersistenceEnabled());
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isPersistenceEnabled()) return;
+    if (!isPersistenceEnabled()) {
+      seedDemoWorkspaceIfEnabled();
+      return;
+    }
 
     workspaceApi
       .load()

@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   return withAuth(request, async (service) => {
     const body = await request.json();
-    const { backgroundAgents, customProvider, customModel } = body as {
+    const { backgroundAgents, customProvider, customModel, suggestInsights, advancedMode } = body as {
       backgroundAgents?: {
         knowledgeGraph?: boolean;
         ranking?: boolean;
@@ -20,6 +20,8 @@ export async function PATCH(request: NextRequest) {
       };
       customProvider?: string;
       customModel?: string;
+      suggestInsights?: boolean;
+      advancedMode?: boolean;
     };
 
     const updates: Record<string, unknown> = {};
@@ -39,6 +41,8 @@ export async function PATCH(request: NextRequest) {
     }
     if (customProvider !== undefined) updates.custom_provider = customProvider;
     if (customModel !== undefined) updates.custom_model = customModel;
+    if (suggestInsights !== undefined) updates.suggest_insights = suggestInsights;
+    if (advancedMode !== undefined) updates.advanced_mode = advancedMode;
 
     await service.updateSettings(updates);
     const workspace = await service.getWorkspace();
