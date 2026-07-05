@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-05 - Agent-loom library sync @ 2a796a7
 - Author: agent
-- Commit: not committed yet
+- Commit: 5c4a443
 - Summary: Synced 104 library skills from upstream (3 new, 101 updated). Protected `cerulean-*`; forked `knowledge-graph` (`.next` exclusion intact). Updated `SKILL-INDEX.md`, shared context, SKILL-OUTPUTS.
 - Files:
   - `.agents/skills/` (104 synced)
