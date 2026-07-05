@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-05 - Session handoff (agent-loom sync uncommitted)
 - Author: agent
-- Commit: not committed yet
+- Commit: 0898d72
 - Summary: Refreshed `docs/HANDOFF.md` and shared context for next session. Thinking Loop v2 committed @ `32a1567`; agent-loom sync @ `96f9e73` applied but uncommitted (~20 files). Build + 8 tests pass.
 - Files:
   - `docs/HANDOFF.md`
@@ -39,7 +39,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-05 - Sync agent-loom library @ 96f9e73
 - Author: agent
-- Commit: not committed yet
+- Commit: 0898d72
 - Summary: Applied `agent-loom-sync --apply` from `../agent-loom`. Added 3 harness skills; updated 11 library skills. Preserved `cerulean-*` protected and `knowledge-graph` fork. agent-loom untouched.
 - Files:
   - `.agents/agent-loom-sync.json`

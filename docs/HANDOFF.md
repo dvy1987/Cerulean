@@ -1,17 +1,16 @@
 # Cerulean Handoff
 
 **Last updated:** 2026-07-05 (post agent-loom sync @ `96f9e73`)  
-**Branch:** `main` — synced with `origin/main` @ `66d4dfc`  
+**Branch:** `main` — synced with `origin/main` @ `0898d72`  
 **Read first:** `AGENTS.md` → this file → `docs/agent-shared-context.md`
 
 ---
 
 ## Start next session here
 
-**Status:** Thinking Loop v2 is **shipped and committed** (`32a1567`). Adversarial review P0–P3 fixes included. Agent-loom library sync applied locally but **not committed**.
+**Status:** Thinking Loop v2 is **shipped and committed** (`32a1567`). Agent-loom library sync committed (`0898d72`).
 
 **User should say one of:**
-- **"commit"** — commit agent-loom sync (~20 files, harness skills)
 - **"verify"** or **"run QA"** — manual QA checklist below
 - **"start Phase 5"** — Railway + Supabase deployment (apply migration `003`)
 - **"start Phase 6"** — golden tests + doc refresh
@@ -33,7 +32,7 @@
 
 | Work | Status |
 |------|--------|
-| Agent-loom sync from `../agent-loom` @ `96f9e73` | Applied, **uncommitted** |
+| Agent-loom sync from `../agent-loom` @ `96f9e73` | Committed (`0898d72`) |
 | New skills: `harness-engineering`, `harness-generation`, `harness-evolution` | Added |
 | Updated: 11 library skills (project-setup, eval-pipeline, memory-handoff, etc.) | Synced |
 | Protected: `cerulean-*` (3) | Unchanged |
@@ -71,27 +70,10 @@
 | Commit | What |
 |--------|------|
 | `32a1567` | Thinking Loop v2 Phases 0–4 + adversarial P0–P3 fixes (65 files) |
+| `0898d72` | Agent-loom sync @ `96f9e73` — harness skills + handoff refresh (34 files) |
 | `66d4dfc` | Docs: changelog + handoff updated for `32a1567` |
 
 **Before deploy:** apply migration `003` on Postgres (`supabase/migrations/003_document_templates.sql`).
-
----
-
-## Uncommitted (agent-loom sync)
-
-~20 files — safe to commit as one chore commit:
-
-```
-.agents/agent-loom-sync.json
-.agents/skills/harness-{engineering,evolution,generation}/
-.agents/skills/{agent-builder,eval-pipeline,memory-handoff,memory-startup,project-orchestrator,project-setup,reality-check,retroactive-project-setup,setup-evaluation,skill-finder,skill-routing}/
-docs/SKILL-INDEX.md
-docs/agent-change-log.md
-docs/agent-shared-context.md
-docs/skill-outputs/SKILL-OUTPUTS.md
-```
-
-Suggested message: `chore: sync agent-loom library @ 96f9e73 (harness skills)`
 
 ---
 
@@ -182,7 +164,7 @@ flowchart TB
 ## Agent skills (`.agents/skills/`)
 
 - **112 skills** — 109 library + 3 Cerulean domain (`cerulean-project`, `cerulean-deployment`, `cerulean-mcp`)
-- **Last sync:** upstream `96f9e73` (uncommitted)
+- **Last sync:** upstream `96f9e73` (committed `0898d72`)
 - **New this sync:** harness suite (`harness-engineering`, `harness-generation`, `harness-evolution`)
 - **Fork preserved:** `knowledge-graph` (Cerulean `.next` exclusion in `build_graph.py`)
 - **Index:** `docs/SKILL-INDEX.md` | **Routing:** `.agents/ROUTING.md`
@@ -244,8 +226,7 @@ With Supabase: copy `.env.example` → `.env.local`, apply migrations 001–003,
 
 | Item | Notes |
 |------|-------|
-| **Commit agent-loom sync** | ~20 uncommitted files from this session |
-| **Manual QA** | Checklist above not run in this session |
+| **Manual QA** | Checklist below not run in this session |
 | **Railway deployment** | Phase 5 — `docs/DEPLOYMENT.md` |
 | **Golden / eval tests** | Phase 6 — only smoke + heading-match today |
 | **Agent harness bootstrap** | No `docs/harness/` — optional via `harness-generation` |
@@ -264,7 +245,7 @@ With Supabase: copy `.env.example` → `.env.local`, apply migrations 001–003,
 3. **Do not modify** `../agent-loom` — sync is one-way into Cerulean.
 4. **Do not refactor** module structure unless asked.
 5. If user says **"verify"** — run QA checklist and report findings.
-6. If user says **"commit"** — one chore commit for agent-loom sync is appropriate.
+5. If user says **"commit"** — working tree is clean @ `0898d72`; only commit if new changes exist.
 7. After substantial work: update `agent-change-log.md` and `agent-shared-context.md`.
 
 ---
