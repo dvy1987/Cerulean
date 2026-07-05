@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-05 - Session handoff (Thinking Loop v2 complete in code)
 - Author: agent
-- Commit: not committed yet
+- Commit: 32a1567
 - Summary: Refreshed `HANDOFF.md` and shared context for next session. Phases 0–4 + P0–P3 review fixes done; ~60 uncommitted files; build + 8 tests pass.
 - Files:
   - `docs/HANDOFF.md`
@@ -38,7 +38,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-05 - Adversarial review fixes (P0–P3)
 - Author: agent
-- Commit: not committed yet
+- Commit: 32a1567
 - Summary: Fixed duplicate persisted chat messages, unified chat agent + real provider streaming, async post-chat after `done`, server-side `callAI`, insight dedupe, contradiction tray wiring, shared heading match, real module tests, trimmed public dev-ai exports, deprecated `/api/ai/chat`.
 - Files:
   - `src/app/api/v1/ai/chat/stream/route.ts`
@@ -55,7 +55,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-05 - Thinking Loop v2 full implementation
 - Author: agent
-- Commit: not committed yet
+- Commit: 32a1567
 - Summary: Implemented master plan phases 0–6 in code: AI spine (`/api/v1/ai/chat/stream`, post-chat pipeline), proactive insight bar, Product Spec default + template change, section-aware promotion, Advanced mode, migration 003, tests, onboarding, demo seed.
 - Files: `src/lib/ai/*`, `src/lib/document-templates/*`, `src/modules/chat/*`, `src/components/*`, `supabase/migrations/003_document_templates.sql`, `tests/thinking-loop-v2.test.mjs`, docs
 - Notes: Deploy still manual. Run migration 003 on Supabase before persisted template features work.

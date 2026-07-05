@@ -1,19 +1,17 @@
 # Cerulean Handoff
 
 **Last updated:** 2026-07-05 (post Thinking Loop v2 + adversarial review fixes)  
-**Branch:** `main` — **large uncommitted changeset** (see below)  
+**Branch:** `main` — synced with `origin/main` @ `32a1567`  
 **Read first:** `AGENTS.md` → this file → `docs/agent-shared-context.md`
 
 ---
 
 ## Start next session here
 
-**Status:** Thinking Loop v2 is **implemented in code** (Phases 0–4). Adversarial review P0–P3 fixes are **applied**. Nothing from this work is committed yet.
+**Status:** Thinking Loop v2 is **shipped** (Phases 0–4) @ commit `32a1567`. Adversarial review P0–P3 fixes included.
 
 **User should say one of:**
-- **"commit the changes"** — stage + commit the full changeset (see uncommitted files below)
-- **"verify locally"** — run manual QA checklist below
-- **"start Phase 5"** — Railway + Supabase deployment
+- **"start Phase 5"** — Railway + Supabase deployment (apply migration `003`)
 - **"start Phase 6"** — golden tests + doc refresh
 
 ### Phase status (master plan)
@@ -53,20 +51,11 @@
 
 ---
 
-## Uncommitted work (important)
+## Committed (2026-07-05)
 
-`git status` shows ~40 modified files + ~20 new files. **Not on `origin/main`.**
+Commit `32a1567` — 65 files: Thinking Loop v2 Phases 0–4 + adversarial P0–P3 fixes.
 
-Key new surfaces:
-- `POST /api/v1/ai/chat/stream` — SSE chat (init → chunks → done → postChat)
-- `POST /api/v1/ai/complete` — server completion for agents
-- `src/lib/ai/post-chat-pipeline.ts`, `server-call-ai.ts`, `context-from-stores.ts`
-- `src/lib/document-templates/`, `src/lib/document/placement.ts`, `heading-match.ts`
-- `ProposedInsightBar`, `DocumentTypePicker`, `OnboardingGuide`, `ChangeTemplateModal`
-- `supabase/migrations/003_document_templates.sql`
-- `tests/heading-match.test.mts`, `tests/thinking-loop-v2.test.mjs`
-
-**Before deploy:** user must commit (when ready) and apply migration `003` on Postgres.
+**Before deploy:** apply migration `003` on Postgres (`supabase/migrations/003_document_templates.sql`).
 
 ---
 
