@@ -1,7 +1,7 @@
 # Cerulean Handoff
 
 **Last updated:** 2026-07-05 (post agent-loom sync @ `96f9e73`)  
-**Branch:** `main` — synced with `origin/main` @ `ecf83f2`  
+**Branch:** `main` — synced with `origin/main` @ `f3713c0`  
 **Read first:** `AGENTS.md` → this file → `docs/agent-shared-context.md`
 
 ---
@@ -70,6 +70,7 @@
 | Commit | What |
 |--------|------|
 | `32a1567` | Thinking Loop v2 Phases 0–4 + adversarial P0–P3 fixes (65 files) |
+| `ecf83f2` | Docs: changelog + handoff updated for `0898d72` |
 | `0898d72` | Agent-loom sync @ `96f9e73` — harness skills + handoff refresh (34 files) |
 | `66d4dfc` | Docs: changelog + handoff updated for `32a1567` |
 
