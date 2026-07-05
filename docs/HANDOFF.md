@@ -1,7 +1,7 @@
 # Cerulean Handoff
 
 **Last updated:** 2026-07-05 (post agent-loom sync @ `96f9e73`)  
-**Branch:** `main` — synced with `origin/main` @ `0898d72`  
+**Branch:** `main` — synced with `origin/main` @ `ecf83f2`  
 **Read first:** `AGENTS.md` → this file → `docs/agent-shared-context.md`
 
 ---
