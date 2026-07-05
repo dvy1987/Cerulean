@@ -608,6 +608,13 @@ RED_FLAGS: dict[str, list[str]] = {
         "secure-* gate skipped at Step 2 or Step 9",
         "Description trigger phrases removed during edit",
         "validate-skills or skill-deconflict not run after create",
+        "Consumer skill shipped without metadata.origin: project-local",
+    ],
+    "svg-creation": [
+        "<script> or event handlers inside generated SVG",
+        "CSS animation shipped for img or README context",
+        "Guessed stroke-dasharray on line-draw animation",
+        "Morph paths with mismatched command counts",
     ],
     "validate-skills": [
         "agentskills validate run on file not skill directory",

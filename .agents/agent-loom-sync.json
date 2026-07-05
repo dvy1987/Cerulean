@@ -8,6 +8,6 @@
   "forked_skills": {
     "knowledge-graph": "Cerulean: exclude .next from repo scan in build_graph.py SKIP_DIRS"
   },
-  "last_sync": "2026-07-04T14:06:40Z",
-  "upstream_commit": "c97a3df"
+  "last_sync": "2026-07-05T02:03:24Z",
+  "upstream_commit": "2a796a7"
 }

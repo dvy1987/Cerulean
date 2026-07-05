@@ -12,7 +12,7 @@ description: >
 license: MIT
 metadata:
   author: dvy1987
-  version: "1.0"
+  version: "1.1"
   category: project-specific
   sources: Google design-md, W3C DTCG tokens, APCA, design-tokens-craft + icon-craft (merged)
   resources:
@@ -73,7 +73,7 @@ Type scale + weights + tracking + reading column; log-spaced spacing; one radius
 Check every text/bg and text-on-accent pair against APCA targets. Fix failures (shift L or add overlay) before emitting.
 
 ### Step 6 — Icon strategy
-Read `references/icon-strategies.md` (and `svg-craft.md` if custom). Pick ONE strategy, weight matched to type. Record it; defer drawing/sourcing to the build.
+Read `references/icon-strategies.md` (and `svg-craft.md` if custom). Pick ONE strategy, weight matched to type. Record it; defer drawing/sourcing to the build. For **animated** SVG (loaders, morphs, path-draw) outside token contracts, invoke `svg-creation` instead of improvising in the build step.
 
 ### Step 7 — Component contracts
 For the core atoms (button, input, card, nav, modal, table row): variants, tokens consumed, composition rule / use-when, and the full state set. This is the agent-readable contract.
@@ -125,6 +125,11 @@ Append to `docs/skill-outputs/SKILL-OUTPUTS.md`:
 ```
 
 ---
+
+## Prune Log
+Last pruned: 2026-07-04
+- No changes — citation audit passed; content current (improve-skills full pass 2026-07-04)
+
 
 ## Impact Report
 ```

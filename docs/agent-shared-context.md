@@ -1,6 +1,6 @@
 # Cerulean Shared Context
 
-Last updated: 2026-07-04
+Last updated: 2026-07-05
 Status: Active working context for humans and AI agents
 
 ## Purpose
@@ -58,7 +58,7 @@ Update this file when:
 
 ## Handoff
 - **Start here:** `docs/HANDOFF.md` — architecture, file map, deploy checklist
-- **Agent skills:** `.agents/skills/` — 106 skills (103 library + 3 Cerulean domain); last library sync `2026-07-04` @ upstream `c97a3df` via `agent-loom-sync`; `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
+- **Agent skills:** `.agents/skills/` — 109 skills (106 library + 3 Cerulean domain); last library sync `2026-07-05` @ upstream `2a796a7` via `agent-loom-sync`; new: `svg-creation`, `gsap-animation`, `motion-animation`; `knowledge-graph` fork preserved (`.next` exclusion); `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
 - **Skill index:** `docs/SKILL-INDEX.md` | **Routing:** `.agents/ROUTING.md`
 - **Memory:** `docs/memory/` bridged with `docs/agent-shared-context.md`
 

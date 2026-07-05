@@ -1,6 +1,6 @@
 # Cerulean Change Log
 
-Last updated: 2026-07-04
+Last updated: 2026-07-05
 Purpose: Shared historical log of repo changes, reviews, and context updates made by AI agents or humans during active collaboration
 
 ## How To Use
@@ -26,6 +26,18 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ## Entries
 <!-- New entries go here, newest first -->
+
+### 2026-07-05 - Agent-loom library sync @ 2a796a7
+- Author: agent
+- Commit: not committed yet
+- Summary: Synced 104 library skills from upstream (3 new, 101 updated). Protected `cerulean-*`; forked `knowledge-graph` (`.next` exclusion intact). Updated `SKILL-INDEX.md`, shared context, SKILL-OUTPUTS.
+- Files:
+  - `.agents/skills/` (104 synced)
+  - `.agents/agent-loom-sync.json`
+  - `docs/SKILL-INDEX.md`
+  - `docs/agent-shared-context.md`
+  - `docs/skill-outputs/SKILL-OUTPUTS.md`
+- Notes: New skills — `svg-creation`, `gsap-animation`, `motion-animation`. Cerulean `ROUTING.md` left unchanged (custom domain layer preserved).
 
 ### 2026-07-04 - Thinking Loop v2 master implementation plan
 - Author: agent

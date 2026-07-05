@@ -6,7 +6,7 @@ Complete reference for all skills in this repo.
 Agents: read this when deciding which skill to invoke or checking what a skill produces.
 Humans: read this for a full picture of what's available and what each skill outputs.
 
-Last updated: 2026-07-04 (library sync @ c97a3df; Cerulean domain extensions below)
+Last updated: 2026-07-05 (library sync @ 2a796a7; Cerulean domain extensions below)
 
 ---
 
@@ -790,6 +790,39 @@ Install globally: `~/.agents/skills/`. Output files land inside the current proj
 **Output file:** `.design/<feature>/REVIEW.md`
 **References:** `references/review-rubric.md` (0–3 anchors + SHIP thresholds), `references/apca-contrast.md` (targets + usage), `references/playwright-flow.md`; `scripts/apca.mjs` (APCA calculator)
 **Impact report:** Review pass, verdict (SHIP/REVISE), APCA result, state coverage, direction fidelity, findings raised
+
+---
+
+### `svg-creation`
+**Triggers:** "create SVG", "draw an SVG icon", "animate an SVG", "SVG loader", "path animation", "shape morph", "animated logo", "line drawing effect", "stroke-dashoffset", "SMIL animation", "vector illustration", "fix trashy SVG"
+**What it does:** Handcrafts static SVG graphics and performant animations (line-draw, spinners, morphs, motion paths). Picks SMIL vs CSS from delivery context (`<img>`/README vs inline DOM). Hard-bans scripts and external refs. Distills patterns from supermemoryai svg-animations and SVG-ORA prompt discipline. For token-aligned icon families inside a design build, pairs with `design-system` static craft.
+**Calls:** `design-system` (when icon set must match DESIGN.md tokens)
+**Output files:** `assets/svg/<name>.svg` (or user path)
+**Logged to:** `docs/skill-outputs/SKILL-OUTPUTS.md`
+**References:** `references/static-craft.md`, `references/animation-craft.md`, `references/ai-svg-prompts.md`, `references/svg-tooling.md`, `references/examples.md`
+**Impact report:** Asset name, static vs animated, delivery context, path count, quality gate pass/fail
+
+---
+
+### `gsap-animation`
+**Triggers:** "animate with GSAP", "GSAP timeline", "ScrollTrigger", "DrawSVG", "MorphSVG", "MotionPath", "gsap.context", "useGSAP", "scroll animation library", "GSAP React"
+**What it does:** Runtime GSAP animations for web apps — timelines, scroll-driven motion, SVG draw/morph/path plugins, React `useGSAP` integration with cleanup. Hard-bans `<img>`/README SVG targets. Pairs with `svg-creation` for static inline SVG markup; `frontend-design` for token-level motion defaults.
+**Calls:** `svg-creation` (static SVG markup), `frontend-design` (design-token motion in full UI builds)
+**Output files:** User component/hook path (e.g. `src/components/HeroAnimation.tsx`)
+**Logged to:** `docs/skill-outputs/SKILL-OUTPUTS.md`
+**References:** `references/react-integration.md`, `references/svg-plugins.md`, `references/examples.md`
+**Impact report:** Pattern, framework, plugins, cleanup method, reduced-motion handling
+
+---
+
+### `motion-animation`
+**Triggers:** "animate with Motion", "Framer Motion", "motion.div", "AnimatePresence", "layout animation", "whileInView", "motion/react", "useReducedMotion", "React enter exit animation"
+**What it does:** Declarative Motion for React animations — variants, stagger, gestures, AnimatePresence exit, layout/layoutId, whileInView, useScroll, inline SVG pathLength. React/Next client only. Pairs with `svg-creation` for static SVG markup; `gsap-animation` for scroll pin and non-React stacks.
+**Calls:** `svg-creation` (static SVG markup), `frontend-design` (motion tokens in full UI builds)
+**Output files:** User component path (e.g. `src/components/HeroReveal.tsx`)
+**Logged to:** `docs/skill-outputs/SKILL-OUTPUTS.md`
+**References:** `references/react-patterns.md`, `references/svg-and-scroll.md`, `references/examples.md`
+**Impact report:** Pattern, import path, reduced-motion method, AnimatePresence usage
 
 ---
 
