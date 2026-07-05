@@ -1,6 +1,6 @@
 # Cerulean Change Log
 
-Last updated: 2026-07-05 (session handoff)
+Last updated: 2026-07-05 (handoff after agent-loom sync)
 Purpose: Shared historical log of repo changes, reviews, and context updates made by AI agents or humans during active collaboration
 
 ## How To Use
@@ -26,6 +26,30 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ## Entries
 <!-- New entries go here, newest first -->
+
+### 2026-07-05 - Session handoff (agent-loom sync uncommitted)
+- Author: agent
+- Commit: not committed yet
+- Summary: Refreshed `docs/HANDOFF.md` and shared context for next session. Thinking Loop v2 committed @ `32a1567`; agent-loom sync @ `96f9e73` applied but uncommitted (~20 files). Build + 8 tests pass.
+- Files:
+  - `docs/HANDOFF.md`
+  - `docs/agent-shared-context.md`
+  - `docs/agent-change-log.md`
+- Notes: Next session options — commit sync, manual QA, Phase 5 deploy, Phase 6 golden tests, optional harness bootstrap.
+
+### 2026-07-05 - Sync agent-loom library @ 96f9e73
+- Author: agent
+- Commit: not committed yet
+- Summary: Applied `agent-loom-sync --apply` from `../agent-loom`. Added 3 harness skills; updated 11 library skills. Preserved `cerulean-*` protected and `knowledge-graph` fork. agent-loom untouched.
+- Files:
+  - `.agents/agent-loom-sync.json`
+  - `.agents/skills/harness-engineering/`
+  - `.agents/skills/harness-evolution/`
+  - `.agents/skills/harness-generation/`
+  - `.agents/skills/{agent-builder,eval-pipeline,memory-handoff,memory-startup,project-orchestrator,project-setup,reality-check,retroactive-project-setup,setup-evaluation,skill-finder,skill-routing}/`
+  - `docs/SKILL-INDEX.md`
+  - `docs/skill-outputs/SKILL-OUTPUTS.md`
+- Notes: Upstream commit `96f9e73`. Add: harness-engineering, harness-evolution, harness-generation. Update: agent-builder, eval-pipeline, memory-handoff, memory-startup, project-orchestrator, project-setup, reality-check, retroactive-project-setup, setup-evaluation, skill-finder, skill-routing.
 
 ### 2026-07-05 - Session handoff (Thinking Loop v2 complete in code)
 - Author: agent

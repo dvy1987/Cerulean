@@ -1,6 +1,6 @@
 # Cerulean Shared Context
 
-Last updated: 2026-07-05 (handoff after Thinking Loop v2 + P0–P3 fixes)
+Last updated: 2026-07-05 (handoff after agent-loom sync @ 96f9e73)
 Status: Active working context for humans and AI agents
 
 ## Purpose
@@ -56,16 +56,17 @@ Update this file when:
 - 2026-07-03: MCP server for Cursor/Antigravity — IDE AI does thinking; Cerulean stores structure. API keys per user (`cer_...`)
 - 2026-07-04: Thinking Loop v2 approved — proactive capture, template-first docs (`product_spec` default), runtime consolidation, Advanced mode
 - 2026-07-04: Template change ships in v1; insight proposal latency 1–3s OK; never auto-save insights
-- 2026-07-05: Agent-loom sync @ `2a796a7`; `main` pushed and clean
+- 2026-07-05: Thinking Loop v2 committed (`32a1567`); `main` pushed @ `66d4dfc`
+- 2026-07-05: Agent-loom sync @ `96f9e73` applied locally (uncommitted)
 
 ## Handoff
 - **Start here:** `docs/HANDOFF.md` — full session handoff, QA checklist, uncommitted files list
-- **Execution plan:** `docs/specs/implementation-master-plan.md` — Phases 0–4 done in code; 5–6 remain
+- **Execution plan:** `docs/specs/implementation-master-plan.md` — Phases 0–4 done; 5–6 remain
 - **Product spec:** `docs/specs/thinking-loop-v2.md`
-- **Next steps (user choice):** commit changeset · manual QA · Phase 5 deploy · Phase 6 golden tests
-- **Uncommitted:** ~60 files — Thinking Loop v2 + adversarial review fixes; `npm run build` + `npm test` (8) pass
+- **Next steps (user choice):** commit agent-loom sync · manual QA · Phase 5 deploy · Phase 6 golden tests · optional harness bootstrap
+- **Uncommitted:** ~20 files — agent-loom sync (harness skills + 11 updated library skills); `npm run build` + `npm test` (8) pass
 - **Verify:** persisted chat no duplicates; streaming `done` before proposals; contradictions with 2+ insights; template seed + promote placement
-- **Agent skills:** `.agents/skills/` — 109 skills (106 library + 3 Cerulean domain); last library sync `2026-07-05` @ upstream `2a796a7` via `agent-loom-sync`; new: `svg-creation`, `gsap-animation`, `motion-animation`; `knowledge-graph` fork preserved (`.next` exclusion); `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
+- **Agent skills:** `.agents/skills/` — 112 skills (109 library + 3 Cerulean domain); last library sync `2026-07-05` @ upstream `96f9e73` via `agent-loom-sync`; new: `harness-engineering`, `harness-generation`, `harness-evolution`; `knowledge-graph` fork preserved (`.next` exclusion); `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
 - **Skill index:** `docs/SKILL-INDEX.md` | **Routing:** `.agents/ROUTING.md`
 - **Memory:** `docs/memory/` bridged with `docs/agent-shared-context.md`
 
@@ -86,7 +87,8 @@ Update this file when:
 - Tests: 8 passing (`heading-match.test.mts` + smoke/heuristic `.mjs`)
 
 ### What is NOT yet implemented
-- **Git commit** for Thinking Loop v2 work (large uncommitted changeset on `main`)
+- **Git commit** for agent-loom sync (harness skills, ~20 files)
+- **Manual QA** for Thinking Loop v2 (checklist in HANDOFF.md)
 - Railway + self-hosted Supabase deployment (Phase 5)
 - Golden / eval tests (Phase 6)
 - LLM-based orchestrator routing (still rule-based dev-router; deferred)
@@ -110,7 +112,8 @@ Update this file when:
 - AI abstraction layer is in place for easy provider swap later
 
 ### Gaps & Risks
-- **Uncommitted changeset** — ~60 files; next session should commit or explicitly defer
+- **Uncommitted agent-loom sync** — ~20 files; commit or defer next session
+- **No agent harness** — `docs/harness/manifest.json` missing; optional `harness-generation` if user wants agent reliability setup
 - Deploy + migration 003 required for persisted template/settings columns
 - Without Supabase env vars, all state is ephemeral (local dev mode)
 - Test coverage is minimal (no golden evals for AI quality)
@@ -186,4 +189,5 @@ It is not advice, not a recommended plan, and not a task list for autonomous exe
 - 2026-07-03: Railway + self-hosted Supabase; username/password auth; MCP with API keys
 - 2026-07-04: Handoff docs prepared (`docs/HANDOFF.md`, README updated)
 - 2026-07-04: Thinking Loop v2 spec + master implementation plan committed (`e0a2c02`)
-- 2026-07-05: Thinking Loop v2 Phases 0–4 + adversarial P0–P3 fixes implemented in code (uncommitted); HANDOFF refreshed
+- 2026-07-05: Thinking Loop v2 Phases 0–4 + adversarial P0–P3 fixes committed (`32a1567`); HANDOFF refreshed
+- 2026-07-05: Agent-loom sync @ `96f9e73` — harness skills added; uncommitted
