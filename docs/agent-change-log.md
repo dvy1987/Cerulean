@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-06 - Smart routing & placement implementation
 - Author: Cursor agent
-- Commit: not committed yet
+- Commit: 121d3a3
 - Summary: Implemented approved spec — `resolvePlacement`, `llm-router` with rules fallback, settings toggles (default on), `placement_confidence` migration, 50-case golden suite @ ≥98%, MCP/stream routing parity tests.
 - Files:
   - `src/lib/document/resolve-placement.ts`, `classify-section.ts`
