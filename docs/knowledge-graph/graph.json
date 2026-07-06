@@ -1,10 +1,10 @@
 {
   "version": "2.2",
-  "generated_at": "2026-07-04T14:12:08.483496+00:00",
+  "generated_at": "2026-07-06T05:16:15.388696+00:00",
   "mode": "skill-library",
   "mode_reason": "skill-library label: docs/skill-graph.md + docs/SKILL-INDEX.md present → adds authoritative skill invoke edges. Still scans full repo (not skills-only).",
   "scan_layers": [
-    "skills (106 in .agents/skills)",
+    "skills (112 in .agents/skills)",
     "repo-wide source ((root), packages, src, tests)",
     "docs (AGENTS.md, README.md, docs/**/*.md)",
     "memory (docs/memory, handoffs)",
@@ -15,33 +15,33 @@
   ],
   "root": "/Users/divya/Projects/Building-apps/Cerulean",
   "stats": {
-    "nodes": 258,
-    "edges": 305,
-    "authoritative_edges": 171,
-    "extracted_edges": 300,
+    "nodes": 298,
+    "edges": 344,
+    "authoritative_edges": 186,
+    "extracted_edges": 339,
     "inferred_edges": 5,
     "node_types": {
       "config": 5,
       "directory": 7,
-      "doc": 29,
+      "doc": 31,
       "handoff": 1,
       "memory": 9,
-      "module": 99,
+      "module": 131,
       "package": 2,
-      "skill": 106
+      "skill": 112
     }
   },
   "god_nodes": [
+    "types.ts (module)",
     "secure-skill",
     "universal-skill-creator",
-    "types.ts (module)",
+    "actions.ts (module)",
     "venture-exploration",
     "registry.ts (module)",
     "experimentation",
-    "actions.ts (module)",
     "validate-skills",
-    "index.ts (module)",
-    "improve-skills"
+    "improve-skills",
+    "memory"
   ],
   "surprising_connections": [
     {
@@ -57,6 +57,13 @@
       "relation": "invokes",
       "from_community": "project",
       "to_community": "process"
+    },
+    {
+      "from": "motion-animation",
+      "to": "svg-creation",
+      "relation": "invokes",
+      "from_community": "motion",
+      "to_community": "svg"
     },
     {
       "from": "publish-skill",
@@ -80,42 +87,30 @@
       "to_community": "venture"
     },
     {
+      "from": "harness-evolution",
+      "to": "eval-pipeline",
+      "relation": "invokes",
+      "from_community": "harness",
+      "to_community": "eval"
+    },
+    {
       "from": "reality-check",
       "to": "assumption-mapping",
       "relation": "invokes",
       "from_community": "reality",
       "to_community": "assumption"
-    },
-    {
-      "from": "reality-check",
-      "to": "adversarial-hat",
-      "relation": "invokes",
-      "from_community": "reality",
-      "to_community": "adversarial"
-    },
-    {
-      "from": "business-modeling",
-      "to": "venture-exploration",
-      "relation": "invokes",
-      "from_community": "business",
-      "to_community": "venture"
     }
   ],
   "suggested_questions": [
     "How does project-orchestrator (project) connect to skill-routing (skill)?",
     "How does project-orchestrator (project) connect to process-decomposer (process)?",
-    "How does publish-skill (publish) connect to validate-skills (validate)?",
+    "How does motion-animation (motion) connect to svg-creation (svg)?",
+    "What depends on types.ts (module), and what does types.ts (module) invoke?",
     "What depends on secure-skill, and what does secure-skill invoke?",
-    "What depends on universal-skill-creator, and what does universal-skill-creator invoke?",
-    "What depends on types.ts (module), and what does types.ts (module) invoke?"
+    "What depends on universal-skill-creator, and what does universal-skill-creator invoke?"
   ],
   "communities": {
-    "cerulean": [
-      "cerulean-deployment",
-      "cerulean-mcp",
-      "cerulean-project"
-    ],
-    "memory": [
+    "test": [
       "adversarial-hat",
       "agent-builder",
       "agent-launcher",
@@ -149,6 +144,9 @@
       "first-principles",
       "generate-changelog",
       "git-workflow-and-versioning",
+      "harness-engineering",
+      "harness-evolution",
+      "harness-generation",
       "idea-evaluation",
       "idea-generation",
       "implementation-plan",
@@ -206,7 +204,7 @@
       "validate-skills",
       "venture-exploration"
     ],
-    "shipping": [
+    "performance": [
       "app-security-hardening",
       "browser-testing-with-devtools",
       "ci-cd-and-automation",
@@ -214,19 +212,27 @@
       "design-review",
       "design-system",
       "frontend-design",
+      "gsap-animation",
+      "motion-animation",
       "performance-optimization",
-      "shipping-and-launch"
+      "shipping-and-launch",
+      "svg-creation"
+    ],
+    "debug": [
+      "debug-and-fix"
+    ],
+    "cerulean": [
+      "cerulean-deployment",
+      "cerulean-mcp",
+      "cerulean-project"
+    ],
+    "context": [
+      "context-engineering"
     ],
     "code": [
       "code-review-crsp",
       "code-simplification",
       "technical-debt-audit"
-    ],
-    "context": [
-      "context-engineering"
-    ],
-    "debug": [
-      "debug-and-fix"
     ]
   },
   "nodes": [
@@ -287,6 +293,14 @@
       "community": "learn"
     },
     {
+      "id": "skill_motion_animation",
+      "label": "motion-animation",
+      "type": "skill",
+      "path": ".agents/skills/motion-animation/SKILL.md",
+      "category": "project-specific",
+      "community": "motion"
+    },
+    {
       "id": "skill_publish_skill",
       "label": "publish-skill",
       "type": "skill",
@@ -301,6 +315,14 @@
       "path": ".agents/skills/customer-discovery/SKILL.md",
       "category": "project-specific",
       "community": "customer"
+    },
+    {
+      "id": "skill_harness_evolution",
+      "label": "harness-evolution",
+      "type": "skill",
+      "path": ".agents/skills/harness-evolution/SKILL.md",
+      "category": "project-specific",
+      "community": "harness"
     },
     {
       "id": "skill_test_driven_development",
@@ -349,6 +371,14 @@
       "path": ".agents/skills/cerulean-deployment/SKILL.md",
       "category": "domain",
       "community": "cerulean"
+    },
+    {
+      "id": "skill_svg_creation",
+      "label": "svg-creation",
+      "type": "skill",
+      "path": ".agents/skills/svg-creation/SKILL.md",
+      "category": "project-specific",
+      "community": "svg"
     },
     {
       "id": "skill_incremental_implementation",
@@ -671,6 +701,14 @@
       "community": "assumption"
     },
     {
+      "id": "skill_gsap_animation",
+      "label": "gsap-animation",
+      "type": "skill",
+      "path": ".agents/skills/gsap-animation/SKILL.md",
+      "category": "project-specific",
+      "community": "gsap"
+    },
+    {
       "id": "skill_eval_judge",
       "label": "eval-judge",
       "type": "skill",
@@ -701,6 +739,22 @@
       "path": ".agents/skills/shipping-and-launch/SKILL.md",
       "category": "project-specific",
       "community": "shipping"
+    },
+    {
+      "id": "skill_harness_engineering",
+      "label": "harness-engineering",
+      "type": "skill",
+      "path": ".agents/skills/harness-engineering/SKILL.md",
+      "category": "project-specific",
+      "community": "harness"
+    },
+    {
+      "id": "skill_harness_generation",
+      "label": "harness-generation",
+      "type": "skill",
+      "path": ".agents/skills/harness-generation/SKILL.md",
+      "category": "project-specific",
+      "community": "harness"
     },
     {
       "id": "skill_implementation_plan",
@@ -763,7 +817,7 @@
       "label": "validate-skills",
       "type": "skill",
       "path": ".agents/skills/validate-skills/SKILL.md",
-      "category": "meta",
+      "category": "project-specific",
       "community": "validate"
     },
     {
@@ -1191,6 +1245,22 @@
       "language": "ts"
     },
     {
+      "id": "module_src_app_api_v1_ai_chat_stream_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/ai/chat/stream/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_ai_complete_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/ai/complete/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
       "id": "module_src_app_api_v1_ai_run_route_ts",
       "label": "route.ts",
       "type": "module",
@@ -1223,10 +1293,26 @@
       "language": "ts"
     },
     {
+      "id": "module_src_app_api_v1_document_preview_template_change_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/document/preview-template-change/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
       "id": "module_src_app_api_v1_document_route_ts",
       "label": "route.ts",
       "type": "module",
       "path": "src/app/api/v1/document/route.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_app_api_v1_document_seed_template_route_ts",
+      "label": "route.ts",
+      "type": "module",
+      "path": "src/app/api/v1/document/seed-template/route.ts",
       "community": "src",
       "language": "ts"
     },
@@ -1399,6 +1485,30 @@
       "language": "tsx"
     },
     {
+      "id": "module_src_components_changetemplatemodal_tsx",
+      "label": "ChangeTemplateModal.tsx",
+      "type": "module",
+      "path": "src/components/ChangeTemplateModal.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_components_documenttypepicker_tsx",
+      "label": "DocumentTypePicker.tsx",
+      "type": "module",
+      "path": "src/components/DocumentTypePicker.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_components_onboardingguide_tsx",
+      "label": "OnboardingGuide.tsx",
+      "type": "module",
+      "path": "src/components/OnboardingGuide.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
       "id": "module_src_components_workspace_tsx",
       "label": "Workspace.tsx",
       "type": "module",
@@ -1527,6 +1637,14 @@
       "language": "ts"
     },
     {
+      "id": "module_src_lib_ai_context_from_stores_ts",
+      "label": "context-from-stores.ts",
+      "type": "module",
+      "path": "src/lib/ai/context-from-stores.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
       "id": "module_src_lib_ai_context_ts",
       "label": "context.ts",
       "type": "module",
@@ -1567,6 +1685,14 @@
       "language": "ts"
     },
     {
+      "id": "module_src_lib_ai_post_chat_pipeline_ts",
+      "label": "post-chat-pipeline.ts",
+      "type": "module",
+      "path": "src/lib/ai/post-chat-pipeline.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
       "id": "module_src_lib_ai_provider_ts",
       "label": "provider.ts",
       "type": "module",
@@ -1579,6 +1705,30 @@
       "label": "registry.ts",
       "type": "module",
       "path": "src/lib/ai/registry.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_runtime_request_ts",
+      "label": "runtime-request.ts",
+      "type": "module",
+      "path": "src/lib/ai/runtime-request.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_runtime_router_ts",
+      "label": "runtime-router.ts",
+      "type": "module",
+      "path": "src/lib/ai/runtime-router.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_ai_server_call_ai_ts",
+      "label": "server-call-ai.ts",
+      "type": "module",
+      "path": "src/lib/ai/server-call-ai.ts",
       "community": "src",
       "language": "ts"
     },
@@ -1655,6 +1805,110 @@
       "language": "ts"
     },
     {
+      "id": "module_src_lib_demo_seed_demo_workspace_ts",
+      "label": "seed-demo-workspace.ts",
+      "type": "module",
+      "path": "src/lib/demo/seed-demo-workspace.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_templates_change_template_ts",
+      "label": "change-template.ts",
+      "type": "module",
+      "path": "src/lib/document-templates/change-template.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_templates_index_ts",
+      "label": "index.ts",
+      "type": "module",
+      "path": "src/lib/document-templates/index.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_templates_product_analysis_ts",
+      "label": "product-analysis.ts",
+      "type": "module",
+      "path": "src/lib/document-templates/product-analysis.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_templates_product_spec_ts",
+      "label": "product-spec.ts",
+      "type": "module",
+      "path": "src/lib/document-templates/product-spec.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_templates_registry_ts",
+      "label": "registry.ts",
+      "type": "module",
+      "path": "src/lib/document-templates/registry.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_templates_strategy_memo_ts",
+      "label": "strategy-memo.ts",
+      "type": "module",
+      "path": "src/lib/document-templates/strategy-memo.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_classify_section_ts",
+      "label": "classify-section.ts",
+      "type": "module",
+      "path": "src/lib/document/classify-section.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_heading_match_ts",
+      "label": "heading-match.ts",
+      "type": "module",
+      "path": "src/lib/document/heading-match.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_placement_ts",
+      "label": "placement.ts",
+      "type": "module",
+      "path": "src/lib/document/placement.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_document_section_status_ts",
+      "label": "section-status.ts",
+      "type": "module",
+      "path": "src/lib/document/section-status.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_insights_proposal_constants_ts",
+      "label": "proposal-constants.ts",
+      "type": "module",
+      "path": "src/lib/insights/proposal-constants.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_lib_metrics_session_metrics_ts",
+      "label": "session-metrics.ts",
+      "type": "module",
+      "path": "src/lib/metrics/session-metrics.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
       "id": "module_src_lib_supabase_admin_ts",
       "label": "admin.ts",
       "type": "module",
@@ -1715,6 +1969,14 @@
       "label": "HighlightMenu.tsx",
       "type": "module",
       "path": "src/modules/chat/HighlightMenu.tsx",
+      "community": "src",
+      "language": "tsx"
+    },
+    {
+      "id": "module_src_modules_chat_proposedinsightbar_tsx",
+      "label": "ProposedInsightBar.tsx",
+      "type": "module",
+      "path": "src/modules/chat/ProposedInsightBar.tsx",
       "community": "src",
       "language": "tsx"
     },
@@ -1815,6 +2077,14 @@
       "language": "ts"
     },
     {
+      "id": "module_src_store_contradictionstore_ts",
+      "label": "contradictionStore.ts",
+      "type": "module",
+      "path": "src/store/contradictionStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
       "id": "module_src_store_documentstore_ts",
       "label": "documentStore.ts",
       "type": "module",
@@ -1847,6 +2117,22 @@
       "language": "ts"
     },
     {
+      "id": "module_src_store_proposedinsightstore_ts",
+      "label": "proposedInsightStore.ts",
+      "type": "module",
+      "path": "src/store/proposedInsightStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
+      "id": "module_src_store_suggestionstore_ts",
+      "label": "suggestionStore.ts",
+      "type": "module",
+      "path": "src/store/suggestionStore.ts",
+      "community": "src",
+      "language": "ts"
+    },
+    {
       "id": "module_src_types_index_ts",
       "label": "index.ts",
       "type": "module",
@@ -1863,10 +2149,34 @@
       "language": "ts"
     },
     {
+      "id": "module_tests_golden_helpers_mjs",
+      "label": "golden-helpers.mjs",
+      "type": "module",
+      "path": "tests/golden-helpers.mjs",
+      "community": "tests",
+      "language": "mjs"
+    },
+    {
+      "id": "module_tests_golden_thinking_loop_test_mjs",
+      "label": "golden-thinking-loop.test.mjs",
+      "type": "module",
+      "path": "tests/golden-thinking-loop.test.mjs",
+      "community": "tests",
+      "language": "mjs"
+    },
+    {
       "id": "module_tests_smoke_test_mjs",
       "label": "smoke.test.mjs",
       "type": "module",
       "path": "tests/smoke.test.mjs",
+      "community": "tests",
+      "language": "mjs"
+    },
+    {
+      "id": "module_tests_thinking_loop_v2_test_mjs",
+      "label": "thinking-loop-v2.test.mjs",
+      "type": "module",
+      "path": "tests/thinking-loop-v2.test.mjs",
       "community": "tests",
       "language": "mjs"
     },
@@ -2095,6 +2405,20 @@
       "community": "memory"
     },
     {
+      "id": "doc_docs_specs_thinking_loop_v2_md",
+      "label": "thinking-loop-v2",
+      "type": "doc",
+      "path": "docs/specs/thinking-loop-v2.md",
+      "community": "docs"
+    },
+    {
+      "id": "doc_docs_specs_implementation_master_plan_md",
+      "label": "implementation-master-plan",
+      "type": "doc",
+      "path": "docs/specs/implementation-master-plan.md",
+      "community": "docs"
+    },
+    {
       "id": "doc_docs_speclets_llm_scored_relevance_and_maturity_md",
       "label": "llm-scored-relevance-and-maturity",
       "type": "doc",
@@ -2280,6 +2604,15 @@
       "provenance": "skill-graph.md"
     },
     {
+      "source": "skill_motion_animation",
+      "target": "skill_svg_creation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
       "source": "skill_publish_skill",
       "target": "skill_validate_skills",
       "relation": "invokes",
@@ -2305,6 +2638,15 @@
       "confidence_score": 1.0,
       "source_file": ".agents/skills/customer-discovery/SKILL.md",
       "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_harness_evolution",
+      "target": "skill_eval_pipeline",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
     },
     {
       "source": "skill_reality_check",
@@ -2350,6 +2692,15 @@
       "confidence_score": 1.0,
       "source_file": ".agents/skills/split-skill/SKILL.md",
       "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_svg_creation",
+      "target": "skill_design_system",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
     },
     {
       "source": "skill_memory",
@@ -2514,6 +2865,15 @@
       "provenance": "skill-graph.md"
     },
     {
+      "source": "skill_memory_startup",
+      "target": "skill_harness_engineering",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/memory-startup/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
       "source": "skill_experiment_spec",
       "target": "skill_experiment_runbook",
       "relation": "invokes",
@@ -2566,6 +2926,15 @@
       "confidence_score": 1.0,
       "source_file": null,
       "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_agent_builder",
+      "target": "skill_harness_generation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/agent-builder/SKILL.md",
+      "provenance": "SKILL.md"
     },
     {
       "source": "skill_agent_builder",
@@ -2685,6 +3054,24 @@
       "provenance": "SKILL.md"
     },
     {
+      "source": "skill_gsap_animation",
+      "target": "skill_svg_creation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_gsap_animation",
+      "target": "skill_motion_animation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/gsap-animation/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
       "source": "skill_eval_judge",
       "target": "skill_eval_rubric_design",
       "relation": "invokes",
@@ -2701,6 +3088,15 @@
       "confidence_score": 1.0,
       "source_file": ".agents/skills/apply-paper-to-project/SKILL.md",
       "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_harness_evolution",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
     },
     {
       "source": "skill_implementation_plan",
@@ -2758,7 +3154,7 @@
     },
     {
       "source": "skill_project_setup",
-      "target": "skill_agent_loom_sync",
+      "target": "skill_harness_generation",
       "relation": "invokes",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -2812,7 +3208,7 @@
     },
     {
       "source": "skill_retroactive_project_setup",
-      "target": "skill_agent_loom_sync",
+      "target": "skill_harness_generation",
       "relation": "invokes",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -3016,6 +3412,15 @@
       "confidence_score": 1.0,
       "source_file": null,
       "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_design_system",
+      "target": "skill_svg_creation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/design-system/SKILL.md",
+      "provenance": "SKILL.md"
     },
     {
       "source": "skill_feature_spec",
@@ -3252,6 +3657,15 @@
       "provenance": "ts-import"
     },
     {
+      "source": "module_src_lib_ai_agents_chat_agent_ts",
+      "target": "module_src_lib_ai_provider_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/agents/chat-agent.ts",
+      "provenance": "ts-import"
+    },
+    {
       "source": "module_src_lib_ai_agents_document_expansion_agent_ts",
       "target": "module_src_lib_ai_types_ts",
       "relation": "imports",
@@ -3308,15 +3722,6 @@
     {
       "source": "module_src_lib_ai_agents_document_integration_agent_ts",
       "target": "module_src_lib_ai_registry_ts",
-      "relation": "imports",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/ai/agents/document-integration-agent.ts",
-      "provenance": "ts-import"
-    },
-    {
-      "source": "module_src_lib_ai_agents_document_integration_agent_ts",
-      "target": "module_src_lib_ai_dev_ai_ts",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -3618,6 +4023,24 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/ai/background.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_call_ai_ts",
+      "target": "module_src_lib_ai_server_call_ai_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/call-ai.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_call_ai_ts",
+      "target": "module_src_lib_ai_provider_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/call-ai.ts",
       "provenance": "ts-import"
     },
     {
@@ -3627,6 +4050,15 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/ai/context-from-db.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_context_from_stores_ts",
+      "target": "module_src_lib_ai_context_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/context-from-stores.ts",
       "provenance": "ts-import"
     },
     {
@@ -3659,15 +4091,6 @@
     {
       "source": "module_src_lib_ai_index_ts",
       "target": "module_src_lib_ai_orchestrator_ts",
-      "relation": "imports",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/ai/index.ts",
-      "provenance": "ts-import"
-    },
-    {
-      "source": "module_src_lib_ai_index_ts",
-      "target": "module_src_lib_ai_dev_ai_ts",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -3811,7 +4234,7 @@
     },
     {
       "source": "module_src_lib_ai_orchestrator_ts",
-      "target": "module_src_lib_ai_dev_router_ts",
+      "target": "module_src_lib_ai_runtime_router_ts",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -3819,12 +4242,30 @@
       "provenance": "ts-import"
     },
     {
-      "source": "module_src_lib_ai_orchestrator_ts",
-      "target": "module_src_lib_ai_background_ts",
+      "source": "module_src_lib_ai_post_chat_pipeline_ts",
+      "target": "module_src_lib_ai_orchestrator_ts",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/lib/ai/orchestrator.ts",
+      "source_file": "src/lib/ai/post-chat-pipeline.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_post_chat_pipeline_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/post-chat-pipeline.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_post_chat_pipeline_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/post-chat-pipeline.ts",
       "provenance": "ts-import"
     },
     {
@@ -3834,6 +4275,123 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/ai/registry.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_runtime_request_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/runtime-request.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_runtime_router_ts",
+      "target": "module_src_lib_ai_actions_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/runtime-router.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_runtime_router_ts",
+      "target": "module_src_lib_ai_types_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/runtime-router.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_runtime_router_ts",
+      "target": "module_src_lib_ai_dev_router_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/runtime-router.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_runtime_router_ts",
+      "target": "module_src_lib_ai_runtime_request_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/runtime-router.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_server_call_ai_ts",
+      "target": "module_src_lib_ai_provider_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/server-call-ai.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_ai_types_ts",
+      "target": "module_src_lib_ai_provider_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/ai/types.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_document_templates_change_template_ts",
+      "target": "module_src_lib_document_templates_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/document-templates/change-template.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_document_templates_index_ts",
+      "target": "module_src_lib_document_templates_registry_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/document-templates/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_document_templates_index_ts",
+      "target": "module_src_lib_document_templates_change_template_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/document-templates/index.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_document_templates_registry_ts",
+      "target": "module_src_lib_document_templates_product_spec_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/document-templates/registry.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_document_templates_registry_ts",
+      "target": "module_src_lib_document_templates_strategy_memo_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/document-templates/registry.ts",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_src_lib_document_templates_registry_ts",
+      "target": "module_src_lib_document_templates_product_analysis_ts",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/document-templates/registry.ts",
       "provenance": "ts-import"
     },
     {
@@ -3873,6 +4431,15 @@
       "provenance": "ts-import"
     },
     {
+      "source": "module_src_modules_chat_chatpanel_tsx",
+      "target": "module_src_modules_chat_proposedinsightbar_tsx",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/chat/ChatPanel.tsx",
+      "provenance": "ts-import"
+    },
+    {
       "source": "module_src_modules_document_documentpanel_tsx",
       "target": "module_src_modules_document_documentblockview_tsx",
       "relation": "imports",
@@ -3897,6 +4464,24 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/insights/InsightTray.tsx",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_tests_golden_thinking_loop_test_mjs",
+      "target": "module_tests_golden_helpers_mjs",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/golden-thinking-loop.test.mjs",
+      "provenance": "ts-import"
+    },
+    {
+      "source": "module_tests_thinking_loop_v2_test_mjs",
+      "target": "module_tests_golden_helpers_mjs",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/thinking-loop-v2.test.mjs",
       "provenance": "ts-import"
     },
     {
@@ -4874,6 +5459,96 @@
     {
       "source": "skill_codebase_understanding",
       "target": "skill_knowledge_graph",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_gsap_animation",
+      "target": "skill_frontend_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_motion_animation",
+      "target": "skill_frontend_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_harness_generation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_project_setup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_retroactive_project_setup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_eval_rubric_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_eval_pipeline",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_reality_check",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_agent_builder",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_evolution",
+      "target": "skill_memory_capture",
       "relation": "invokes",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,

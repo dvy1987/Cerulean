@@ -4,6 +4,7 @@
 
 import { DocumentBlock, PatchOperation } from "@/types";
 import { v4 as uuidv4 } from "uuid";
+import { MIN_ASSISTANT_MESSAGE_LENGTH } from "@/lib/insights/proposal-constants";
 
 const THINKING_DELAY = 600;
 const CHAR_DELAY = 15;
@@ -300,6 +301,10 @@ export function proposeInsightsFromChat(
   userMessage: string,
   assistantMessage: string
 ): Array<{ title: string; content: string; confidence?: number }> {
+  if (assistantMessage.trim().length < MIN_ASSISTANT_MESSAGE_LENGTH) {
+    return [];
+  }
+
   const proposals: Array<{ title: string; content: string; confidence?: number }> = [];
 
   const sentences = assistantMessage

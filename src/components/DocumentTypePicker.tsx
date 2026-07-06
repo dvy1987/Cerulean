@@ -7,6 +7,7 @@ import { isPersistenceEnabled } from "@/lib/config";
 import { workspaceApi } from "@/lib/api/workspace-client";
 import { useDocumentStore } from "@/store/documentStore";
 import { useAiSettingsStore } from "@/store/aiSettingsStore";
+import { trackMetric } from "@/lib/metrics/session-metrics";
 
 const OPTIONS: DocumentType[] = [
   "product_spec",
@@ -37,6 +38,7 @@ export default function DocumentTypePicker({ open, onClose }: DocumentTypePicker
         applyTemplate(selected);
         setHasChosenTemplate(true);
       }
+      trackMetric("template_applied");
       onClose();
     } finally {
       setLoading(false);

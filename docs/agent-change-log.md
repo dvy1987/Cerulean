@@ -27,6 +27,24 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-05 - Thinking Loop v2 gap closure (non-QA)
+- Author: Cursor agent
+- Commit: not committed yet
+- Summary: Closed remaining thinking-loop-v2 spec gaps — proposal UX/copy, 80-char noise gate, source_message_ids on chip save, empty-section UI, RuntimeRequest API on `/api/v1/ai/run`, golden eval tests (16 total), session metrics instrumentation.
+- Files:
+  - `src/modules/chat/ProposedInsightBar.tsx`
+  - `src/lib/ai/post-chat-pipeline.ts`
+  - `src/lib/ai/runtime-request.ts`
+  - `src/lib/document/classify-section.ts`
+  - `src/lib/document/section-status.ts`
+  - `src/lib/metrics/session-metrics.ts`
+  - `src/modules/document/DocumentPanel.tsx`
+  - `tests/golden-thinking-loop.test.mjs`
+  - `tests/golden-helpers.mjs`
+  - `tests/golden/placement-cases.json`
+  - `tests/golden/proposal-cases.json`
+- Notes: Manual QA and deploy (Phase 5) still pending user.
+
 ### 2026-07-05 - Session handoff (agent-loom sync uncommitted)
 - Author: agent
 - Commit: 0898d72

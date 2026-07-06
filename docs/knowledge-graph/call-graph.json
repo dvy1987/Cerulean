@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T14:12:08.483496+00:00",
+  "generated_at": "2026-07-06T05:16:15.388696+00:00",
   "edges": [
     {
       "source": "skill_experiment_backlog",
@@ -38,6 +38,15 @@
       "provenance": "skill-graph.md"
     },
     {
+      "source": "skill_motion_animation",
+      "target": "skill_svg_creation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
       "source": "skill_publish_skill",
       "target": "skill_validate_skills",
       "relation": "invokes",
@@ -63,6 +72,15 @@
       "confidence_score": 1.0,
       "source_file": ".agents/skills/customer-discovery/SKILL.md",
       "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_harness_evolution",
+      "target": "skill_eval_pipeline",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
     },
     {
       "source": "skill_reality_check",
@@ -108,6 +126,15 @@
       "confidence_score": 1.0,
       "source_file": ".agents/skills/split-skill/SKILL.md",
       "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_svg_creation",
+      "target": "skill_design_system",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
     },
     {
       "source": "skill_memory",
@@ -272,6 +299,15 @@
       "provenance": "skill-graph.md"
     },
     {
+      "source": "skill_memory_startup",
+      "target": "skill_harness_engineering",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/memory-startup/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
       "source": "skill_experiment_spec",
       "target": "skill_experiment_runbook",
       "relation": "invokes",
@@ -324,6 +360,15 @@
       "confidence_score": 1.0,
       "source_file": null,
       "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_agent_builder",
+      "target": "skill_harness_generation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/agent-builder/SKILL.md",
+      "provenance": "SKILL.md"
     },
     {
       "source": "skill_agent_builder",
@@ -443,6 +488,24 @@
       "provenance": "SKILL.md"
     },
     {
+      "source": "skill_gsap_animation",
+      "target": "skill_svg_creation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_gsap_animation",
+      "target": "skill_motion_animation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/gsap-animation/SKILL.md",
+      "provenance": "SKILL.md"
+    },
+    {
       "source": "skill_eval_judge",
       "target": "skill_eval_rubric_design",
       "relation": "invokes",
@@ -459,6 +522,15 @@
       "confidence_score": 1.0,
       "source_file": ".agents/skills/apply-paper-to-project/SKILL.md",
       "provenance": "SKILL.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_harness_evolution",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
     },
     {
       "source": "skill_implementation_plan",
@@ -516,7 +588,7 @@
     },
     {
       "source": "skill_project_setup",
-      "target": "skill_agent_loom_sync",
+      "target": "skill_harness_generation",
       "relation": "invokes",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -570,7 +642,7 @@
     },
     {
       "source": "skill_retroactive_project_setup",
-      "target": "skill_agent_loom_sync",
+      "target": "skill_harness_generation",
       "relation": "invokes",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -774,6 +846,15 @@
       "confidence_score": 1.0,
       "source_file": null,
       "provenance": "skill-graph.md"
+    },
+    {
+      "source": "skill_design_system",
+      "target": "skill_svg_creation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/design-system/SKILL.md",
+      "provenance": "SKILL.md"
     },
     {
       "source": "skill_feature_spec",
@@ -1795,6 +1876,96 @@
     {
       "source": "skill_codebase_understanding",
       "target": "skill_knowledge_graph",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_gsap_animation",
+      "target": "skill_frontend_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_motion_animation",
+      "target": "skill_frontend_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_harness_generation",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_project_setup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_retroactive_project_setup",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_eval_rubric_design",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_eval_pipeline",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_reality_check",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_engineering",
+      "target": "skill_agent_builder",
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/divya/Projects/Building-apps/Cerulean/docs/SKILL-INDEX.md",
+      "provenance": "SKILL-INDEX.md"
+    },
+    {
+      "source": "skill_harness_evolution",
+      "target": "skill_memory_capture",
       "relation": "invokes",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,

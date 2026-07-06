@@ -1,6 +1,6 @@
 # Cerulean Shared Context
 
-Last updated: 2026-07-05 (handoff after agent-loom sync @ 96f9e73)
+Last updated: 2026-07-06 (handoff after thinking-loop gap closure)
 Status: Active working context for humans and AI agents
 
 ## Purpose
@@ -61,11 +61,12 @@ Update this file when:
 
 ## Handoff
 - **Start here:** `docs/HANDOFF.md` — full session handoff, QA checklist
-- **Execution plan:** `docs/specs/implementation-master-plan.md` — Phases 0–4 done; 5–6 remain
-- **Product spec:** `docs/specs/thinking-loop-v2.md`
-- **Next steps (user choice):** manual QA · Phase 5 deploy · Phase 6 golden tests · optional harness bootstrap
-- **Uncommitted:** none — `main` @ `0898d72` synced with origin
-- **Verify:** persisted chat no duplicates; streaming `done` before proposals; contradictions with 2+ insights; template seed + promote placement
+- **Execution plan:** `docs/specs/implementation-master-plan.md` — Phases 0–4 + 6 done; Phase 5 (deploy) remains
+- **Product spec:** `docs/specs/thinking-loop-v2.md` — **implemented in code**; manual QA + deploy outstanding
+- **Next steps (user choice):** **commit** gap-closure · manual QA · Phase 5 deploy · optional harness bootstrap
+- **Uncommitted:** gap-closure work on `main` (18 modified + 7 new files) — see `HANDOFF.md` Working tree
+- **Tests:** 16 passing (`golden-thinking-loop.test.mjs`, `heading-match.test.mts`, smoke)
+- **Verify:** persisted chat no duplicates; streaming `done` before proposals; proposals with `source_message_ids`; empty-section hints; placement golden ≥70%
 - **Agent skills:** `.agents/skills/` — 112 skills (109 library + 3 Cerulean domain); last library sync `2026-07-05` @ upstream `96f9e73` via `agent-loom-sync`; new: `harness-engineering`, `harness-generation`, `harness-evolution`; `knowledge-graph` fork preserved (`.next` exclusion); `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
 - **Skill index:** `docs/SKILL-INDEX.md` | **Routing:** `.agents/ROUTING.md`
 - **Memory:** `docs/memory/` bridged with `docs/agent-shared-context.md`
@@ -84,12 +85,12 @@ Update this file when:
 - **API keys** for MCP/CLI — per-user, hashed at rest
 - **MCP server** — `packages/cerulean-mcp` with 35+ tools
 - Web UI syncs to Supabase when env vars configured; in-memory fallback without them
-- Tests: 8 passing (`heading-match.test.mts` + smoke/heuristic `.mjs`)
+- Tests: 16 passing (golden evals + heading-match + smoke)
 
 ### What is NOT yet implemented
-- **Manual QA** for Thinking Loop v2 (checklist in HANDOFF.md)
+- **Manual QA** for Thinking Loop v2 (checklist in HANDOFF.md; user deferred)
+- **Git commit** for gap-closure work (uncommitted on disk)
 - Railway + self-hosted Supabase deployment (Phase 5)
-- Golden / eval tests (Phase 6)
 - LLM-based orchestrator routing (still rule-based dev-router; deferred)
 - Memory management UI
 - Live production URL

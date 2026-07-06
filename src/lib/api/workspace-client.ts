@@ -9,6 +9,7 @@ import { useAiSettingsStore } from "@/store/aiSettingsStore";
 import { useProposedInsightStore } from "@/store/proposedInsightStore";
 import { useSuggestionStore } from "@/store/suggestionStore";
 import { useContradictionStore } from "@/store/contradictionStore";
+import { trackMetric } from "@/lib/metrics/session-metrics";
 import { isPersistenceEnabled } from "@/lib/config";
 import { runAiAction } from "@/lib/ai/orchestrator";
 import { buildAgentContextFromStores } from "@/lib/ai/context-from-stores";
@@ -79,6 +80,7 @@ function applyPostChatResults(
     useProposedInsightStore
       .getState()
       .setProposals(postChat.proposals, assistantMessageId);
+    trackMetric("proposals_shown", { count: postChat.proposals.length });
   }
   if (postChat.suggestions.length > 0) {
     useSuggestionStore.getState().setSuggestions(postChat.suggestions);
@@ -247,6 +249,7 @@ export const workspaceApi = {
       body: JSON.stringify({ text, sourceMessageIds }),
     });
     useDocumentStore.getState().setPendingPatch(patch);
+    trackMetric("promotion_created");
     return patch;
   },
 

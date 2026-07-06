@@ -1,6 +1,14 @@
 import { AiAction } from "./actions";
 import { AgentContext, AgentId } from "./types";
 import { routeAction, RoutingDecision } from "./dev-router";
+import { isRuntimeRequestBody, runtimeRequestToAction } from "./runtime-request";
+
+export type { RuntimeRequest, RuntimeRoute } from "./runtime-request";
+export {
+  isRuntimeRequestBody,
+  runtimeRequestToAction,
+  actionToRuntimeRoute,
+} from "./runtime-request";
 
 export type RuntimeConcern = "conversation" | "document" | "graph" | "meta";
 
@@ -30,6 +38,18 @@ export function routeThroughRuntime(
   context: AgentContext
 ): RoutingDecision {
   return routeAction(action, context);
+}
+
+/** Resolve POST /api/v1/ai/run body — legacy `action` or spec `runtime` envelope. */
+export function resolveAiRunAction(body: unknown): AiAction {
+  if (isRuntimeRequestBody(body)) {
+    return runtimeRequestToAction(body.runtime);
+  }
+  const { action } = body as { action?: AiAction };
+  if (!action?.type) {
+    throw new Error("action or runtime is required");
+  }
+  return action;
 }
 
 export function getRuntimeAgentGroup(agentId: AgentId): RuntimeConcern {

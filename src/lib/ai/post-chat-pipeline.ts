@@ -9,6 +9,10 @@ import {
 import { Contradiction, ThinkingSuggestion, ProposedInsight } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import { WorkspaceService } from "@/lib/db/workspace-service";
+import {
+  MAX_PROPOSALS,
+  MIN_ASSISTANT_MESSAGE_LENGTH,
+} from "@/lib/insights/proposal-constants";
 
 export interface PostChatPipelineInput {
   userId?: string;
@@ -65,15 +69,19 @@ export async function runPostChatPipeline(
   const bg = settings.backgroundAgents;
   const existingInsights = context.stores.insights;
 
-  const proposePromise = suggestInsights
-    ? runAiAction<InsightProposeResult>(
-        {
-          type: "insight.propose",
-          input: { userMessage, assistantMessage, assistantMessageId },
-        },
-        { context, userId }
-      )
-    : Promise.resolve(null);
+  const assistantLongEnough =
+    assistantMessage.trim().length >= MIN_ASSISTANT_MESSAGE_LENGTH;
+
+  const proposePromise =
+    suggestInsights && assistantLongEnough
+      ? runAiAction<InsightProposeResult>(
+          {
+            type: "insight.propose",
+            input: { userMessage, assistantMessage, assistantMessageId },
+          },
+          { context, userId }
+        )
+      : Promise.resolve(null);
 
   const suggestionPromise = bg.suggestion
     ? runAiAction<SuggestionResult>(
@@ -129,6 +137,7 @@ export async function runPostChatPipeline(
   ) {
     proposals = proposeRes.value.data.proposals
       .filter((p) => !isDuplicateProposal(p, existingInsights))
+      .slice(0, MAX_PROPOSALS)
       .map((p) => ({
         proposal_id: uuidv4(),
         title: p.title,

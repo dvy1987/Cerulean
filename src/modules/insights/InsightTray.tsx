@@ -11,6 +11,7 @@ import { buildAgentContextFromStores } from "@/lib/ai/context-from-stores";
 import { DocumentPromoteResult, InsightToPromptResult } from "@/lib/ai/actions";
 import { v4 as uuidv4 } from "uuid";
 import { useContradictionStore } from "@/store/contradictionStore";
+import { trackMetric } from "@/lib/metrics/session-metrics";
 import InsightCard from "./InsightCard";
 
 export default function InsightTray() {
@@ -109,6 +110,7 @@ export default function InsightTray() {
       });
       setInsightStatus(insight.insight_id, "promoted");
     }
+    trackMetric("promotion_created");
   };
 
   const handleExplore = async (insight: Insight) => {

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { ProposedInsight } from "@/types";
+import { MAX_PROPOSALS } from "@/lib/insights/proposal-constants";
 
 const DISMISS_KEY = "cerulean_dismissed_proposals";
 
@@ -47,7 +48,7 @@ export const useProposedInsightStore = create<ProposedInsightState>((set, get) =
       (p) => !dismissed.has(p.proposal_id) && p.title.trim().length > 0
     );
     void existingTitles;
-    set({ proposals: filtered.slice(0, 3), assistantMessageId });
+    set({ proposals: filtered.slice(0, MAX_PROPOSALS), assistantMessageId });
   },
 
   dismiss: (proposalId) => {

@@ -15,6 +15,7 @@ import ChatInput from "./ChatInput";
 import HighlightMenu from "./HighlightMenu";
 import ThinkingSuggestions from "./ThinkingSuggestions";
 import ProposedInsightBar from "./ProposedInsightBar";
+import { trackMetric } from "@/lib/metrics/session-metrics";
 
 interface ChatPanelProps {
   onHeaderDoubleClick?: () => void;
@@ -74,6 +75,7 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
           assistantMsg.message_id
         );
       }
+      trackMetric("chat_turn");
     } catch {
       showToast("Something went wrong with the response");
     } finally {
@@ -99,6 +101,7 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
         });
       }
       showToast("Insight saved");
+      trackMetric("insight_saved_manual");
     } catch {
       showToast("Failed to save insight");
     }
@@ -135,6 +138,7 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
         };
         setPendingPatch(patch);
       }
+      trackMetric("promotion_created");
       showToast("Patch created — review in document");
     } catch {
       showToast("Failed to create patch");

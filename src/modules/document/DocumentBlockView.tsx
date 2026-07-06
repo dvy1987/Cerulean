@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 interface DocumentBlockViewProps {
   block: DocumentBlock;
   isHighlighted?: boolean;
+  isEmptySectionHeading?: boolean;
   onUpdate: (blockId: string, content: string) => void;
   onRemove: (blockId: string) => void;
   onAddBelow: (blockId: string) => void;
@@ -27,6 +28,7 @@ const BLOCK_STYLES: Record<BlockType, string> = {
 export default function DocumentBlockView({
   block,
   isHighlighted,
+  isEmptySectionHeading,
   onUpdate,
   onRemove,
   onAddBelow,
@@ -115,6 +117,8 @@ export default function DocumentBlockView({
       className={`group relative rounded-lg px-4 py-2.5 border-l-2 ${
         isHighlighted
           ? "bg-cerulean-50/80 border-l-cerulean-400 shadow-soft"
+          : isEmptySectionHeading
+          ? "border-l-cerulean-200/80 bg-cerulean-50/30"
           : isEditing
           ? "bg-white border-l-cerulean-300 shadow-soft"
           : "border-l-transparent hover:border-l-gray-200 hover:bg-white/60"

@@ -4,6 +4,7 @@ import { agentRegistry } from "../registry";
 import { DocumentBlock, DocumentType } from "@/types";
 import { callAIForJSON } from "../call-ai";
 import { buildPromotionPatch } from "@/lib/document/placement";
+import { classifyPromotionSection } from "@/lib/document/classify-section";
 import { DEFAULT_DOCUMENT_TYPE } from "@/lib/document-templates/registry";
 
 type PromoteInput = DocumentPromoteAction["input"];
@@ -59,6 +60,10 @@ const documentIntegrationAgent: AgentDefinition<PromoteInput, DocumentPromoteRes
 
       if (aiResult.adapted_text) textToIntegrate = aiResult.adapted_text;
       if (aiResult.target_section) targetSection = aiResult.target_section;
+    }
+
+    if (!targetSection) {
+      targetSection = classifyPromotionSection(textToIntegrate, documentType);
     }
 
     const { operations, placement_label, placement_block_id } = buildPromotionPatch({

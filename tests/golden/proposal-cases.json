@@ -1,0 +1,62 @@
+[
+  {
+    "userMessage": "How should we price the product?",
+    "assistantMessage": "Consider value-based pricing for enterprise buyers who care about ROI. Start with a pilot tier to reduce adoption friction. Measure willingness to pay during onboarding calls.",
+    "minProposals": 1,
+    "maxProposals": 3
+  },
+  {
+    "userMessage": "What risks should we track?",
+    "assistantMessage": "The main risk is proposal noise annoying users if extraction is too aggressive. Mitigate with a strict cap of three chips and easy dismiss controls.",
+    "minProposals": 1,
+    "maxProposals": 3
+  },
+  {
+    "userMessage": "Summarize our thesis",
+    "assistantMessage": "Great question! Let me break this down for you.",
+    "minProposals": 0,
+    "maxProposals": 0
+  },
+  {
+    "userMessage": "Short",
+    "assistantMessage": "OK.",
+    "minProposals": 0,
+    "maxProposals": 0
+  },
+  {
+    "userMessage": "Who are the users?",
+    "assistantMessage": "Product managers exploring PRDs and strategy memos are the primary persona. They need fast capture without breaking conversational flow.",
+    "minProposals": 1,
+    "maxProposals": 3
+  },
+  {
+    "userMessage": "What about compliance?",
+    "assistantMessage": "Assumption: self-hosted Supabase satisfies data residency for early adopters. Open question: do we need SOC2 before enterprise sales?",
+    "minProposals": 1,
+    "maxProposals": 3
+  },
+  {
+    "userMessage": "Feature idea",
+    "assistantMessage": "Users should be able to change document templates mid-project without losing written content. Carryover section preserves orphan blocks.",
+    "minProposals": 1,
+    "maxProposals": 3
+  },
+  {
+    "userMessage": "Metrics",
+    "assistantMessage": "Track insights saved per session, time to first saved insight, and promotion accept rate. Goal: sixty percent of patches accepted.",
+    "minProposals": 1,
+    "maxProposals": 3
+  },
+  {
+    "userMessage": "Hello",
+    "assistantMessage": "Thanks for reaching out! How can I help you think through your product today?",
+    "minProposals": 0,
+    "maxProposals": 2
+  },
+  {
+    "userMessage": "Non-goals",
+    "assistantMessage": "We will not build a full project management suite in v1. Out of scope: Gantt charts, resource planning, and sprint tooling.",
+    "minProposals": 1,
+    "maxProposals": 3
+  }
+]

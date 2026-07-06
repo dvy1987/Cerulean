@@ -1,0 +1,42 @@
+[
+  {
+    "text": "Enterprise buyers need SSO and audit logs before they will adopt.",
+    "expectedSection": "Requirements"
+  },
+  {
+    "text": "We should build a guided onboarding wizard for first-time PMs.",
+    "expectedSection": "Solution"
+  },
+  {
+    "text": "The core problem is ideas get lost between chat and the final document.",
+    "expectedSection": "Problem"
+  },
+  {
+    "text": "Primary users are product managers writing specs with AI assistance.",
+    "expectedSection": "Users"
+  },
+  {
+    "text": "North star metric: insights saved per session should exceed three.",
+    "expectedSection": "Success Metrics"
+  },
+  {
+    "text": "We will not support mobile in v1 — desktop only.",
+    "expectedSection": "Non-Goals"
+  },
+  {
+    "text": "Still unclear whether we need real-time collaboration.",
+    "expectedSection": "Open Questions"
+  },
+  {
+    "text": "Cerulean is a thinking workspace that turns conversations into structured docs.",
+    "expectedSection": "Overview"
+  },
+  {
+    "text": "Must-have requirement: one-click insight capture after each reply.",
+    "expectedSection": "Requirements"
+  },
+  {
+    "text": "Recommended approach: template-first documents with section-aware promotion.",
+    "expectedSection": "Solution"
+  }
+]

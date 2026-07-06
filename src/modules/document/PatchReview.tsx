@@ -3,6 +3,7 @@
 import { useDocumentStore } from "@/store/documentStore";
 import { isPersistenceEnabled } from "@/lib/config";
 import { workspaceApi } from "@/lib/api/workspace-client";
+import { trackMetric } from "@/lib/metrics/session-metrics";
 
 export default function PatchReview() {
   const { pendingPatch, acceptPatch, rejectPatch } = useDocumentStore();
@@ -15,6 +16,7 @@ export default function PatchReview() {
     } else {
       acceptPatch();
     }
+    trackMetric("promotion_accepted");
   };
 
   const handleReject = async () => {
@@ -23,6 +25,7 @@ export default function PatchReview() {
     } else {
       rejectPatch();
     }
+    trackMetric("promotion_rejected");
   };
 
   if (!pendingPatch) return null;

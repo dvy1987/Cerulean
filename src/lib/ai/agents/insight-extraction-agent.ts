@@ -8,6 +8,7 @@ import {
 import { agentRegistry } from "../registry";
 import { extractInsightsFromText, proposeInsightsFromChat } from "../dev-ai";
 import { callAIForJSON } from "../call-ai";
+import { MIN_ASSISTANT_MESSAGE_LENGTH } from "@/lib/insights/proposal-constants";
 
 type ExtractInput =
   | InsightExtractAction["input"]
@@ -56,6 +57,14 @@ const insightExtractionAgent: AgentDefinition<
     input: ExtractInput
   ): Promise<AgentResult<InsightExtractResult | InsightProposeResult>> {
     if (isProposeInput(input)) {
+      if (input.assistantMessage.trim().length < MIN_ASSISTANT_MESSAGE_LENGTH) {
+        return {
+          agentId: "insight_extraction",
+          success: true,
+          data: { proposals: [] },
+        };
+      }
+
       const aiProposals = await callAIForJSON<
         Array<{ title: string; content: string; confidence?: number }>
       >({

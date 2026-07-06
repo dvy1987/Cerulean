@@ -7,6 +7,8 @@ import DocumentBlockView from "./DocumentBlockView";
 import PatchReview from "./PatchReview";
 import ChangeTemplateModal from "@/components/ChangeTemplateModal";
 import { DOCUMENT_TEMPLATES } from "@/lib/document-templates/registry";
+import { countEmptySections, getEmptySectionHeadings, isHeadingBlock } from "@/lib/document/section-status";
+import { headingsMatch } from "@/lib/document/heading-match";
 import { isPersistenceEnabled } from "@/lib/config";
 import { workspaceApi } from "@/lib/api/workspace-client";
 
@@ -47,6 +49,25 @@ export default function DocumentPanel() {
     if (!pendingPatch) return new Set<string>();
     return new Set(pendingPatch.operations.map((op) => op.block_id));
   }, [pendingPatch]);
+
+  const emptySectionCount = useMemo(
+    () => countEmptySections(blocks, doc.document_type),
+    [blocks, doc.document_type]
+  );
+
+  const emptyHeadingIds = useMemo(() => {
+    const emptySections = getEmptySectionHeadings(blocks, doc.document_type);
+    const ids = new Set<string>();
+    for (const block of blocks) {
+      if (
+        isHeadingBlock(block) &&
+        emptySections.some((s) => headingsMatch(block.content, s))
+      ) {
+        ids.add(block.block_id);
+      }
+    }
+    return ids;
+  }, [blocks, doc.document_type]);
 
   const handleTitleSave = async () => {
     if (isPersistenceEnabled()) {
@@ -149,6 +170,12 @@ export default function DocumentPanel() {
               </h2>
               <p className="text-[11px] text-muted mt-0.5">
                 {DOCUMENT_TEMPLATES[doc.document_type]?.label ?? "Document"}
+                {emptySectionCount > 2 && (
+                  <span className="text-cerulean-600">
+                    {" "}
+                    · {emptySectionCount} sections still open
+                  </span>
+                )}
               </p>
             </div>
           )}
@@ -237,6 +264,7 @@ export default function DocumentPanel() {
             key={block.block_id}
             block={block}
             isHighlighted={patchBlockIds.has(block.block_id)}
+            isEmptySectionHeading={emptyHeadingIds.has(block.block_id)}
             onUpdate={handleUpdateBlock}
             onRemove={handleRemoveBlock}
             onAddBelow={handleAddBlock}

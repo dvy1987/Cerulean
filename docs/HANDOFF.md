@@ -1,19 +1,19 @@
 # Cerulean Handoff
 
-**Last updated:** 2026-07-05 (post agent-loom sync @ `96f9e73`)  
-**Branch:** `main` — synced with `origin/main` @ `f3713c0`  
+**Last updated:** 2026-07-06 (thinking-loop gap closure — **uncommitted**)  
+**Branch:** `main` — synced with `origin/main` @ `5d736bc`  
 **Read first:** `AGENTS.md` → this file → `docs/agent-shared-context.md`
 
 ---
 
 ## Start next session here
 
-**Status:** Thinking Loop v2 is **shipped and committed** (`32a1567`). Agent-loom library sync committed (`0898d72`).
+**Status:** Thinking Loop v2 Phases 0–4 committed (`32a1567`). **Gap-closure work done but NOT committed** — 18 modified + 7 new files on disk. `npm run build` + `npm test` pass (**16 tests**).
 
 **User should say one of:**
-- **"verify"** or **"run QA"** — manual QA checklist below
+- **"commit"** — stage and commit gap-closure work (see Working tree below)
+- **"verify"** or **"run QA"** — manual QA checklist below (user deferred this)
 - **"start Phase 5"** — Railway + Supabase deployment (apply migration `003`)
-- **"start Phase 6"** — golden tests + doc refresh
 - **"bootstrap harness"** — optional; run `harness-generation` (no `docs/harness/manifest.json` yet)
 
 ### Phase status (master plan)
@@ -26,19 +26,27 @@
 | **3** | Template-first docs (`product_spec` default) | **Done** |
 | **4** | Unify promote/expand through orchestrator | **Done** |
 | **5** | Deploy Railway + Supabase | **Not started** |
-| **6** | Golden tests + doc refresh | **Partial** (8 tests pass; no golden evals) |
+| **6** | Golden tests + doc refresh | **Done** (16 tests; golden evals in `tests/golden/`) |
 
-### This session (2026-07-05)
+### This session (2026-07-05 → 06)
 
 | Work | Status |
 |------|--------|
-| Agent-loom sync from `../agent-loom` @ `96f9e73` | Committed (`0898d72`) |
-| New skills: `harness-engineering`, `harness-generation`, `harness-evolution` | Added |
-| Updated: 11 library skills (project-setup, eval-pipeline, memory-handoff, etc.) | Synced |
-| Protected: `cerulean-*` (3) | Unchanged |
-| Forked: `knowledge-graph` (`.next` exclusion) | Preserved |
-| agent-loom repo | **Untouched** |
-| `npm run build` + `npm test` | Pass (8 tests) |
+| Closed thinking-loop-v2 spec gaps (except manual QA + deploy) | **Uncommitted** |
+| Proposal bar: spec copy, `source_message_ids`, +N more, noise gate | Done |
+| Empty-section UI + `classifyPromotionSection` fallback | Done |
+| `RuntimeRequest` on `/api/v1/ai/run` | Done |
+| Golden tests (10 placement + 10 proposal cases) | Done |
+| Session metrics (`src/lib/metrics/session-metrics.ts`) | Done |
+| `npm run build` + `npm test` | Pass (16 tests) |
+| Manual QA checklist | **Not run** (user deferred) |
+| Git commit / push | **Not done** — user did not ask |
+
+### Working tree (uncommitted)
+
+**Modified:** `docs/HANDOFF.md`, `docs/agent-change-log.md`, `ProposedInsightBar.tsx`, `post-chat-pipeline.ts`, `runtime-router.ts`, `DocumentPanel.tsx`, `DocumentBlockView.tsx`, `PatchReview.tsx`, `ChatPanel.tsx`, `InsightTray.tsx`, `workspace-client.ts`, agents, `DocumentTypePicker.tsx`, `proposedInsightStore.ts`, `tests/thinking-loop-v2.test.mjs`, `/api/v1/ai/run/route.ts`
+
+**New:** `src/lib/ai/runtime-request.ts`, `src/lib/document/classify-section.ts`, `src/lib/document/section-status.ts`, `src/lib/insights/proposal-constants.ts`, `src/lib/metrics/session-metrics.ts`, `tests/golden-thinking-loop.test.mjs`, `tests/golden-helpers.mjs`, `tests/golden/*.json`
 
 ### Adversarial review fixes (committed in `32a1567`)
 
@@ -69,10 +77,11 @@
 
 | Commit | What |
 |--------|------|
+| `5d736bc` | Docs: handoff HEAD pointer (current `origin/main`) |
 | `32a1567` | Thinking Loop v2 Phases 0–4 + adversarial P0–P3 fixes (65 files) |
-| `ecf83f2` | Docs: changelog + handoff updated for `0898d72` |
 | `0898d72` | Agent-loom sync @ `96f9e73` — harness skills + handoff refresh (34 files) |
-| `66d4dfc` | Docs: changelog + handoff updated for `32a1567` |
+
+**Pending commit:** thinking-loop gap closure (see Working tree above). Changelog entry in `docs/agent-change-log.md` @ 2026-07-05.
 
 **Before deploy:** apply migration `003` on Postgres (`supabase/migrations/003_document_templates.sql`).
 
@@ -201,11 +210,19 @@ Cerulean/
 │   │   ├── provider.ts                     ← streamProvider + callProvider
 │   │   └── agents/
 │   ├── lib/api/workspace-client.ts         ← streamChat, applyPostChatResults
-│   ├── lib/document/heading-match.ts
+│   ├── lib/document/
+│   │   ├── heading-match.ts
+│   │   ├── classify-section.ts      ← promotion section heuristic
+│   │   └── section-status.ts      ← empty section detection
+│   ├── lib/ai/runtime-request.ts    ← RuntimeRequest → AiAction adapter
+│   ├── lib/metrics/session-metrics.ts
 │   └── store/contradictionStore.ts
 └── tests/
     ├── heading-match.test.mts
-    └── thinking-loop-v2.test.mjs
+    ├── thinking-loop-v2.test.mjs
+    ├── golden-thinking-loop.test.mjs
+    ├── golden-helpers.mjs
+    └── golden/                      ← 10 placement + 10 proposal cases
 ```
 
 ---
@@ -216,7 +233,7 @@ Cerulean/
 npm install
 npm run dev          # http://localhost:3000
 npm run build        # must pass
-npm test             # 8 tests (strip-types + .mjs)
+npm test             # 16 tests (strip-types + .mjs)
 ```
 
 With Supabase: copy `.env.example` → `.env.local`, apply migrations 001–003, sign up at `/login`.
@@ -227,9 +244,9 @@ With Supabase: copy `.env.example` → `.env.local`, apply migrations 001–003,
 
 | Item | Notes |
 |------|-------|
-| **Manual QA** | Checklist below not run in this session |
+| **Git commit** | Gap-closure work uncommitted — user should say **"commit"** |
+| **Manual QA** | Checklist below not run (user deferred) |
 | **Railway deployment** | Phase 5 — `docs/DEPLOYMENT.md` |
-| **Golden / eval tests** | Phase 6 — only smoke + heading-match today |
 | **Agent harness bootstrap** | No `docs/harness/` — optional via `harness-generation` |
 | **LLM orchestrator routing** | Still `dev-router.ts` (deferred) |
 | **Memory management UI** | Tables exist; UI deferred |
@@ -242,12 +259,14 @@ With Supabase: copy `.env.example` → `.env.local`, apply migrations 001–003,
 ## For the next agent
 
 1. Read `AGENTS.md`, this file, `docs/agent-shared-context.md`.
-2. **Do not commit** unless user asks.
+2. **Do not commit** unless user asks — tree has uncommitted gap-closure work.
 3. **Do not modify** `../agent-loom` — sync is one-way into Cerulean.
 4. **Do not refactor** module structure unless asked.
-5. If user says **"verify"** — run QA checklist and report findings.
-5. If user says **"commit"** — working tree is clean @ `0898d72`; only commit if new changes exist.
-7. After substantial work: update `agent-change-log.md` and `agent-shared-context.md`.
+5. If user says **"commit"** — stage all gap-closure files; message should cover thinking-loop-v2 gap closure; update changelog commit hash.
+6. If user says **"verify"** — run QA checklist and report findings.
+7. If user says **"start Phase 5"** — use `cerulean-deployment`; apply migration `003`.
+8. Runtime API: `/api/v1/ai/run` accepts `{ action }` (legacy) or `{ runtime: { route, input } }` — see `src/lib/ai/runtime-request.ts`.
+9. Session metrics live in `sessionStorage` key `cerulean_session_metrics_v1` — client-only, no server endpoint yet.
 
 ---
 
