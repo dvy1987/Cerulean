@@ -124,6 +124,7 @@ export interface DocumentPromoteResult {
   operations: PatchOperation[];
   placement_label: string;
   placement_block_id: string;
+  placement_confidence?: "high" | "medium" | "low";
 }
 
 export interface DocumentExpandResult {

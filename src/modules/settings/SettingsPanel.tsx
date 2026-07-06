@@ -84,8 +84,12 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
   const toggleBackgroundAgent = useAiSettingsStore((s) => s.toggleBackgroundAgent);
   const suggestInsights = useAiSettingsStore((s) => s.suggestInsights);
   const advancedMode = useAiSettingsStore((s) => s.advancedMode);
+  const smartRouting = useAiSettingsStore((s) => s.smartRouting);
+  const smartPlacement = useAiSettingsStore((s) => s.smartPlacement);
   const setSuggestInsights = useAiSettingsStore((s) => s.setSuggestInsights);
   const setAdvancedMode = useAiSettingsStore((s) => s.setAdvancedMode);
+  const setSmartRouting = useAiSettingsStore((s) => s.setSmartRouting);
+  const setSmartPlacement = useAiSettingsStore((s) => s.setSmartPlacement);
 
   const customProvider = useAiSettingsStore((s) => s.customProvider);
   const customModel = useAiSettingsStore((s) => s.customModel);
@@ -195,6 +199,44 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                     setSuggestInsights(e.target.checked);
                     if (isPersistenceEnabled()) {
                       await workspaceApi.updateSettings({ suggestInsights: e.target.checked });
+                    }
+                  }}
+                  className="rounded border-gray-300 text-cerulean-600"
+                />
+              </label>
+              <label className="flex items-center justify-between gap-3 cursor-pointer">
+                <div>
+                  <span className="text-xs text-foreground">Smart routing</span>
+                  <p className="text-[10px] text-muted mt-0.5">
+                    Uses fewer AI calls when off — routing may be less accurate
+                  </p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={smartRouting}
+                  onChange={async (e) => {
+                    setSmartRouting(e.target.checked);
+                    if (isPersistenceEnabled()) {
+                      await workspaceApi.updateSettings({ smartRouting: e.target.checked });
+                    }
+                  }}
+                  className="rounded border-gray-300 text-cerulean-600"
+                />
+              </label>
+              <label className="flex items-center justify-between gap-3 cursor-pointer">
+                <div>
+                  <span className="text-xs text-foreground">Smart placement</span>
+                  <p className="text-[10px] text-muted mt-0.5">
+                    Uses fewer AI calls when off — placement may be less accurate
+                  </p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={smartPlacement}
+                  onChange={async (e) => {
+                    setSmartPlacement(e.target.checked);
+                    if (isPersistenceEnabled()) {
+                      await workspaceApi.updateSettings({ smartPlacement: e.target.checked });
                     }
                   }}
                   className="rounded border-gray-300 text-cerulean-600"

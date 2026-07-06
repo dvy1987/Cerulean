@@ -134,6 +134,7 @@ export default function ChatPanel({ onHeaderDoubleClick }: ChatPanelProps) {
           source_text: text,
           placement_label: result.data.placement_label,
           placement_block_id: result.data.placement_block_id,
+          placement_confidence: result.data.placement_confidence ?? null,
           created_at: new Date().toISOString(),
         };
         setPendingPatch(patch);

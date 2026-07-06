@@ -58,6 +58,11 @@ export default function PatchReview() {
           {pendingPatch.placement_label && (
             <p className="text-[11px] text-cerulean-700 mb-1">
               Adding under: <span className="font-medium">{pendingPatch.placement_label}</span>
+              {pendingPatch.placement_confidence === "low" && (
+                <span className="ml-1.5 text-warning-700 font-normal">
+                  (low confidence — review placement)
+                </span>
+              )}
             </p>
           )}
           <p className="text-[11px] text-cerulean-600 line-clamp-2 font-mono leading-relaxed">

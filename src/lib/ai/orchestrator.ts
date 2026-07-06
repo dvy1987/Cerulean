@@ -3,7 +3,8 @@ import { AgentResult, AgentContext } from "./types";
 import { agentRegistry } from "./registry";
 import { buildAgentContext } from "./context";
 import { buildAgentContextFromDb } from "./context-from-db";
-import { routeThroughRuntime } from "./runtime-router";
+import { resolveRouting } from "./llm-router";
+import { logRoutingDecision } from "./routing-log";
 
 export interface OrchestratorOptions {
   onChunk?: (chunk: string) => void;
@@ -32,7 +33,14 @@ export async function runAiAction<T = unknown>(
     context.providerConfig = options.providerConfig;
   }
 
-  const routing = routeThroughRuntime(action, context);
+  const routeStart = Date.now();
+  const routing = await resolveRouting(action, context);
+  logRoutingDecision({
+    action: action.type,
+    primaryAgent: routing.primaryAgent,
+    source: routing.source,
+    latencyMs: Date.now() - routeStart,
+  });
 
   const primaryAgent = agentRegistry.get(routing.primaryAgent);
   if (!primaryAgent) {

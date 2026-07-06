@@ -43,6 +43,8 @@ export interface WorkspaceSnapshot {
     suggestInsights: boolean;
     advancedMode: boolean;
     hasChosenTemplate: boolean;
+    smartRouting: boolean;
+    smartPlacement: boolean;
     customProvider: string;
     customModel: string;
   };
@@ -107,6 +109,7 @@ function mapPatch(row: Record<string, unknown>): Patch {
     source_text: (row.source_text as string) ?? null,
     placement_label: (row.placement_label as string) ?? null,
     placement_block_id: (row.placement_block_id as string) ?? null,
+    placement_confidence: (row.placement_confidence as Patch["placement_confidence"]) ?? null,
     created_at: row.created_at as string,
   };
 }
@@ -231,6 +234,8 @@ export class WorkspaceService {
       suggest_insights: true,
       advanced_mode: false,
       has_chosen_template: false,
+      smart_routing: true,
+      smart_placement: true,
       custom_provider: "",
       custom_model: "",
     };
@@ -254,6 +259,8 @@ export class WorkspaceService {
         suggestInsights: settings.suggest_insights ?? true,
         advancedMode: settings.advanced_mode ?? false,
         hasChosenTemplate: settings.has_chosen_template ?? false,
+        smartRouting: settings.smart_routing ?? true,
+        smartPlacement: settings.smart_placement ?? true,
         customProvider: settings.custom_provider ?? "",
         customModel: settings.custom_model ?? "",
       },
@@ -561,6 +568,7 @@ export class WorkspaceService {
     sourceText?: string | null;
     placementLabel?: string | null;
     placementBlockId?: string | null;
+    placementConfidence?: "high" | "medium" | "low" | null;
   }): Promise<Patch> {
     const { documentId } = await this.getWorkspaceIds();
 
@@ -581,6 +589,7 @@ export class WorkspaceService {
         source_text: params.sourceText ?? null,
         placement_label: params.placementLabel ?? null,
         placement_block_id: params.placementBlockId ?? null,
+        placement_confidence: params.placementConfidence ?? null,
         status: "pending",
         is_active: true,
       })
@@ -620,6 +629,7 @@ export class WorkspaceService {
       sourceText: text,
       placementLabel: result.data.placement_label,
       placementBlockId: result.data.placement_block_id,
+      placementConfidence: result.data.placement_confidence ?? null,
     });
   }
 
@@ -813,6 +823,8 @@ export class WorkspaceService {
     suggest_insights: boolean;
     advanced_mode: boolean;
     has_chosen_template: boolean;
+    smart_routing: boolean;
+    smart_placement: boolean;
     custom_provider: string;
     custom_model: string;
   }>) {

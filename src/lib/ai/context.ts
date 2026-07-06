@@ -78,6 +78,8 @@ export function buildAgentContext(): AgentContext {
     suggestInsights: settingsState.suggestInsights,
     advancedMode: settingsState.advancedMode,
     hasChosenTemplate: settingsState.hasChosenTemplate,
+    smartRouting: settingsState.smartRouting,
+    smartPlacement: settingsState.smartPlacement,
   };
 
   return {

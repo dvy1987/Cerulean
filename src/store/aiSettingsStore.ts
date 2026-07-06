@@ -14,11 +14,15 @@ interface AiSettingsState {
   suggestInsights: boolean;
   advancedMode: boolean;
   hasChosenTemplate: boolean;
+  smartRouting: boolean;
+  smartPlacement: boolean;
   toggleBackgroundAgent: (key: keyof BackgroundAgentToggles) => void;
   setBackgroundAgent: (key: keyof BackgroundAgentToggles, value: boolean) => void;
   setSuggestInsights: (value: boolean) => void;
   setAdvancedMode: (value: boolean) => void;
   setHasChosenTemplate: (value: boolean) => void;
+  setSmartRouting: (value: boolean) => void;
+  setSmartPlacement: (value: boolean) => void;
 
   customProvider: CustomAiProvider;
   customModel: string;
@@ -38,10 +42,14 @@ export const useAiSettingsStore = create<AiSettingsState>((set) => ({
   suggestInsights: true,
   advancedMode: false,
   hasChosenTemplate: false,
+  smartRouting: true,
+  smartPlacement: true,
 
   setSuggestInsights: (value) => set({ suggestInsights: value }),
   setAdvancedMode: (value) => set({ advancedMode: value }),
   setHasChosenTemplate: (value) => set({ hasChosenTemplate: value }),
+  setSmartRouting: (value) => set({ smartRouting: value }),
+  setSmartPlacement: (value) => set({ smartPlacement: value }),
 
   toggleBackgroundAgent: (key) =>
     set((state) => ({

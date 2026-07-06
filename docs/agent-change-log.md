@@ -27,6 +27,18 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 ## Entries
 <!-- New entries go here, newest first -->
 
+### 2026-07-06 - Smart routing & placement implementation
+- Author: Cursor agent
+- Commit: not committed yet
+- Summary: Implemented approved spec — `resolvePlacement`, `llm-router` with rules fallback, settings toggles (default on), `placement_confidence` migration, 50-case golden suite @ ≥98%, MCP/stream routing parity tests.
+- Files:
+  - `src/lib/document/resolve-placement.ts`, `classify-section.ts`
+  - `src/lib/ai/llm-router.ts`, `routing-log.ts`, `orchestrator.ts`
+  - `src/store/aiSettingsStore.ts`, `SettingsPanel.tsx`
+  - `supabase/migrations/004_smart_routing_placement.sql`
+  - `tests/golden/placement-cases.json`, `tests/routing-parity.test.mjs`
+- Notes: Run migration `004` on deploy. Optional Task 8 LLM eval job not included.
+
 ### 2026-07-05 - Thinking Loop v2 gap closure (non-QA)
 - Author: Cursor agent
 - Commit: `54b808f`

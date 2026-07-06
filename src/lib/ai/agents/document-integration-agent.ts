@@ -2,9 +2,8 @@ import { AgentDefinition, AgentContext, AgentResult } from "../types";
 import { DocumentPromoteAction, DocumentPromoteResult } from "../actions";
 import { agentRegistry } from "../registry";
 import { DocumentBlock, DocumentType } from "@/types";
-import { callAIForJSON } from "../call-ai";
 import { buildPromotionPatch } from "@/lib/document/placement";
-import { classifyPromotionSection } from "@/lib/document/classify-section";
+import { resolvePlacement } from "@/lib/document/resolve-placement";
 import { DEFAULT_DOCUMENT_TYPE } from "@/lib/document-templates/registry";
 
 type PromoteInput = DocumentPromoteAction["input"];
@@ -40,31 +39,17 @@ const documentIntegrationAgent: AgentDefinition<PromoteInput, DocumentPromoteRes
       updated_at: new Date().toISOString(),
     }));
 
-    let textToIntegrate = input.text;
-    let targetSection = input.targetSection;
+    const smartPlacement = context.settings.smartPlacement !== false;
+    const placement = await resolvePlacement({
+      text: input.text,
+      documentType,
+      blocks: existingBlocks,
+      smartPlacement,
+      providerConfig: context.providerConfig,
+    });
 
-    if (existingBlocks.length > 0) {
-      const documentSnapshot = existingBlocks
-        .sort((a, b) => a.position - b.position)
-        .map((b) => `[${b.block_type}] ${b.content}`)
-        .join("\n");
-
-      const aiResult = await callAIForJSON<{
-        target_section?: string;
-        adapted_text?: string;
-      }>({
-        systemPrompt: SYSTEM_PROMPT,
-        userMessage: `Document type: ${documentType}\n\nExisting document:\n${documentSnapshot}\n\nText to integrate:\n${input.text}`,
-        fallback: {},
-      });
-
-      if (aiResult.adapted_text) textToIntegrate = aiResult.adapted_text;
-      if (aiResult.target_section) targetSection = aiResult.target_section;
-    }
-
-    if (!targetSection) {
-      targetSection = classifyPromotionSection(textToIntegrate, documentType);
-    }
+    const textToIntegrate = placement.adaptedText ?? input.text;
+    const targetSection = input.targetSection ?? placement.targetSection;
 
     const { operations, placement_label, placement_block_id } = buildPromotionPatch({
       text: textToIntegrate,
@@ -78,7 +63,12 @@ const documentIntegrationAgent: AgentDefinition<PromoteInput, DocumentPromoteRes
     return {
       agentId: "document_integration",
       success: true,
-      data: { operations, placement_label, placement_block_id },
+      data: {
+        operations,
+        placement_label,
+        placement_block_id,
+        placement_confidence: placement.confidence,
+      },
     };
   },
 };

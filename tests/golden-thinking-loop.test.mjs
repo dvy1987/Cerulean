@@ -8,6 +8,7 @@ import {
   headingsMatch,
   proposeInsightsFromChat,
   countEmptySections,
+  getTemplateSections,
 } from "./golden-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -20,36 +21,35 @@ const proposalCases = JSON.parse(
   readFileSync(join(__dirname, "golden/proposal-cases.json"), "utf8")
 );
 
-const PRODUCT_SPEC_SECTIONS = [
-  "Overview",
-  "Problem",
-  "Users",
-  "Requirements",
-  "Solution",
-  "Success Metrics",
-  "Non-Goals",
-  "Open Questions",
-];
+const PRODUCT_SPEC_SECTIONS = getTemplateSections("product_spec");
 
-test("golden placement: classifyPromotionSection >=70% accuracy", () => {
+test("golden placement: 50 cases present", () => {
+  assert.equal(placementCases.length, 50);
+});
+
+test("golden placement: classifyPromotionSection >=98% accuracy", () => {
   let correct = 0;
+  const failures = [];
   for (const c of placementCases) {
-    const section = classifyPromotionSection(c.text, PRODUCT_SPEC_SECTIONS);
-    if (section === c.expectedSection) correct += 1;
+    const section = classifyPromotionSection(c.text, c.documentType);
+    if (section === c.expectedSection) {
+      correct += 1;
+    } else {
+      failures.push({ text: c.text.slice(0, 50), expected: c.expectedSection, got: section });
+    }
   }
   const rate = correct / placementCases.length;
   assert.ok(
-    rate >= 0.7,
-    `Expected >=70% placement accuracy, got ${(rate * 100).toFixed(0)}% (${correct}/${placementCases.length})`
+    rate >= 0.98,
+    `Expected >=98% placement accuracy, got ${(rate * 100).toFixed(0)}% (${correct}/${placementCases.length}). Failures: ${JSON.stringify(failures.slice(0, 3))}`
   );
 });
 
 test("golden placement: headings resolve for all expected sections", () => {
   for (const c of placementCases) {
-    const match = PRODUCT_SPEC_SECTIONS.some((s) =>
-      headingsMatch(s, c.expectedSection)
-    );
-    assert.ok(match, `Missing template section for ${c.expectedSection}`);
+    const sections = getTemplateSections(c.documentType);
+    const match = sections.some((s) => headingsMatch(s, c.expectedSection));
+    assert.ok(match, `Missing template section for ${c.expectedSection} in ${c.documentType}`);
   }
 });
 

@@ -54,6 +54,8 @@ export function hydrateStoresFromWorkspace(workspace: WorkspaceSnapshot) {
     suggestInsights: workspace.settings.suggestInsights ?? true,
     advancedMode: workspace.settings.advancedMode ?? false,
     hasChosenTemplate: workspace.settings.hasChosenTemplate ?? false,
+    smartRouting: workspace.settings.smartRouting ?? true,
+    smartPlacement: workspace.settings.smartPlacement ?? true,
     customProvider: (workspace.settings.customProvider || "") as "",
     customModel: workspace.settings.customModel,
   });
@@ -493,6 +495,8 @@ export const workspaceApi = {
     tonalAdjustment: boolean;
     suggestInsights: boolean;
     advancedMode: boolean;
+    smartRouting: boolean;
+    smartPlacement: boolean;
   }>) {
     const current = useAiSettingsStore.getState();
     const mergedBg = { ...current.backgroundAgents };
@@ -507,6 +511,8 @@ export const workspaceApi = {
     }
     if (toggle.suggestInsights !== undefined) payload.suggestInsights = toggle.suggestInsights;
     if (toggle.advancedMode !== undefined) payload.advancedMode = toggle.advancedMode;
+    if (toggle.smartRouting !== undefined) payload.smartRouting = toggle.smartRouting;
+    if (toggle.smartPlacement !== undefined) payload.smartPlacement = toggle.smartPlacement;
 
     const { settings } = await apiFetch("/api/v1/settings", {
       method: "PATCH",
@@ -516,11 +522,15 @@ export const workspaceApi = {
       backgroundAgents?: typeof mergedBg;
       suggestInsights?: boolean;
       advancedMode?: boolean;
+      smartRouting?: boolean;
+      smartPlacement?: boolean;
     };
     useAiSettingsStore.setState({
       backgroundAgents: s.backgroundAgents ?? mergedBg,
       suggestInsights: s.suggestInsights ?? current.suggestInsights,
       advancedMode: s.advancedMode ?? current.advancedMode,
+      smartRouting: s.smartRouting ?? current.smartRouting,
+      smartPlacement: s.smartPlacement ?? current.smartPlacement,
     });
     return settings;
   },

@@ -86,6 +86,7 @@ export interface Patch {
   source_text: string | null;
   placement_label?: string | null;
   placement_block_id?: string | null;
+  placement_confidence?: "high" | "medium" | "low" | null;
   created_at: string;
 }
 

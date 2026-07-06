@@ -40,6 +40,19 @@ export function routeThroughRuntime(
   return routeAction(action, context);
 }
 
+/** Async routing — LLM when smart routing on, rules fallback otherwise. */
+export async function routeThroughRuntimeAsync(
+  action: AiAction,
+  context: AgentContext
+): Promise<RoutingDecision> {
+  const { resolveRouting } = await import("./llm-router");
+  const decision = await resolveRouting(action, context);
+  return {
+    primaryAgent: decision.primaryAgent,
+    backgroundAgents: decision.backgroundAgents,
+  };
+}
+
 /** Resolve POST /api/v1/ai/run body — legacy `action` or spec `runtime` envelope. */
 export function resolveAiRunAction(body: unknown): AiAction {
   if (isRuntimeRequestBody(body)) {

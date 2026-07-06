@@ -36,6 +36,10 @@ export interface AiSettingsSnapshot {
   suggestInsights?: boolean;
   advancedMode?: boolean;
   hasChosenTemplate?: boolean;
+  /** Default true — LLM routing when provider available. */
+  smartRouting?: boolean;
+  /** Default true — LLM placement when provider available. */
+  smartPlacement?: boolean;
 }
 
 import type { ProviderConfig } from "./provider";

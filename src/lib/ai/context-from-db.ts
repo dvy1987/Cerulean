@@ -61,6 +61,8 @@ export async function buildAgentContextFromDb(userId: string): Promise<AgentCont
     suggestInsights: ws.settings.suggestInsights,
     advancedMode: ws.settings.advancedMode,
     hasChosenTemplate: ws.settings.hasChosenTemplate,
+    smartRouting: ws.settings.smartRouting,
+    smartPlacement: ws.settings.smartPlacement,
   };
 
   return {

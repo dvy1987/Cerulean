@@ -1,42 +1,54 @@
 [
-  {
-    "text": "Enterprise buyers need SSO and audit logs before they will adopt.",
-    "expectedSection": "Requirements"
-  },
-  {
-    "text": "We should build a guided onboarding wizard for first-time PMs.",
-    "expectedSection": "Solution"
-  },
-  {
-    "text": "The core problem is ideas get lost between chat and the final document.",
-    "expectedSection": "Problem"
-  },
-  {
-    "text": "Primary users are product managers writing specs with AI assistance.",
-    "expectedSection": "Users"
-  },
-  {
-    "text": "North star metric: insights saved per session should exceed three.",
-    "expectedSection": "Success Metrics"
-  },
-  {
-    "text": "We will not support mobile in v1 — desktop only.",
-    "expectedSection": "Non-Goals"
-  },
-  {
-    "text": "Still unclear whether we need real-time collaboration.",
-    "expectedSection": "Open Questions"
-  },
-  {
-    "text": "Cerulean is a thinking workspace that turns conversations into structured docs.",
-    "expectedSection": "Overview"
-  },
-  {
-    "text": "Must-have requirement: one-click insight capture after each reply.",
-    "expectedSection": "Requirements"
-  },
-  {
-    "text": "Recommended approach: template-first documents with section-aware promotion.",
-    "expectedSection": "Solution"
-  }
+  {"documentType": "product_spec", "text": "Cerulean is a thinking workspace that turns conversations into structured docs.", "expectedSection": "Overview"},
+  {"documentType": "product_spec", "text": "The core problem is ideas get lost between chat and the final document.", "expectedSection": "Problem"},
+  {"documentType": "product_spec", "text": "Primary users are product managers writing specs with AI assistance.", "expectedSection": "Users"},
+  {"documentType": "product_spec", "text": "Enterprise buyers need SSO and audit logs before they will adopt.", "expectedSection": "Requirements"},
+  {"documentType": "product_spec", "text": "Must-have requirement: one-click insight capture after each reply.", "expectedSection": "Requirements"},
+  {"documentType": "product_spec", "text": "We should build a guided onboarding wizard for first-time PMs.", "expectedSection": "Solution"},
+  {"documentType": "product_spec", "text": "Recommended approach: template-first documents with section-aware promotion.", "expectedSection": "Solution"},
+  {"documentType": "product_spec", "text": "North star metric: insights saved per session should exceed three.", "expectedSection": "Success Metrics"},
+  {"documentType": "product_spec", "text": "We will measure success by promotion accept rate above sixty percent.", "expectedSection": "Success Metrics"},
+  {"documentType": "product_spec", "text": "We will not support mobile in v1 — desktop only.", "expectedSection": "Non-Goals"},
+  {"documentType": "product_spec", "text": "Out of scope: building a full project management suite.", "expectedSection": "Non-Goals"},
+  {"documentType": "product_spec", "text": "Still unclear whether we need real-time collaboration.", "expectedSection": "Open Questions"},
+  {"documentType": "product_spec", "text": "Open question: should template changes require admin approval?", "expectedSection": "Open Questions"},
+  {"documentType": "product_spec", "text": "Pain point: PMs copy-paste from ChatGPT into Notion and lose structure.", "expectedSection": "Problem"},
+  {"documentType": "product_spec", "text": "Persona: solo founder doing product discovery without a writing coach.", "expectedSection": "Users"},
+  {"documentType": "product_spec", "text": "Functional requirement: export markdown that matches the active template.", "expectedSection": "Requirements"},
+  {"documentType": "product_spec", "text": "Architecture: orchestrator routes all AI through a single spine.", "expectedSection": "Solution"},
+
+  {"documentType": "strategy_memo", "text": "Context: the team is deciding whether to expand from SMB to enterprise.", "expectedSection": "Context"},
+  {"documentType": "strategy_memo", "text": "Background: revenue growth slowed after our initial PLG motion saturated.", "expectedSection": "Context"},
+  {"documentType": "strategy_memo", "text": "Strategic question: should we prioritize enterprise sales or self-serve PLG?", "expectedSection": "Strategic Question"},
+  {"documentType": "strategy_memo", "text": "The key question we must answer is which segment has higher LTV.", "expectedSection": "Strategic Question"},
+  {"documentType": "strategy_memo", "text": "Option A: double down on enterprise with a sales-led motion.", "expectedSection": "Options"},
+  {"documentType": "strategy_memo", "text": "Alternative: stay PLG and add a prosumer tier as option two.", "expectedSection": "Options"},
+  {"documentType": "strategy_memo", "text": "Tradeoff between faster revenue and higher support burden.", "expectedSection": "Options"},
+  {"documentType": "strategy_memo", "text": "Recommendation: pursue enterprise with a pilot program in Q3.", "expectedSection": "Recommendation"},
+  {"documentType": "strategy_memo", "text": "We should recommend focusing on teams of 50+ with compliance needs.", "expectedSection": "Recommendation"},
+  {"documentType": "strategy_memo", "text": "Risk: longer sales cycles could delay profitability.", "expectedSection": "Risks"},
+  {"documentType": "strategy_memo", "text": "Downside threat: incumbents may bundle similar features for free.", "expectedSection": "Risks"},
+  {"documentType": "strategy_memo", "text": "Next step: interview five enterprise buyers by end of month.", "expectedSection": "Next Steps"},
+  {"documentType": "strategy_memo", "text": "Action item: draft pilot pricing and timeline for roadmap review.", "expectedSection": "Next Steps"},
+  {"documentType": "strategy_memo", "text": "Milestone: launch enterprise pilot with two design partners.", "expectedSection": "Next Steps"},
+  {"documentType": "strategy_memo", "text": "Thesis: enterprise expansion is the highest-leverage bet this year.", "expectedSection": "Recommendation"},
+  {"documentType": "strategy_memo", "text": "Hypothesis to test: buyers will pay 3x for SSO and audit logs.", "expectedSection": "Strategic Question"},
+  {"documentType": "strategy_memo", "text": "Concern: champion turnover could stall deals in pipeline.", "expectedSection": "Risks"},
+
+  {"documentType": "product_analysis", "text": "Summary: the market for AI writing tools is crowded but underserved for PMs.", "expectedSection": "Summary"},
+  {"documentType": "product_analysis", "text": "Executive summary: structured thinking workspaces are an emerging category.", "expectedSection": "Summary"},
+  {"documentType": "product_analysis", "text": "Market size for product-spec tooling is growing with AI adoption.", "expectedSection": "Market"},
+  {"documentType": "product_analysis", "text": "TAM analysis suggests strong demand among product-led SaaS companies.", "expectedSection": "Market"},
+  {"documentType": "product_analysis", "text": "Target users are PMs and staff engineers writing decision docs.", "expectedSection": "Users"},
+  {"documentType": "product_analysis", "text": "Customer persona: design-minded PM at a Series B startup.", "expectedSection": "Users"},
+  {"documentType": "product_analysis", "text": "Competitive landscape includes Notion AI, ChatGPT, and dedicated PRD tools.", "expectedSection": "Competitive Landscape"},
+  {"documentType": "product_analysis", "text": "Competitor analysis: incumbents lack insight-to-document loop.", "expectedSection": "Competitive Landscape"},
+  {"documentType": "product_analysis", "text": "Opportunity: own the chat-to-structured-doc workflow for PMs.", "expectedSection": "Opportunities"},
+  {"documentType": "product_analysis", "text": "Whitespace opportunity in MCP-connected thinking workspaces.", "expectedSection": "Opportunities"},
+  {"documentType": "product_analysis", "text": "Risk: OpenAI could ship native document structuring.", "expectedSection": "Risks"},
+  {"documentType": "product_analysis", "text": "Threat: free alternatives may cap willingness to pay.", "expectedSection": "Risks"},
+  {"documentType": "product_analysis", "text": "Open question: is mobile access required for v1?", "expectedSection": "Open Questions"},
+  {"documentType": "product_analysis", "text": "Unclear whether we need SOC2 before first enterprise pilot.", "expectedSection": "Open Questions"},
+  {"documentType": "product_analysis", "text": "Finding: users abandon tools that require heavy upfront setup.", "expectedSection": "Summary"},
+  {"documentType": "product_analysis", "text": "Compared to Notion, we win on structured capture not freeform notes.", "expectedSection": "Competitive Landscape"}
 ]
