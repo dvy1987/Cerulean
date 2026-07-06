@@ -1,17 +1,16 @@
 # Cerulean Handoff
 
 **Last updated:** 2026-07-06 (thinking-loop gap closure — **uncommitted**)  
-**Branch:** `main` — synced with `origin/main` @ `5d736bc`  
+**Branch:** `main` — synced with `origin/main` @ `54b808f`  
 **Read first:** `AGENTS.md` → this file → `docs/agent-shared-context.md`
 
 ---
 
 ## Start next session here
 
-**Status:** Thinking Loop v2 Phases 0–4 committed (`32a1567`). **Gap-closure work done but NOT committed** — 18 modified + 7 new files on disk. `npm run build` + `npm test` pass (**16 tests**).
+**Status:** Thinking Loop v2 gap-closure **committed and pushed** (`54b808f`). `npm run build` + `npm test` pass (**16 tests**).
 
 **User should say one of:**
-- **"commit"** — stage and commit gap-closure work (see Working tree below)
 - **"verify"** or **"run QA"** — manual QA checklist below (user deferred this)
 - **"start Phase 5"** — Railway + Supabase deployment (apply migration `003`)
 - **"bootstrap harness"** — optional; run `harness-generation` (no `docs/harness/manifest.json` yet)
@@ -32,7 +31,7 @@
 
 | Work | Status |
 |------|--------|
-| Closed thinking-loop-v2 spec gaps (except manual QA + deploy) | **Uncommitted** |
+| Closed thinking-loop-v2 spec gaps (except manual QA + deploy) | Committed (`54b808f`) |
 | Proposal bar: spec copy, `source_message_ids`, +N more, noise gate | Done |
 | Empty-section UI + `classifyPromotionSection` fallback | Done |
 | `RuntimeRequest` on `/api/v1/ai/run` | Done |
@@ -40,7 +39,7 @@
 | Session metrics (`src/lib/metrics/session-metrics.ts`) | Done |
 | `npm run build` + `npm test` | Pass (16 tests) |
 | Manual QA checklist | **Not run** (user deferred) |
-| Git commit / push | **Not done** — user did not ask |
+| Git commit / push | Done (`54b808f`) |
 
 ### Working tree (uncommitted)
 
@@ -77,11 +76,12 @@
 
 | Commit | What |
 |--------|------|
+| `54b808f` | Thinking Loop v2 gap closure — golden tests, RuntimeRequest, metrics (37 files) |
 | `5d736bc` | Docs: handoff HEAD pointer (current `origin/main`) |
 | `32a1567` | Thinking Loop v2 Phases 0–4 + adversarial P0–P3 fixes (65 files) |
 | `0898d72` | Agent-loom sync @ `96f9e73` — harness skills + handoff refresh (34 files) |
 
-**Pending commit:** thinking-loop gap closure (see Working tree above). Changelog entry in `docs/agent-change-log.md` @ 2026-07-05.
+**Pending commit:** none — `main` @ `54b808f` synced with origin.
 
 **Before deploy:** apply migration `003` on Postgres (`supabase/migrations/003_document_templates.sql`).
 

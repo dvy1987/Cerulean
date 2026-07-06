@@ -29,7 +29,7 @@ Purpose: Shared historical log of repo changes, reviews, and context updates mad
 
 ### 2026-07-05 - Thinking Loop v2 gap closure (non-QA)
 - Author: Cursor agent
-- Commit: not committed yet
+- Commit: `54b808f`
 - Summary: Closed remaining thinking-loop-v2 spec gaps — proposal UX/copy, 80-char noise gate, source_message_ids on chip save, empty-section UI, RuntimeRequest API on `/api/v1/ai/run`, golden eval tests (16 total), session metrics instrumentation.
 - Files:
   - `src/modules/chat/ProposedInsightBar.tsx`

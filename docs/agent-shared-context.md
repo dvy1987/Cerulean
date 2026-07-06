@@ -64,7 +64,7 @@ Update this file when:
 - **Execution plan:** `docs/specs/implementation-master-plan.md` — Phases 0–4 + 6 done; Phase 5 (deploy) remains
 - **Product spec:** `docs/specs/thinking-loop-v2.md` — **implemented in code**; manual QA + deploy outstanding
 - **Next steps (user choice):** **commit** gap-closure · manual QA · Phase 5 deploy · optional harness bootstrap
-- **Uncommitted:** gap-closure work on `main` (18 modified + 7 new files) — see `HANDOFF.md` Working tree
+- **Uncommitted:** none — `main` @ `54b808f` synced with origin
 - **Tests:** 16 passing (`golden-thinking-loop.test.mjs`, `heading-match.test.mts`, smoke)
 - **Verify:** persisted chat no duplicates; streaming `done` before proposals; proposals with `source_message_ids`; empty-section hints; placement golden ≥70%
 - **Agent skills:** `.agents/skills/` — 112 skills (109 library + 3 Cerulean domain); last library sync `2026-07-05` @ upstream `96f9e73` via `agent-loom-sync`; new: `harness-engineering`, `harness-generation`, `harness-evolution`; `knowledge-graph` fork preserved (`.next` exclusion); `AGENTS.md` ≤200 lines (extended rules in `cerulean-project/references/agents-extended.md`)
